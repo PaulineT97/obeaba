@@ -1,0 +1,21 @@
+@use "variables.scss";
+@use "utils.scss";
+@use "flex.scss";
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-size: 16px;
+    font-family: var(--poppins);
+    color: var(--textColor);
+}
+img{
+    display: block;
+}
+a{
+    display: block;
+    text-decoration: none;
+}

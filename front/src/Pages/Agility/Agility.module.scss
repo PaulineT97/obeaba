@@ -1,0 +1,14 @@
+.banniere {
+    width: 100%;
+    height: 80vh;
+    background-position:center;
+    background-size:cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        position: relative;
+        z-index: 0;
+    }
+}

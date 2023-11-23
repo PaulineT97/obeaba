@@ -1,0 +1,13 @@
+.contact {
+    position: absolute;
+    z-index: 5;
+    top: -25%;
+    left: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+        color: var(--textColor);
+        font-size: 3rem;
+    }
+} 

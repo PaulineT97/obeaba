@@ -1,0 +1,126 @@
+.banniere {
+    width: 100%;
+    height: 80vh;
+
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .titre {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+            position: relative;
+            z-index: 0;
+        }
+    }
+}
+
+.mainWelcome {
+    section {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 5%;
+
+        .bloc {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3% 0;
+
+            article {
+                width: 47%;
+
+                p,
+                ul {
+                    padding: 2% 0;
+                }
+
+                p,
+                li {
+                    text-align: left;
+                }
+
+                li {
+                    font-size: 1.25rem;
+                    margin-left: 6%;
+                }
+
+                .needs {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .tableau {
+                        width: 70%;
+                        display: flex;
+                        justify-content: space-between;
+
+                        .ulActivity {
+                            width: 60%;
+                            .entete {
+                                font-family: var(--satisfy);
+                                font-size: 1.5rem;
+                                line-height: 3rem;
+                                font-weight: 100;
+                            }
+                        }
+
+                        .ulNeed {
+                            width: 25%;  
+                        }
+                        li {
+                                line-height: 2.2rem;
+                                text-align: center;
+                                select{
+                                    width: 100%;
+                                    margin-bottom: 13%;
+                                }
+                            }
+                        .left {
+                            text-align: left;
+                        }
+                    }
+
+                    p.notice {
+                        padding-top: 3%;
+                        width: 60%;
+                        font-size: 1rem;
+                        font-style: italic;
+                        text-align: center;
+                    }
+                }
+            }
+
+            .milieu {
+                width: 35%;
+            }
+
+
+            .Key {
+                width: 30%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                left: 32vw;
+                // transform: translateX(50%);
+
+            }
+        }
+
+        .middle {
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,0 +1,53 @@
+.banniere {
+    width: 100%;
+    height: 80vh;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        position: relative;
+        z-index: 0;
+    }
+}
+main {
+    .box {
+        width: 50vw;
+        border: solid 1px var(--orange);
+        border-radius: 2em;
+        padding: 2% 3%;
+        margin-bottom: 5%;
+        display: flex;
+        flex-direction: column;
+        p{
+            padding: 2% 0;
+            font-size: 1.25rem;
+            text-align: left;
+        }
+        .sup{
+            display: flex;
+            align-items: center;
+            i{
+                margin: 5%;
+            }
+            p{
+                font-size: 1.1rem;
+                font-style: italic;
+            }
+        }
+
+    }
+}
+
+.feedback{
+    color: indianred;
+    font-size: 18px;
+    font-weight: 600;
+}
+.feedbackGood{
+    color:seagreen;
+    font-size: 18px;
+    font-weight: 600;
+}
