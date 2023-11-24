@@ -1,5 +1,5 @@
-// import { getConnectedUser } from "../apis/users";
+import { getConnectedUser } from "../apis/users";
 
-// export async function userLoader() {
-//   return getConnectedUser();
-// }
+export async function userLoader() {
+  return getConnectedUser();
+}

@@ -3,8 +3,10 @@ import styles from "./Home.module.scss";
 import equipe from "../../Assets/Images/equipe.jpg";
 import activites from "../../Assets/Images/activites.jpg";
 import Map from "./Map";
+import { NavLink } from 'react-router-dom';
 
 export default function Home() {
+
 
     return (
         <>
@@ -43,9 +45,9 @@ export default function Home() {
                             </div>
                         </div>
                         <div className={`${styles.texte} shadow`}>
-                            <p>Dès votre inscription, qui se fait dans nos bureaux, vous avez accès aux cours d’<span className='bold'>éducation</span> par niveau.</p>
-                            <p>Si vous le souhaitez, nous proposons également la pratique d’activités cynophiles : l’<span className='bold'>agility</span> et l’<span className='bold'>obérythmée</span>.</p>
-                            <p>Pour finir, vous avez la possibilité de participer à des <span className='bold'>balades organisées</span>, sur une demi-journée ou la journée complète, sous réservation.</p>
+                            <p>Dès votre inscription, qui se fait dans nos bureaux, vous avez accès aux cours d’<NavLink to="/Education" style={{display: 'inline' }}><span className='bold'>éducation</span></NavLink> par niveau.</p>
+                            <p>Si vous le souhaitez, nous proposons également la pratique d’activités cynophiles : l’<NavLink to="/Agility" style={{display: 'inline' }}><span className='bold'>agility</span></NavLink>  et l’<NavLink to="/DogDance" style={{display: 'inline' }}><span className='bold'>obérythmée</span></NavLink>.</p>
+                            <p>Pour finir, vous avez la possibilité de participer à des <NavLink to="/Walk" style={{ transition: '0.2s all', display: 'inline' }}><span className='bold'>balades organisées</span></NavLink>, sur une demi-journée ou la journée complète, sous réservation.</p>
                         </div>
 
 
@@ -57,7 +59,7 @@ export default function Home() {
                             <p>Nous disposons de grands espaces verts qui nous permettent de pratiquer les différentes activités citées précédemment. </p>
                             <div className={`${styles.infos}`}>
                                 <i class="fa-solid fa-location-dot"></i>
-                                <p  className={`${styles.adresse}`}>
+                                <p className={`${styles.adresse}`}>
                                     <span>Rue de l'Université</span>
                                     <span>62400 Verquigneul</span>
                                 </p>
@@ -76,7 +78,7 @@ export default function Home() {
                             <h2 className='titreArticle'>Où nous trouver ?</h2>
                             <div className={`${styles.image} shadow`}>
 
-                                <Map/>
+                                <Map />
                             </div>
                         </div>
                     </article>

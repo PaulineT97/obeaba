@@ -12,6 +12,7 @@
     left: 0;
     background-color: rgba(0, 0, 0, .3);
 }
+
 .overlayText {
     position: absolute;
     width: 100%;
@@ -21,11 +22,25 @@
     background-color: rgba(186, 206, 193, .7);
     border-radius: 1.8em;
 }
+
 .relative {
     position: relative;
 }
 
+.center {
+    text-align: center;
+}
+
+
 main {
+    a {
+        transition: 0.2s all;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
     background-color: var(--backColor);
     display: flex;
     flex-direction: column;
@@ -36,6 +51,7 @@ main {
     aside {
         width: 60%;
         font-size: 1.5rem;
+        text-align: center;
     }
 
     .titreArticle {
@@ -64,17 +80,6 @@ main {
         -webkit-text-stroke: .05rem var(--stroke);
     }
 
-    button {
-        cursor: pointer;
-        margin: 5% auto;
-        padding: 2% 8%;
-        font-family: var(--satisfy);
-        font-size: 1.5rem;
-        background-color: var(--orange);
-        border-radius: .8rem;
-        border: none;
-        box-shadow: 4px 4px 4px 0px rgba(29, 49, 36, 0.25) inset;
-    }
 
     select {
         cursor: pointer;
@@ -127,4 +132,9 @@ main {
         margin-right: 3%;
     }
 
+    // .active {
+    //     i{
+    //         font-size: 1.8rem;
+    //     }
+    // }
 }

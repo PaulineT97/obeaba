@@ -1,69 +1,85 @@
 import React from 'react'
 import HeadProfile from "../../Assets/Images/headerMonCompte.jpg";
 import styles from "./Profile.module.scss";
-import { useState } from 'react';
-import Infos from "./Infos";
-import Login from "./Login";
-import Register from "./Register";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Profile() {
 
-  const [seeComponent, setSeeComponent] = useState(0);
-  const [user, setUser] = useState(null);
-  
-  function seeRegisterForm() {
-    setSeeComponent(1);
-  }
+  const [feedback, setFeedBack] = useState("");
+  const [feedbackGood, setFeedBackGood] = useState("");
+  const navigate = useNavigate();
 
-  function seeLoginForm() {
-    setSeeComponent();
-  }
+  const { user } = useContext(AuthContext);
+  const {logout} = useContext(AuthContext);
 
-  function toggleLogin() {
-    setSeeComponent(2);
-  }
+  const yupSchema = yup.object({
+    email: yup
+      .string()
+      .required("Le champ est obligatoire")
+      .email("Vous devez saisir un email valide"),
+    password: yup
+      .string()
+      .required("Le champ est obligatoire")
+      .min(5, "Mot de passe trop court")
+      .max(10, "Mot de passe trop long"),
+  });
 
-  function logout() {
-    setSeeComponent();
-    setUser(null);
-  }
-  
-function getUser(userLogged) {
-  setUser(userLogged);
-}
-  
+  const defaultValues = {
+    password: "",
+    email: "",
+    avatar: "",
+  };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+    mode: "onChange",
+    resolver: yupResolver(yupSchema),
+  });
+
   return (
     <>
       < div style={{ backgroundImage: `url(${HeadProfile})` }} className={`${styles.banniere}`}>
-      <div className='overlay' ></div>
+        <div className='overlay' ></div>
         <h1 className='titreBanniere'>Mon compte</h1>
       </div >
 
       <main>
-      <div>
-      {user ? (
-        <ul>
-            <button style={{display:'flex', alignItems:'center'}} onClick={logout} className={`mr10 btn btn-primary-reverse`}>
-                <i style={{marginRight:'5%'}} className="fas fa-right-to-bracket"></i>
-                <span>Déconnexion</span>
-            </button>
-        </ul>
-            ): (
-                <ul style={{display:'flex'}}>
-                <button style={{display:'flex', alignItems:'center', marginRight:'10%'}} onClick={seeRegisterForm} className={`mr10 btn btn-primary`}>
-                    <i style={{marginRight:'5%'}} className="fa-solid fa-user"></i>
-                    <span>Inscription</span>
-                </button>
-
-                <button style={{display:'flex', alignItems:'center'}} onClick={seeLoginForm} className={`mr10 btn btn-primary-reverse`}>
-                    <i style={{marginRight:'5%'}} className="fas fa-right-to-bracket"></i>
-                    <span>Connexion</span>
-                </button>
-            </ul>
-            )}
-      </div>
-        {seeComponent === 1 ? (<Register seeLoginForm={seeLoginForm} />) : 
-        seeComponent === 2 ? (<Infos user={user}/>):(<Login toggleLogin={toggleLogin} getUser={getUser}/>)}
+        <div>
+        {
+          user === null ? (
+            <>
+              <NavLink to="/" className={`mr10 btn btn-primary-reverse`}>
+                <span>Login</span>
+              </NavLink>
+              <NavLink to="register" className={`mr10 btn btn-primary-reverse`}>
+                <span>Register</span>
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink onClick={logout} to="/" className={`mr10 btn btn-primary-reverse`}>
+                <span>Logout</span>
+              </NavLink>
+              <NavLink to="profile" className={`mr10 btn btn-primary-reverse`}>
+                <span>Profile</span>
+              </NavLink>
+            </>
+          )
+        }
+        </div>
       </main>
     </>
   )

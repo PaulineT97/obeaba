@@ -14,15 +14,15 @@ export default function Footer () {
 
             <div className={`${styles.width}`}>
                 <div className={`${styles.flex}`}>
-                    <div>
+                    <div className="center">
                     <Title Titre="Infos et Actus"/>
                     <List Link1="Qui sommes nous" lien1="/" 
                     Link2="Accueillir un chien" lien2="/WelcomeDog" 
-                    Link3="Se connecter" lien3="/Profile" 
+                    Link3="Se connecter" lien3="/Forms" 
                     Link4="Newsletter" lien4="/"/>
                     </div>
                     <Paws/>
-                    <div>
+                    <div className="center">
                     <Title Titre="Nos activités"/>
                     <List Link1="Éducation" lien1="/Education" 
                     Link2="Agility" lien2="/Agility" 
@@ -30,7 +30,7 @@ export default function Footer () {
                     Link4="Balades organisées" lien4="/Walk" />
                     </div>
                     <Paws/>
-                    <div>
+                    <div className="center">
                         <div>
                             <Title Titre="Nous contacter"/>
                             <div className={`${styles.center}`}>

@@ -1,9 +1,12 @@
 import React from 'react'
-import styles from "./Profile.module.scss";
+import styles from "./Forms.module.scss";
+// import HeadProfile from "../../Assets/Images/headerMonCompte.jpg";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from 'react';
+import Button from '../../Components/button/Button';
+import { NavLink } from 'react-router-dom';
 
 
 export default function Login({ toggleLogin, getUser }) {
@@ -82,36 +85,30 @@ export default function Login({ toggleLogin, getUser }) {
 
     // --- --- --- --- --->   R E T U R N   <--- --- --- --- --- //
     return (
-        <div className={`dFlex flexColumn justifyContentCenter alignItemsCenter mb20 ${styles.appContainer}`}>
+        <form onSubmit={handleSubmit(submit)} className="">
 
-            <form onSubmit={handleSubmit(submit)} className="dFlex flexColumn card p20 mb20">
+            <div className={styles.oneInput}>
+                <label htmlFor="email">Adresse mail</label>
+                <input {...register("email")} type="text" id="email" />
 
-                <div className="dFlex flexColumn mb20">
-                    <label htmlFor="email">Adresse mail</label>
-                    <input {...register("email")} type="text" id="email" />
+                {errors?.email && (
+                    <p style={{ color: "red" }}> {errors.email.message} </p>
+                )}
+            </div>
 
-                    {errors?.email && (
-                        <p style={{ color: "red" }}> {errors.email.message} </p>
-                    )}
-                </div>
+            <div className={styles.oneInput}>
+                <label htmlFor="motdepasse">Mot de passe</label>
+                <input {...register("motdepasse")} type="password" id="motdepasse" />
 
-                <div className="dFlex flexColumn mb20">
-                    <label htmlFor="motdepasse">Mot de passe</label>
-                    <input {...register("motdepasse")} type="password" id="motdepasse" />
+                {errors?.motdepasse && (
+                    <p style={{ color: "red" }}> {errors.motdepasse.message} </p>
+                )}
+            </div>
 
-                    {errors?.motdepasse && (
-                        <p style={{ color: "red" }}> {errors.motdepasse.message} </p>
-                    )}
-                </div>
+            {feedback && <p className={`mb10 mt20 ${styles.feedback}`}>{feedback}</p>}
 
-                {feedback && <p className={`mb10 mt20 ${styles.feedback}`}>{feedback}</p>}
-
-                {feedbackGood && <p className={`mb10 mt20 ${styles.feedbackGood}`}>{feedbackGood}</p>}
-
-                <div className="dFlex justifyContentCenter">
-                    <button className="btn btn-primary">Voir mon profil</button>
-                </div>
-            </form>
-        </div>
+            {feedbackGood && <p className={`mb10 mt20 ${styles.feedbackGood}`}>{feedbackGood}</p>}
+            <Button content="Voir mon profil" className={styles.send} />
+        </form>
     )
 }

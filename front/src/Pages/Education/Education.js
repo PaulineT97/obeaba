@@ -1,6 +1,7 @@
 import React from 'react'
 import HeadEduc from "../../Assets/Images/headerEducation.jpg";
 import styles from "./Education.module.scss";
+import Button from '../../Components/button/Button';
 // import Slider from './carrousel/Carrousel';
 
 export default function Education() {
@@ -17,14 +18,14 @@ export default function Education() {
                 <aside> Notre objectif est d'enseigner à l’humain comme au chien, les comportements et les compétences nécessaires pour établir au sein de votre binôme une communication claire et un lien de confiance. Nous utilisons la méthode positive qui repose sur la récompense. </aside>
 
                 <div className={`${styles.educateurs}`}>
-                    <h2 className='titreOrange'><i className="fa-solid fa-dog Orange"></i> Nos éducateurs</h2>
+                    <h2 className='titreOrange center'><i className="fa-solid fa-dog Orange"></i> Nos éducateurs</h2>
                     
                     {/* <Slider /> */}
 
                 </div>
 
                 <section>
-                    <h2 className='titreOrange'> <i className="fa-solid fa-dog Orange"></i> Les cours </h2>
+                    <h2 className='titreOrange center'> <i className="fa-solid fa-dog Orange"></i> Les cours </h2>
                     <p className={`${styles.intro}`}>Selon le niveau et la modalité de cours, nous proposons des créneaux d’éducation les lundi, mardi, jeudi et vendredi soirs ainsi que le samedi après-midi.</p>
 
                     <div className={`${styles.flex} ${styles.rowReverse}`}>
@@ -34,7 +35,7 @@ export default function Education() {
                                 <div className='overlayText'></div>
                                 <div className='relative'>
                                     <p>Vous pouvez déjà retrouver nos conseils pour préparer  l’arrivée de votre compagnon, sur notre page “Un chien à la maison”.</p>
-                                    <button>Découvrir nos conseils</button>
+                                    <Button content= "découvrir nos conseils" />
                                 </div>
 
                             </div>
@@ -72,7 +73,7 @@ export default function Education() {
                                         <li>votre compagnon est  <span className='bold'>réactif</span> avec les humains  et / ou ses congénaires</li>
                                     </ul>
                                     <p>Nous étudions ensemble votre besoin et vous proposons un planning adapté.</p>
-                                    <button>Réserver un créneau</button>
+                                    <Button content = "Réserver un créneau"/>
                                 </div>
                             </div>
                         </article>
@@ -102,7 +103,7 @@ export default function Education() {
                                         <li>marcher en laisse</li>
                                     </ul>
                                     <p>Certains objectifs sont travaillés dès le premier niveau mais il n’est pas attendu du chien qu’ils soient “acquis”.</p>
-                                    <button>Inscrire mon chien</button>
+                                    <Button content = "Inscrire mon chien"/>
                                 </div>
                             </div>
                         </article>

@@ -8,7 +8,7 @@ export default function Header() {
             <div className={`${styles.navbar}`}>
                 <nav>
                     <ul>
-                        <li><NavLink className={`${styles.lien}`} to="/Profile">Mon compte</NavLink></li>
+                        <li><NavLink className={`${styles.lien}`} to="/Forms">Mon compte</NavLink></li>
                         <li><NavLink className={`${styles.lien}`} to="/WelcomeDog">Accueillir un chien</NavLink></li>
                         <li><NavLink className={`${styles.lien}`} to="/Education">Education</NavLink></li>
                         <li><NavLink end to="/"><div className={`${styles.logoWidth}`}>
