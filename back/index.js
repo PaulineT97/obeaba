@@ -1,11 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-// const cookie = require("cookie-parser");
+const cookie = require("cookie-parser");
 
 app.use(express.json());
 app.use(bodyParser.json());
-// app.use(cookie());
+app.use(cookie());
 
 // --- --- ---> C O N S T A N T E S <--- --- --- //
 const port = 8000;
