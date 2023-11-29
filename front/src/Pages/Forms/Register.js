@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./Forms.module.scss";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from 'react';
 import Button from '../../Components/button/Button';
-// import Activities from "./activities";
+import { useNavigate } from 'react-router-dom';
+import { createUser } from "../../apis/users";
 
-export default function Register({ seeLoginForm }) {
 
+export default function Register() {
+    const [feedback, setFeedback] = useState("");
+    const [feedbackGood, setFeedbackGood] = useState("");
+    const navigate = useNavigate();
 
     const yupSchema = yup.object({
         nom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
@@ -27,23 +30,29 @@ export default function Register({ seeLoginForm }) {
         motdepasse: "",
         confirmMdp: "",
         cgu: "",
-        chien: "",
+        chiens: "",
     };
 
-    //isSubmitted permet de ne valider qu'une fois le formulaire
-    const { register, handleSubmit, control, reset, formState: { errors, isSubmitting }, } = useForm({
+    const {
+        register,
+        handleSubmit,
+        reset,
+        control,
+        getValues,
+        formState: { errors },
+        setError,
+        clearErrors,
+    } = useForm({
         defaultValues,
         mode: "onChange",
         resolver: yupResolver(yupSchema),
     });
 
     const { fields, append, remove } = useFieldArray({
-        name: "chien",
+        name: "chiens",
         control,
     })
 
-    const [feedback, setFeedback] = useState();
-    const [feedbackGood, setFeedbackGood] = useState();
 
     function addChien() {
         append({
@@ -57,36 +66,55 @@ export default function Register({ seeLoginForm }) {
         remove(id);
     }
 
-    async function submit(values) {
+    async function submit() {
+        // console.log("Submitting form with values:");
         setFeedback("");
+        const values = getValues();
+        const formData = new FormData();
+    
+        // Ajoutez chaque champ individuellement à FormData
+        formData.append("nom", values.nom);
+        formData.append("prenom", values.prenom);
+        formData.append("email", values.email);
+        formData.append("password", values.password);
+    
+        // Assurez-vous que values.chien existe avant d'ajouter des champs spécifiques du chien
+        if (values.chiens) {
+            formData.append("chiens", values.chiens);
+    
+            // Ajoutez les champs spécifiques du chien
+            formData.append("nomChien", values.chiens.nomChien);
+            formData.append("naissance", values.chiens.naissance);
+            formData.append("race", values.chiens.race);
+        }
+    
+        // Console.log pour vérifier le contenu de FormData
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+    
         try {
-            const response = await fetch("http://localhost:8000/api/users/register", {
-                method: "POST",
-                body: JSON.stringify(values),
-                headers: { "Content-type": "application/json" }
-            })
-            console.log(values);
-            if (response.ok) {
-                const userBack = await response.json();
-                if (userBack.message) {
-                    setFeedback(userBack.message)
-                } else {
-                    setFeedbackGood(userBack.messageGood);
-                    reset(defaultValues);
-                    setTimeout(() => {
-                        seeLoginForm();
-                    }, 1500)
-                }
+            const newUser = await createUser(formData);
+    
+            if (newUser.message) {
+                setFeedback(newUser.message);
+            } else {
+                setFeedbackGood(newUser.messageGood);
+                reset(defaultValues);
+                setTimeout(() => {
+                    navigate("/Form");
+                }, 2000);
             }
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
     }
+    
 
 
     return (
 
-        <form onSubmit={handleSubmit(submit)} action="">
+        <form onSubmit={handleSubmit(submit)} >
 
             {/* --- --- --- --- ---> I N P U T . N A M E . A V E C . L A B E L  <--- --- --- --- --- */}
             <div className={styles.oneInput}>
@@ -143,7 +171,7 @@ export default function Register({ seeLoginForm }) {
             <div>
                 <label className={styles.add} htmlFor="chien" >
                     <span className='titreArticle'>Ajouter un chien</span>
-                    <Button className={styles.btn} content=" + " onClick={addChien} />
+                    <Button className={styles.btn} content=" + " onClick={addChien} type="button" />
                 </label>
 
                 <ul>
@@ -179,7 +207,7 @@ export default function Register({ seeLoginForm }) {
                                 )}
                             </div>
 
-                            <Button className={styles.btn} onClick={() => deleteChien(index)} content="-" />
+                            <Button className={styles.btn} onClick={() => deleteChien(index)} content="-" type="button" />
 
                         </li>
                     ))}
@@ -210,7 +238,9 @@ export default function Register({ seeLoginForm }) {
 
             {/* --- --- --- --- ---> B U T T O N <--- --- --- --- --- */}
 
-            <Button disabled={isSubmitting} content="Finaliser l'inscription"/>
+            {/* <Button content="Finaliser l'inscription" /> */}
+
+            <button> Finaliser l'inscription </button>
 
         </form>
 

@@ -5,11 +5,12 @@ export async function getConnectedUser() {
     const userC = await response.json();
     console.log(userC);
     return userC;
-  }
+}
 
 
 
 export async function createUser(newUser) {
+    console.log("Sending request to register:", newUser);
     const response = await fetch(`${API_USERS}/register`, {
         method: "POST",
         headers: {
@@ -20,11 +21,13 @@ export async function createUser(newUser) {
     const backResponse = await response.json();
     if (response.ok) {
         console.log(backResponse);
+        return backResponse;
     } else {
         if (backResponse) {
             throw backResponse;
         } else {
-            throw new Error("Error API create User");
+            console.error('Error API create User:');
+            throw new Error('Unexpected error');
         }
     }
 }

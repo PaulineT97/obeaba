@@ -2,7 +2,8 @@ import React from 'react'
 import HeadEduc from "../../Assets/Images/headerEducation.jpg";
 import styles from "./Education.module.scss";
 import Button from '../../Components/button/Button';
-// import Slider from './carrousel/Carrousel';
+import { NavLink } from 'react-router-dom';
+import Slider from './Carrousel';
 
 export default function Education() {
     return (
@@ -20,7 +21,7 @@ export default function Education() {
                 <div className={`${styles.educateurs}`}>
                     <h2 className='titreOrange center'><i className="fa-solid fa-dog Orange"></i> Nos éducateurs</h2>
                     
-                    {/* <Slider /> */}
+                    <Slider />
 
                 </div>
 
@@ -35,7 +36,8 @@ export default function Education() {
                                 <div className='overlayText'></div>
                                 <div className='relative'>
                                     <p>Vous pouvez déjà retrouver nos conseils pour préparer  l’arrivée de votre compagnon, sur notre page “Un chien à la maison”.</p>
-                                    <Button content= "découvrir nos conseils" />
+                                    <NavLink to="/WelcomeDog">
+                                    <Button content= "découvrir nos conseils" /></NavLink>
                                 </div>
 
                             </div>

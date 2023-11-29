@@ -3,12 +3,16 @@ import Paws from "./Paws";
 import List from "./List";
 import Title from "./Title";
 import Contact from "../contact/Contact";
+import { NavLink } from "react-router-dom";
 
 export default function Footer () {
     // const Nav = ({Title, Link1, Link2, Link3, Link4}) => ()
     return(
         <footer className={`${styles.footer}`}>
-         <Contact/>
+            <NavLink to="/ContactUs">
+                <Contact/>
+            </NavLink>
+         
 
 {/* PARTIE NAVIGATION */}
 
@@ -57,7 +61,7 @@ export default function Footer () {
 {/* PARTIE MENTIONS LEGALES */}
 
             <div className={`${styles.mentionsLegales}`}>
-                <p>© 2023 | mentions légales | CGU | CGV | politique de confidentialité</p>
+                <p>© 2023 | <NavLink to="/MentionsLegales" style={{display: 'inline' }}>mentions légales</NavLink>  | <NavLink to="/CGU" style={{display: 'inline' }}>CGU</NavLink> | <NavLink to="/Cookies" style={{display: 'inline' }}>politique de confidentialité</NavLink></p>
             </div>
 
         </footer>

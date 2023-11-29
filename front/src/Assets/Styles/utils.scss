@@ -31,15 +31,19 @@
     text-align: center;
 }
 
+i.logged{
+    font-size: 2rem;
+}
+
 
 main {
-    a {
-        transition: 0.2s all;
+    // a {
+    //     transition: 0.4s all;
 
-        &:hover {
-            transform: scale(1.05);
-        }
-    }
+    //     &:hover {
+    //         transform: scale(1.05);
+    //     }
+    // }
 
     background-color: var(--backColor);
     display: flex;

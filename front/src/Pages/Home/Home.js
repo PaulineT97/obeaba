@@ -58,18 +58,18 @@ export default function Home() {
                         <div className={`${styles.texte} shadow`}>
                             <p>Nous disposons de grands espaces verts qui nous permettent de pratiquer les différentes activités citées précédemment. </p>
                             <div className={`${styles.infos}`}>
-                                <i class="fa-solid fa-location-dot"></i>
+                                <i className="fa-solid fa-location-dot"></i>
                                 <p className={`${styles.adresse}`}>
                                     <span>Rue de l'Université</span>
                                     <span>62400 Verquigneul</span>
                                 </p>
                             </div>
                             <div className={`${styles.infos}`}>
-                                <i class="fa-solid fa-phone"></i>
+                                <i className="fa-solid fa-phone"></i>
                                 <p>06 00 00 00 00</p>
                             </div>
                             <div className={`${styles.infos}`}>
-                                <i class="fa-solid fa-envelope"></i>
+                                <i className="fa-solid fa-envelope"></i>
                                 <p>obeaba@fauxmail.com</p>
                             </div>
 

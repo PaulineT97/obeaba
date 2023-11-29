@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Outlet, 
   // useLoaderData
  } from "react-router-dom";
+import AuthProvider from "./Components/authProvider/AuthProvider"
 
 
 function App() {
@@ -14,11 +15,13 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Suspense>
-        <Outlet />
-      </Suspense>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <Suspense>
+          <Outlet />
+        </Suspense>
+        <Footer />
+      </AuthProvider>
     </div>
   );
 }

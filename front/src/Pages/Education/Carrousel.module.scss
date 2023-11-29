@@ -1,0 +1,23 @@
+.carrouselContainer {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+  }
+  
+  .carrouselSlider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carrouselSlide {
+    flex: 0 0 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    opacity: 0.8;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .carrouselSlideActive {
+    opacity: 1;
+  }

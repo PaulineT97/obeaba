@@ -9,19 +9,22 @@ const Forms = lazy(() => import("./Pages/Forms/Forms"));
 const Register = lazy(() => import("./Pages/Forms/Register"));
 const Login = lazy(() => import("./Pages/Forms/Login"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
-const Infos = lazy(() => import("./Pages/Profile/Infos"));
+// const Infos = lazy(() => import("./Pages/Profile/Infos"));
 const WelcomeDog = lazy(() => import("./Pages/WelcomeDog/WelcomeDog"));
 const Education = lazy(() => import("./Pages/Education/Education"));
 const Agility = lazy(() => import("./Pages/Agility/Agility"));
 const DogDance = lazy(() => import("./Pages/DogDance/DogDance"));
 const Walk = lazy(() => import("./Pages/Walk/Walk"));
+const ContactUs = lazy(() => import("./Pages/Forms/ContactForm"));
+const MentionsLegales = lazy(() => import("./Components/legalContent/MentionsLegales"));
+const CGU = lazy(() => import("./Components/legalContent/CGU"));
 
 
 export const Router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
-        // loader: userLoader,
+        loader: userLoader,
         errorElement: <ErrorPage />,
         children: [
             {
@@ -69,6 +72,18 @@ export const Router = createBrowserRouter([
             {
                 path: "/Walk",
                 element: <Walk />,
+            },
+            {
+                path:"/ContactUs",
+                element: <ContactUs />,
+            },
+            {
+                path:"/MentionsLegales",
+                element: <MentionsLegales />,
+            },
+            {
+                path:"/cgu",
+                element: <CGU />,
             }
         ]
     },
