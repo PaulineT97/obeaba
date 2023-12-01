@@ -1,13 +1,5 @@
 const API_USERS = "/api/users";
 
-export async function getConnectedUser() {
-    const response = await fetch(`${API_USERS}/userConnected`);
-    const userC = await response.json();
-    console.log(userC);
-    return userC;
-}
-
-
 
 export async function createUser(newUser) {
     console.log("Sending request to register:", newUser);
@@ -17,6 +9,29 @@ export async function createUser(newUser) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(newUser),
+    });
+    const backResponse = await response.json();
+    if (response.ok) {
+        console.log(backResponse);
+        return backResponse;
+    } else {
+        if (backResponse) {
+            throw backResponse;
+        } else {
+            console.error('Error API create User:');
+            throw new Error('Unexpected error');
+        }
+    }
+}
+
+export async function updateUser(values) {
+    console.log("Sending request to register:", values);
+    const response = await fetch(`${API_USERS}/update`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
     });
     const backResponse = await response.json();
     if (response.ok) {
@@ -50,6 +65,12 @@ export async function signin(values) {
             throw new Error("Error API login");
         }
     }
+}
+
+export async function getConnectedUser() {
+    const response = await fetch(`${API_USERS}/userConnected`);
+    const user = await response.json();
+    return user;
 }
 
 export async function signout() {

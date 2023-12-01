@@ -9,10 +9,11 @@ router.get("/allEducateurs", (req, res) => {
                 console.log(err);
                 res.status(500).json({ error: "Internal Server Error" });
                 return;
-            }
+            } else {
             const data = result;
             console.log(data);
             res.json(data);
+            }
         });
     } catch (error) {
         console.log(error);

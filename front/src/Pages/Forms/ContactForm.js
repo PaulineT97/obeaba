@@ -12,7 +12,7 @@ export default function ContactForm() {
     motif: "",
   }
   const yupSchema = yup.object({
-    email: yup.string().email("Ce mail n'est pas valide"),
+    email: yup.string().matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Votre email n'est pas valide"),
     motif: yup.string().required("Motif obligatoire"),
   });
 
@@ -35,7 +35,7 @@ export default function ContactForm() {
         <h2 className='titreOrange'><i className="fa-solid fa-file-pen Orange"></i> Nous contacter</h2>
 
         <form onSubmit={handleSubmit(submit)} >
-          <div className={styles.oneInput}>
+          <div className='oneInput'>
             <label htmlFor="email">Adresse mail</label>
             <input {...register("email")} type="email" id="email" required />
 
@@ -44,11 +44,11 @@ export default function ContactForm() {
             )}
           </div>
 
-          <div className={`${styles.oneInput}`}>
+          <div className='oneInput'>
             <label htmlFor="motif">Expliquez votre demande</label>
-            <input className={styles.motif} type="text" id="motif" maxLength={500} placeholder='...' required />
+            <textarea className='motif' type="text" id="motif" maxLength={500} placeholder='   . . .' required />
           </div>
-          <Button content="Envoyer votre demande" className={styles.send} />
+          <Button content="Envoyer votre demande" className='send' />
         </form >
 
       </div>

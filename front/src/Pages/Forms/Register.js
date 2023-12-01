@@ -7,8 +7,10 @@ import Button from '../../Components/button/Button';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from "../../apis/users";
 
-
 export default function Register() {
+
+    //ANCHOR - Constantes
+
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
     const navigate = useNavigate();
@@ -16,11 +18,11 @@ export default function Register() {
     const yupSchema = yup.object({
         nom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
         prenom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
-        email: yup.string().required(" champ obligatoire").email("ce mail n'est pas valide"),
+        email: yup.string().required(" champ obligatoire").matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Votre email n'est pas valide"),
         motdepasse: yup.string().required("Mot de passe obligatoire").min(5, "mot de passe trop court").max(10, "mot de passe trop long"),
         confirmMdp: yup.string().required("vous devez confirmer votre mdp").oneOf([yup.ref("motdepasse", ""), "les mots de passe doivent être identiques"]),
         cgu: yup.boolean().required("vous devez accepter les CGU"),
-        nomChien: yup.string().required(" champ obligatoire"),
+        // nomChien: yup.string().required(" champ obligatoire"),
     });
 
     const defaultValues = {
@@ -40,7 +42,6 @@ export default function Register() {
         control,
         getValues,
         formState: { errors },
-        setError,
         clearErrors,
     } = useForm({
         defaultValues,
@@ -53,6 +54,7 @@ export default function Register() {
         control,
     })
 
+    //ANCHOR - Fonctions 
 
     function addChien() {
         append({
@@ -69,47 +71,50 @@ export default function Register() {
     async function submit() {
         // console.log("Submitting form with values:");
         setFeedback("");
+        clearErrors();
         const values = getValues();
         const formData = new FormData();
-    
+
         // Ajoutez chaque champ individuellement à FormData
         formData.append("nom", values.nom);
         formData.append("prenom", values.prenom);
         formData.append("email", values.email);
-        formData.append("password", values.password);
-    
-        // Assurez-vous que values.chien existe avant d'ajouter des champs spécifiques du chien
+        formData.append("motdepasse", values.motdepasse);
+
         if (values.chiens) {
-            formData.append("chiens", values.chiens);
-    
-            // Ajoutez les champs spécifiques du chien
-            formData.append("nomChien", values.chiens.nomChien);
-            formData.append("naissance", values.chiens.naissance);
-            formData.append("race", values.chiens.race);
+            // formData.append("chiens", values.chiens);
+            values.chiens.forEach((c, index) => {
+                formData.append("nomChien", values.chiens[index].nomChien);
+                formData.append("naissance", values.chiens[index].naissance);
+                formData.append("race", values.chiens[index].race);
+            })
+
         }
-    
+
         // Console.log pour vérifier le contenu de FormData
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-    
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0] + ', ' + pair[1]);
+        // }
+
+        
+
         try {
-            const newUser = await createUser(formData);
-    
+            console.log(values);
+            const newUser = await createUser(values);
+            	console.log(newUser);
             if (newUser.message) {
                 setFeedback(newUser.message);
             } else {
                 setFeedbackGood(newUser.messageGood);
                 reset(defaultValues);
                 setTimeout(() => {
-                    navigate("/Form");
+                    navigate("/Forms");
                 }, 2000);
             }
         } catch (error) {
             console.error(error);
         }
     }
-    
 
 
     return (
@@ -117,7 +122,7 @@ export default function Register() {
         <form onSubmit={handleSubmit(submit)} >
 
             {/* --- --- --- --- ---> I N P U T . N A M E . A V E C . L A B E L  <--- --- --- --- --- */}
-            <div className={styles.oneInput}>
+            <div className="oneInput">
                 <label htmlFor="nom">Nom</label>
                 <input {...register("nom")} type="text" id="nom" />
 
@@ -127,7 +132,7 @@ export default function Register() {
             </div>
 
             {/* --- --- --- --- ---> I N P U T . F I R S T N A M E . A V E C . L A B E L  <--- --- --- --- --- */}
-            <div className={styles.oneInput}>
+            <div className="oneInput">
                 <label htmlFor="prenom">Prénom</label>
                 <input {...register("prenom")} type="text" id="prenom" />
 
@@ -137,7 +142,7 @@ export default function Register() {
             </div>
 
             {/* --- --- --- --- ---> I N P U T . E M A I L . A V E C . L A B E L  <--- --- --- --- --- */}
-            <div className={styles.oneInput}>
+            <div className="oneInput">
                 <label htmlFor="email">Adresse mail</label>
                 <input {...register("email")} type="text" id="email" />
 
@@ -147,7 +152,7 @@ export default function Register() {
             </div>
 
             {/* --- --- --- --- ---> I N P U T . P A S S W O R D . A V E C . L A B E L  <--- --- --- --- --- */}
-            <div className={styles.oneInput}>
+            <div className="oneInput">
                 <label htmlFor="motdepasse">Mot de passe</label>
                 <input {...register("motdepasse")} type="password" id="motdepasse" />
 
@@ -157,7 +162,7 @@ export default function Register() {
             </div>
 
             {/* --- --- --- --- ---> I N P U T . C O N F I R M . P A S S W O R D . A V E C . L A B E L  <--- --- --- --- --- */}
-            <div className={styles.oneInput}>
+            <div className="oneInput">
                 <label htmlFor="confirmMdp">Confirmez votre mot de passe</label>
                 <input {...register("confirmMdp")} type="password" id="confirmMdp" />
 
@@ -169,18 +174,18 @@ export default function Register() {
 
             {/* --- --- --- --- ---> I N P U T . D O G S . A V E C . L A B E L  <--- --- --- --- --- */}
             <div>
-                <label className={styles.add} htmlFor="chien" >
+                <label className="add" htmlFor="chien" >
                     <span className='titreArticle'>Ajouter un chien</span>
-                    <Button className={styles.btn} content=" + " onClick={addChien} type="button" />
+                    <Button className="btn" content=" + " onClick={addChien} type="button" />
                 </label>
 
                 <ul>
-                    {fields.map((dog, index) => (
-                        <li key={dog.idDog}>
+                    {fields.map((c, index) => (
+                        <li key={c.id}>
                             {/* ---> NOM - DU - CHIEN <--- */}
-                            <div className={styles.oneInput}>
+                            <div className="oneInput">
                                 <label htmlFor="nomChien">Nom du chien</label>
-                                <input {...register("nomChien")} type="text" id="nomChien" />
+                                <input {...register(`chiens.[${index}].nomChien`)} type="text" id="nomChien" />
 
                                 {errors?.nomChien && (
                                     <p style={{ color: "red" }}> {errors.nomChien.message} </p>
@@ -188,9 +193,9 @@ export default function Register() {
                             </div>
 
                             {/* ---> DATE - DE - NAISSANCE <--- */}
-                            <div className={styles.oneInput}>
+                            <div className="oneInput">
                                 <label htmlFor="naissance">Date de naissance</label>
-                                <input {...register("naissance")} type="date" id="naissance" />
+                                <input {...register(`chiens.[${index}].naissance`)} type="date" id="naissance" />
 
                                 {errors?.naissance && (
                                     <p style={{ color: "red" }}> {errors.naissance.message} </p>
@@ -198,16 +203,16 @@ export default function Register() {
                             </div>
 
                             {/* ---> RACE - DU - CHIEN <--- */}
-                            <div className={styles.oneInput}>
+                            <div className="oneInput">
                                 <label htmlFor="race">Race</label>
-                                <input {...register("race")} type="text" id="race" />
+                                <input {...register(`chiens.[${index}].race`)} type="text" id="race" />
 
                                 {errors?.race && (
                                     <p style={{ color: "red" }}> {errors.race.message} </p>
                                 )}
                             </div>
 
-                            <Button className={styles.btn} onClick={() => deleteChien(index)} content="-" type="button" />
+                            <Button className="btn" onClick={() => deleteChien(index)} content="-" type="button" />
 
                         </li>
                     ))}
@@ -227,7 +232,7 @@ export default function Register() {
 
 
             {/* --- --- --- --- ---> I N P U T . C G U  <--- --- --- --- --- */}
-            <div className={styles.cgu}>
+            <div className="cgu">
                 <label htmlFor="cgu">J'ai lu et j'accepte les conditions générales d'utilisation</label>
                 <input {...register("cgu")} type="checkbox" id="cgu" />
 
@@ -238,9 +243,7 @@ export default function Register() {
 
             {/* --- --- --- --- ---> B U T T O N <--- --- --- --- --- */}
 
-            {/* <Button content="Finaliser l'inscription" /> */}
-
-            <button> Finaliser l'inscription </button>
+            <Button content="Finaliser l'inscription" />
 
         </form>
 

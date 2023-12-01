@@ -9,12 +9,13 @@ const Forms = lazy(() => import("./Pages/Forms/Forms"));
 const Register = lazy(() => import("./Pages/Forms/Register"));
 const Login = lazy(() => import("./Pages/Forms/Login"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
-// const Infos = lazy(() => import("./Pages/Profile/Infos"));
 const WelcomeDog = lazy(() => import("./Pages/WelcomeDog/WelcomeDog"));
 const Education = lazy(() => import("./Pages/Education/Education"));
 const Agility = lazy(() => import("./Pages/Agility/Agility"));
 const DogDance = lazy(() => import("./Pages/DogDance/DogDance"));
 const Walk = lazy(() => import("./Pages/Walk/Walk"));
+const NewPassword = lazy(() => import("./Pages/Security/NewPassword"));
+const ResetPassword = lazy(() => import("./Pages/Security/ResetPassword"));
 const ContactUs = lazy(() => import("./Pages/Forms/ContactForm"));
 const MentionsLegales = lazy(() => import("./Components/legalContent/MentionsLegales"));
 const CGU = lazy(() => import("./Components/legalContent/CGU"));
@@ -74,6 +75,14 @@ export const Router = createBrowserRouter([
                 element: <Walk />,
             },
             {
+                path: "/NewPassword",
+                element: <NewPassword />,
+            },
+            {
+                path: "/resetPassword",
+                element: <ResetPassword/>,
+            },
+            {
                 path:"/ContactUs",
                 element: <ContactUs />,
             },
@@ -84,7 +93,7 @@ export const Router = createBrowserRouter([
             {
                 path:"/cgu",
                 element: <CGU />,
-            }
+            },
         ]
     },
 ])

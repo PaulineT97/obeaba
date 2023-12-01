@@ -1,0 +1,68 @@
+form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 90%;
+
+    .oneInput {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2%;
+
+        label {
+            margin-bottom: .5%;
+        }
+
+        input,
+        textarea {
+            background-color: var(--clair);
+            border: none;
+            border-radius: .5rem;
+        }
+    }
+
+    .cgu {
+        display: flex;
+        margin: 7% 3% 3% 0;
+
+        label {
+            margin-right: 3%;
+            font-size: 1rem;
+        }
+    }
+
+    .motif {
+        width: 100%;
+        height: 8rem;
+    }
+
+    .send {
+        margin-top: 7%;
+    }
+
+    .add {
+        display: flex;
+        justify-content: center;
+
+        span {
+            font-size: 1.6rem;
+            margin-right: 3%;
+        }
+
+        .btn {
+            padding: .4rem 1rem 0;
+        }
+    }
+}
+
+.feedback {
+    color: indianred;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.feedbackGood {
+    color: seagreen;
+    font-size: 18px;
+    font-weight: 600;
+}
