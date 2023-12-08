@@ -6,6 +6,12 @@ export default function Slider() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
+        console.log('Render - currentIndex:', currentIndex);
+        console.log('Render - carouselData:', carouselData);
+    }, [currentIndex, carouselData]);
+
+    useEffect(() => {
+
         async function fetchData() {
             try {
                 const response = await fetch('http://localhost:8000/api/educators/allEducateurs');
@@ -14,14 +20,27 @@ export default function Slider() {
                 }
 
                 const dataBack = await response.json();
-                console.log(dataBack);
+                console.log("fetch data", dataBack);
 
                 // Assuming dataBack is an array of educateurs
-                const formattedData = dataBack.map(educateur => ({
-                    nom: educateur.nom,
-                    introduction: educateur.introduction,
-                    photo: educateur.photo,
+                const formattedData = await Promise.all(dataBack.map(async educateur => {
+                    if (educateur.photo && educateur.photo.data) {
+                        const blob = new Blob([new Uint8Array(educateur.photo.data)]);
+                        const imageUrl = URL.createObjectURL(blob);
+                        return {
+                            nom: educateur.nom,
+                            introduction: educateur.introduction,
+                            photo: imageUrl,
+                        };
+                    } else {
+                        return {
+                            nom: educateur.nom,
+                            introduction: educateur.introduction,
+                            photo: null, // Mettez ce que vous voulez en cas d'absence de photo
+                        };
+                    }
                 }));
+                console.log("formattedData", formattedData);
 
                 setCarouselData(formattedData);
             } catch (error) {
@@ -34,30 +53,49 @@ export default function Slider() {
 
     const goToNextSlide = () => {
         const nextIndex = (currentIndex + 1) % carouselData.length;
+        console.log('Next Index:', nextIndex);
         setCurrentIndex(nextIndex);
     };
 
     const goToPrevSlide = () => {
         const prevIndex = (currentIndex - 1 + carouselData.length) % carouselData.length;
+        console.log('Prev Index:', prevIndex);
         setCurrentIndex(prevIndex);
     };
 
+    const slideWidth = 100 / (carouselData.length);
+    const slidesToShow = 3; // Vous pouvez ajuster ce nombre selon vos besoins
+    const translateValue = -slideWidth * slidesToShow * currentIndex + '%';
+    const sliderStyle = {
+        transform: `translateX(${translateValue})`,
+    };
+
     return (
-        <div className={styles.carrouselContainer}>
-            <div className={styles.carrouselSlider}>
-                {carouselData.map((element, index) => (
-                    <div
-                        key={index}
-                        className={`${styles.carrouselSlide} ${index === currentIndex ? styles.carrouselSlideActive : ''}`}
-                    >
-                        <h2>{element.nom}</h2>
-                        <p>{element.introduction}</p>
-                        <img src={element.photo} alt={`Portrait de ${element.nom}`} />
-                    </div>
-                ))}
+        <div className={styles.allContainer}>
+            <i className="fa-solid fa-angles-left Orange" onClick={goToPrevSlide} style={{marginLeft:"2%"}}></i>
+            <div className={styles.carrouselContainer}>
+
+                <div className={styles.carrouselSlider} style={sliderStyle}>
+                    {carouselData.map((element, index) => (
+                        <div
+                            key={index}
+                            className={` slideContainer ${styles.carrouselSlide}`}
+                        >
+                            <div className="imgCarrousel"><img src={element.photo} alt={`Portrait de ${element.nom}`} /></div>
+
+                            <div className="txt">
+                                <h2>{element.nom}, </h2>
+                                <p>{element.introduction}</p>
+                            </div>
+
+
+                        </div>
+                    ))}
+                </div>
+
             </div>
-            <button onClick={goToPrevSlide}>Previous</button>
-            <button onClick={goToNextSlide}>Next</button>
+            <i className="fa-solid fa-angles-right Orange" onClick={goToNextSlide} style={{marginLeft:"4%"}}></i>
         </div>
+
     );
 };

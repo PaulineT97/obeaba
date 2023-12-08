@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/button/Button';
+import { useLocation } from 'react-router-dom';
 
 const ResetPassword = () => {
 
@@ -12,6 +13,9 @@ const ResetPassword = () => {
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const email = searchParams.get('email');
 
     const yupSchema = yup.object({
         motdepasse: yup.string().required("Mot de passe obligatoire").min(5, "mot de passe trop court").max(10, "mot de passe trop long"),
@@ -25,7 +29,6 @@ const ResetPassword = () => {
         register,
         handleSubmit,
         reset,
-        control,
         getValues,
         formState: { errors },
         clearErrors,
@@ -42,27 +45,39 @@ const ResetPassword = () => {
         clearErrors();
         const values = getValues();
         const formData = new FormData();
-
-
+        values.email = email;
         formData.append("motdepasse", values.motdepasse);
 
-        // try {
-        //     console.log(values);
-        //     // const newUser = await createUser(values);
-        //     console.log(newUser);
-        //     if (newUser.message) {
-        //         setFeedback(newUser.message);
-        //     } else {
-        //         setFeedbackGood(newUser.messageGood);
-        //         reset(defaultValues);
-        //         setTimeout(() => {
-        //             navigate("/Forms");
-        //         }, 2000);
-        //     }
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        try {
+            console.log(values);
+            const response = await fetch(`http://localhost:8000/api/users/changePassword/${values.email}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            });
+
+            if (response.ok) {
+                const updateUser = await response.json();
+                if (updateUser.message) {
+                    setFeedback(updateUser.message);
+                } else {
+                    setFeedbackGood(updateUser.messageGood);
+                    reset(defaultValues);
+                    setTimeout(() => {
+                        navigate("/Profile");
+                    }, 2000);
+                }
+            } else {
+                // Gérer les erreurs si la réponse n'est pas "ok"
+                console.error(`Erreur HTTP : ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Une erreur s'est produite lors de l'envoi de la requête :", error);
+        }
     }
+
 
     return (
         <main>

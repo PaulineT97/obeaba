@@ -20,11 +20,8 @@ main {
         flex-direction: column;
         align-items: center;
 
-        .box {
+        .texte {
             width: 50%;
-            border: solid .15rem var(--orange);
-            border-radius: 2em;
-            padding: 2% 3%;
             margin: 3% 0 5% 0;
             display: flex;
             flex-direction: column;
@@ -42,39 +39,32 @@ main {
                 align-items: center;
                 margin-bottom: 5%;
 
-
-                .sup {
-                    width: 45%;
-                    display: flex;
-                    align-items: center;
-
-                    i {
-                        margin: 5%;
-                    }
-
-                    p {
-                        font-size: 1.1rem;
-                        font-style: italic;
-                    }
-                }
-                .button{
+                .button {
                     width: 45%;
                 }
 
             }
         }
 
+        .sup {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            i {
+                margin: 5%;
+            }
+
+            p {
+                font-size: 1.1rem;
+                font-style: italic;
+            }
+        }
+        .ul{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
     }
 }
 
-.feedback {
-    color: indianred;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.feedbackGood {
-    color: seagreen;
-    font-size: 18px;
-    font-weight: 600;
-}

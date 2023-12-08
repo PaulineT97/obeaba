@@ -1,14 +1,13 @@
-const API_USERS = "/api/users";
+const API_DOGS = "/api/dogs";
 
-
-export async function createUser(newUser) {
-    console.log("Sending request to register:", newUser);
-    const response = await fetch(`${API_USERS}/register`, {
+export async function addDogs(newDog) {
+    console.log("Sending request to add a dog:", newDog);
+    const response = await fetch(`${API_DOGS}/addDog`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(newDog),
     });
     const backResponse = await response.json();
     if (response.ok) {
@@ -18,20 +17,20 @@ export async function createUser(newUser) {
         if (backResponse) {
             throw backResponse;
         } else {
-            console.error('Error API create User:');
+            console.error('Error API adding a dog:');
             throw new Error('Unexpected error');
         }
     }
 }
 
-export async function updateUser(actualUser) {
-    console.log("Sending request to update:", actualUser);
-    const response = await fetch(`${API_USERS}/update`, {
+export async function deleteDogBack(idChien) {
+    console.log("Sending request to delete a dog:", idChien);
+    const response = await fetch(`${API_DOGS}/deleteDog`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(actualUser),
+        body: JSON.stringify({idChien:idChien}),
     });
     const backResponse = await response.json();
     if (response.ok) {
@@ -41,40 +40,31 @@ export async function updateUser(actualUser) {
         if (backResponse) {
             throw backResponse;
         } else {
-            console.error('Error API update User:');
+            console.error('Error API deleting a dog:');
             throw new Error('Unexpected error');
         }
     }
 }
 
-export async function signin(values) {
-    const response = await fetch(`${API_USERS}/login`, {
+export async function addActivity(values) {
+    console.log("sending new activities to add :", values);
+    const response = await fetch(`${API_DOGS}/addActivity`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({values}),
     });
     const backResponse = await response.json();
     if (response.ok) {
+        console.log(backResponse);
         return backResponse;
     } else {
         if (backResponse) {
             throw backResponse;
         } else {
-            throw new Error("Error API login");
+            console.error('Error API deleting a dog:');
+            throw new Error('Unexpected error');
         }
     }
-}
-
-export async function getConnectedUser() {
-    const response = await fetch(`${API_USERS}/userConnected`);
-    const user = await response.json();
-    return user;
-}
-
-export async function signout() {
-    await fetch(`${API_USERS}/logout`, {
-        method: "DELETE",
-    })
 }

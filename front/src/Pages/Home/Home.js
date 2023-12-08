@@ -20,7 +20,7 @@ export default function Home() {
                 <section>
                     {/* --- ---> presentation de l'équipe <--- --- */}
                     <article>
-                        <div className={`${styles.texte} shadow`}>
+                        <div className={`${styles.texte} box`}>
                             <p>Composée de 10 éducateurs, l’équipe Obeaba vous accompagne tout au long de l’éducation de votre compagnon à quatre pattes, et plus encore.</p>
                             <p>Notre méthode de travail est axée sur la relation que vous allez construire avec votre chien. Celle-ci repose sur 6 valeurs qui seront les clés de votre apprentissage : la confiance, l’écoute, la bienveillance, la patience, la communication et l’adaptation.</p>
 
@@ -44,7 +44,7 @@ export default function Home() {
                                 <img src={activites} alt="" />
                             </div>
                         </div>
-                        <div className={`${styles.texte} shadow`}>
+                        <div className={`${styles.texte} box`}>
                             <p>Dès votre inscription, qui se fait dans nos bureaux, vous avez accès aux cours d’<NavLink to="/Education" style={{display: 'inline' }}><span className='bold'>éducation</span></NavLink> par niveau.</p>
                             <p>Si vous le souhaitez, nous proposons également la pratique d’activités cynophiles : l’<NavLink to="/Agility" style={{display: 'inline' }}><span className='bold'>agility</span></NavLink>  et l’<NavLink to="/DogDance" style={{display: 'inline' }}><span className='bold'>obérythmée</span></NavLink>.</p>
                             <p>Pour finir, vous avez la possibilité de participer à des <NavLink to="/Walk" style={{ transition: '0.2s all', display: 'inline' }}><span className='bold'>balades organisées</span></NavLink>, sur une demi-journée ou la journée complète, sous réservation.</p>
@@ -55,7 +55,7 @@ export default function Home() {
 
                     {/* --- ---> adresse et contact <--- --- */}
                     <article>
-                        <div className={`${styles.texte} shadow`}>
+                        <div className={`${styles.texte} box`}>
                             <p>Nous disposons de grands espaces verts qui nous permettent de pratiquer les différentes activités citées précédemment. </p>
                             <div className={`${styles.infos}`}>
                                 <i className="fa-solid fa-location-dot"></i>

@@ -10,12 +10,10 @@ const transporter = nodemailer.createTransport({
         pass: "sjpv wvqw avvy esgd",
     }
 })
-
-
 const connection = require("../../database");
 
+
 router.post("/login", (req, res) => {
-    // console.log(req.body);
     const { email, motdepasse } = req.body;
     const sqlVerify = `SELECT * FROM adherents WHERE email= ?`;
     connection.query(sqlVerify, [email], (err, result) => {
@@ -33,11 +31,30 @@ router.post("/login", (req, res) => {
                     // les éléments sont ajoutés de la droite vers la gauche
 
                     let idAd = result[0].idAdher;
-                    const sqlData = `SELECT adherents.*, chiens.*, pratiquer.*, activites.nomActivites FROM adherents, chiens, pratiquer, activites WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher AND chiens.idChien = pratiquer.idChien AND pratiquer.idActivites = activites.idActivites`;
+                    const sqlData = `
+                    SELECT adherents.*, chiens.*
+                    FROM adherents
+                    LEFT JOIN chiens ON adherents.idAdher = chiens.idAdher
+                    WHERE adherents.idAdher = ?` ;
+                    // `SELECT adherents.*, chiens.*, pratiquer.*, activites.nomActivites FROM adherents, chiens, pratiquer, activites WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher AND chiens.idChien = pratiquer.idChien AND pratiquer.idActivites = activites.idActivites`;
                     connection.query(sqlData, [idAd], (err, result) => {
                         if (err) throw err;
-                        // console.log(result);
-                        res.json(result);
+                        const connectedUser = {
+                            adherent: {
+                                idAdher: result[0].idAdher,
+                                nom: result[0].nom,
+                                prenom: result[0].prenom,
+                                email: result[0].email,
+                                // d'autres champs adherents si nécessaire
+                            },
+                            chiens: result.map(row => ({
+                                idChien: row.idChien,
+                                nomChien: row.nomChien,
+                                naissance: row.naissance,
+                                race: row.race,
+                            })),
+                        };
+                        res.json(connectedUser);
                     })
                 } else {
                     res.status(400).json("Email et/ou mot de passe incorrects");
@@ -57,7 +74,7 @@ router.post("/register", (req, res) => {
     connection.query(verifyMailSql, [email], async (err, result) => {
         if (err) throw err;
         if (result.length) {
-            let message = { message: "Email existant" };
+            let message = { message: "Cet email est déjà associé à un compte" };
             res.send(message)
         } else {
             const mdpHashed = await bcrypt.hash(motdepasse, 10);
@@ -91,21 +108,61 @@ router.post("/register", (req, res) => {
 })
 
 router.post("/update", (req, res) => {
-    console.log("Received request to register:", req.body);
+    console.log("Received request to update:", req.body);
     const idAd = req.body.idAdher;
     const { nom, prenom, email } = req.body;
-    const updateSql = `UPDATE adherents SET nom = ?, prenom = ?, email = ? WHERE idAdher="${idAd}"`;
-    connection.query(updateSql, [nom, prenom, email], async (err, result) => {
+    const verifyMailSql = `SELECT * FROM adherents WHERE email="${email}"`;
+    connection.query(verifyMailSql, [email], async (err, result) => {
         if (err) throw err;
-        let resultBack = req.body;
-        resultBack.id = result.insertId;
+        if (result.length > 0 && req.body.email !== result[0].email) {
 
-        let message = { messageGood: "Vos informations ont bien été modifiées" }
-        res.send(message)
-    }
-    )
+            let message = { message: "Cet email est déjà associé à un compte" };
+            res.send(message)
+
+        } else {
+            const updateSql = `UPDATE adherents SET nom = ?, prenom = ?, email = ? WHERE idAdher="${idAd}"`;
+            const values = [nom, prenom, email];
+            connection.query(updateSql, values, async (err, result) => {
+                if (err) throw err;
+                let resultBack = req.body;
+                let message = { messageGood: "Vos informations ont bien été modifiées" }
+                res.send(message)
+            }
+            )
+
+        }
+    })
 })
 
+router.post("/changePassword/:email", async (req, res) => {
+
+    const email = req.params.email;
+    const motdepasse = req.body.motdepasse;
+
+    try {
+        const verifyUserSql = `SELECT * FROM adherents WHERE email="${email}"`;
+        connection.query(verifyUserSql, async (err, result) => {
+            if (err) throw err;
+
+            if (result.length === 0) {
+                let message = { message: "Utilisateur non trouvé" };
+                return res.status(404).json(message);
+            }
+
+            const mdpHashed = await bcrypt.hash(motdepasse, 10);
+
+            const updateSql = `UPDATE adherents SET motdepasse = ? WHERE email="${email}"`;
+            connection.query(updateSql, [mdpHashed], (err, result) => {
+                if (err) throw err;
+                let message = { messageGood: "Votre mot de passe a bien été modifié" };
+                res.json(message);
+            });
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 //NOTE - récupérer les infos du user lors de sa connexion 
 
@@ -116,15 +173,34 @@ router.get("/userConnected", (req, res) => {
             const decodedToken = jsonwebtoken.verify(token, keyPub, {
                 algorithms: "RS256",
             });
-            const sqlSelect =
-                `SELECT adherents.*, chiens.* FROM adherents, chiens WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher`;
+            const sqlSelect = `
+            SELECT adherents.*, chiens.*
+            FROM adherents
+            LEFT JOIN chiens ON adherents.idAdher = chiens.idAdher
+            WHERE adherents.idAdher = ?;
+        `;
+
+            // `SELECT adherents.*, chiens.* FROM adherents, chiens WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher`;
             // `SELECT adherents.*, chiens.*, pratiquer.*, activites.nomActivites FROM adherents, chiens, pratiquer, activites WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher AND chiens.idChien = pratiquer.idChien AND pratiquer.idActivites = activites.idActivites`;
             connection.query(sqlSelect, [decodedToken.sub], (err, result) => {
                 if (err) throw err;
-                const connectedUser = result[0];
-                connectedUser.password = "";
-                if (connectedUser) {
-                    // console.log(connectedUser);
+                if (result.length > 0) {
+                    const connectedUser = {
+                        adherent: {
+                            idAdher: result[0].idAdher,
+                            nom: result[0].nom,
+                            prenom: result[0].prenom,
+                            email: result[0].email,
+                            // d'autres champs adherents si nécessaire
+                        },
+                        chiens: result.map(row => ({
+                            idChien: row.idChien,
+                            nomChien: row.nomChien,
+                            naissance: row.naissance,
+                            race: row.race,
+                        })),
+                    };
+                    console.log(connectedUser);
                     res.json(connectedUser);
                 } else {
                     res.json(null);
@@ -154,7 +230,7 @@ router.get("/resetPassword/:email", (req, res) => {
             const mailOptions = {
                 from: "obeaba@fauxmail.com",
                 to: email,
-                subject: "Mot de passe oublié de tel site",
+                subject: "Mot de passe oublié Obeaba",
                 text: `Cliquez sur ce lien pour modifier votre mot de passe : ${confirmLink}`,
             };
             transporter.sendMail(mailOptions, (err, info) => {

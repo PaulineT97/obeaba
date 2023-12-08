@@ -1,23 +1,33 @@
-.carrouselContainer {
-    width: 80%;
+.allContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .carrouselContainer {
+    width: 90%;
     margin: auto;
     overflow: hidden;
+
+
+    .carrouselSlider {
+      width: 100%;
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+
+      .carrouselSlide {
+        width: 33%;
+        flex: 0 0 33%;
+        box-sizing: border-box;
+        margin: 2%;
+        text-align: center;
+        transition: opacity 0.5s ease-in-out;
+
+      }
+    }
+
+    .buttonContainer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
   }
-  
-  .carrouselSlider {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-  
-  .carrouselSlide {
-    flex: 0 0 100%;
-    box-sizing: border-box;
-    padding: 20px;
-    text-align: center;
-    opacity: 0.8;
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-  .carrouselSlideActive {
-    opacity: 1;
-  }
+}

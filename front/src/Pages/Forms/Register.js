@@ -69,26 +69,22 @@ export default function Register() {
     }
 
     async function submit() {
-        // console.log("Submitting form with values:");
         setFeedback("");
         clearErrors();
         const values = getValues();
         const formData = new FormData();
 
-        // Ajoutez chaque champ individuellement à FormData
         formData.append("nom", values.nom);
         formData.append("prenom", values.prenom);
         formData.append("email", values.email);
         formData.append("motdepasse", values.motdepasse);
 
         if (values.chiens) {
-            // formData.append("chiens", values.chiens);
             values.chiens.forEach((c, index) => {
                 formData.append("nomChien", values.chiens[index].nomChien);
                 formData.append("naissance", values.chiens[index].naissance);
                 formData.append("race", values.chiens[index].race);
             })
-
         }
 
         // Console.log pour vérifier le contenu de FormData
@@ -96,12 +92,9 @@ export default function Register() {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
 
-        
-
         try {
-            console.log(values);
             const newUser = await createUser(values);
-            	console.log(newUser);
+
             if (newUser.message) {
                 setFeedback(newUser.message);
             } else {

@@ -19,6 +19,7 @@ const ResetPassword = lazy(() => import("./Pages/Security/ResetPassword"));
 const ContactUs = lazy(() => import("./Pages/Forms/ContactForm"));
 const MentionsLegales = lazy(() => import("./Components/legalContent/MentionsLegales"));
 const CGU = lazy(() => import("./Components/legalContent/CGU"));
+const Registration = lazy(() => import("./Pages/Activities/Registration"));
 
 
 export const Router = createBrowserRouter([
@@ -53,6 +54,14 @@ export const Router = createBrowserRouter([
                         element: <Register />,
                     },
                 ]
+            },
+            {
+                path: "/RegistrationActivities",
+                element: (
+                    <ProtectedRoute>
+                        <Registration />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/WelcomeDog",
