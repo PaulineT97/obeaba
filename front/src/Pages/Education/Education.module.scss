@@ -1,15 +1,28 @@
+@use "../../Assets//Styles/mixin.scss" as mixin;
+
 .banniere {
     width: 100%;
     height: 80vh;
-    background-position: unset;
+    background-position: center;
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    @include mixin.md-lt {
+        height: 70vh;
+    }
+    @include mixin.sm-md {
+        height: 70vh;
+    }
+    @include mixin.tablette {
+        height: 70vh;
+    }
+    @include mixin.xs-sm {
+        height: 30vh;
+    }
     h1 {
-        position: relative;
-        z-index: 0;
+        position: absolute;
+        z-index: 1;
     }
 }
 
@@ -17,7 +30,15 @@
     width: 100%;
     padding: 0;
     padding-top: 5%;
-
+    @include mixin.sm-md {
+        padding-bottom: 8%;
+    }
+    @include mixin.tablette {
+        padding-bottom: 8%;
+    }
+    @include mixin.xs-sm {
+        padding-bottom: 8%;
+    }
     .educateurs {
         padding-top: 3%;
         display: flex;
@@ -29,9 +50,25 @@
         width: 75%;
         padding-top: 3%;
         position: relative;
-        // display: flex;
-        // flex-direction: column;
-        // align-items: center;
+
+        @include mixin.lg-lt {
+            width: 80%;
+        }
+        @include mixin.l-lt {
+            width: 80%;
+        }
+        @include mixin.md-lt {
+            width: 80%;
+        }
+        @include mixin.sm-md{
+            width: 80%;
+        }
+        @include mixin.tablette{
+            width: 80%;
+        }
+        @include mixin.xs-sm{
+            width: 80%;
+        }
 
         .intro {
             font-size: 1.5rem;
@@ -41,9 +78,27 @@
         .flex {
             display: flex;
             justify-content: space-between;
+            @include mixin.sm-md{
+                flex-direction: column;
+            }
+            @include mixin.tablette{
+                flex-direction: column;
+            }
+            @include mixin.xs-sm{
+                flex-direction: column;
+            }
 
             article {
                 width: 45%;
+                @include mixin.sm-md{
+                width: 100%;
+                }
+                @include mixin.tablette{
+                    width: 100%;
+                }
+                @include mixin.xs-sm{
+                    width: 100%;
+                }
 
                 h3 {
                     font-size: 2.2rem;
@@ -84,12 +139,31 @@
 
         .rowReverse {
             flex-direction: row-reverse;
+            @include mixin.sm-md{
+                flex-direction: column;
+            }
+            @include mixin.tablette{
+                flex-direction: column;
+            }
+            @include mixin.xs-sm{
+                flex-direction: column;
+            }
         }
 
         .absolute {
             position: relative;
             transform: translateY(-12%);
+            @include mixin.sm-md{
+                transform: translateY(0);
 
+            }
+            @include mixin.tablette{
+                transform: translateY(0);
+                
+            }
+            @include mixin.xs-sm{
+                transform: translateY(0);
+            }
         }
 
 

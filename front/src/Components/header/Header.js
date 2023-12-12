@@ -43,7 +43,7 @@ export default function Header() {
 
 
     return (
-        <header className={`${styles.header}`}>
+        <header className={`${styles.headerResponsive}`}>
             <div className={`${styles.navbar}`}>
                 <nav>
                     <ul>

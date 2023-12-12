@@ -11,7 +11,7 @@ import Button from '../../Components/button/Button';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { updateUser } from "../../apis/users";
-import DogsSection from './Dog/DogsSection';
+import DogsSection from './DogSection/DogsSection';
 
 export default function Profile() {
 

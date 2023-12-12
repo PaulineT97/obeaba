@@ -1,3 +1,5 @@
+@use '../../Assets/Styles/mixin.scss' as mixin;
+
 .banniere {
     display: flex;
     flex-direction: column;
@@ -8,9 +10,27 @@
     z-index: -3;
     background-color: var(--clair);
 
+    @include mixin.md-lt {
+        height: 70vh;
+        padding-top: 5%;
+    }
+
+    @include mixin.sm-md {
+        height: 70vh;
+        padding-top: 5%;
+    }
+
+    @include mixin.tablette {
+        height: 50vh;
+    }
+
+    @include mixin.xs-sm {
+        height: 30vh;
+    }
+
     .obeaba {
         width: 75%;
-        height: 80vh;
+        height: 100%;
         position: inherit;
         z-index: -2;
         background-image: url(../../Assets/Images/headO.jpg);
@@ -21,6 +41,35 @@
         -webkit-text-fill-color: transparent;
         background-size: cover;
         background-position: center;
+        display: flex;
+        justify-content: center;
+
+        @include mixin.l-lt {
+            width: 80%;
+        }
+
+        @include mixin.md-lt {
+            width: 85%;
+            align-items: center;
+        }
+
+        @include mixin.sm-md {
+            width: 100%;
+            align-items: center;
+        }
+
+        @include mixin.tablette {
+            width: 100%;
+            align-items: center;
+            -webkit-text-fill-color: var(--orange);
+
+        }
+
+        @include mixin.xs-sm {
+            width: 100%;
+            align-items: center;
+            -webkit-text-fill-color: var(--orange);
+        }
 
         h1 {
             display: inline-block;
@@ -30,10 +79,39 @@
             font-style: normal;
             font-weight: 800;
             line-height: normal;
-            letter-spacing: 1.85rem;
+            letter-spacing: 1.9rem;
             text-transform: uppercase;
-            padding: 5% 0%;
+            padding: 5% 0;
             -webkit-text-stroke: .25rem var(--orange);
+
+            @include mixin.lg-lt {
+                font-size: 16rem;
+                padding: 10% 0;
+            }
+
+            @include mixin.l-lt {
+                font-size: 16rem;
+                padding: 15% 0;
+            }
+
+            @include mixin.md-lt {
+                font-size: 14rem;
+            }
+
+            @include mixin.sm-md {
+                font-size: 12rem;
+            }
+
+            @include mixin.tablette {
+                font-size: 8rem;
+                -webkit-text-stroke: .25rem var(--textColor);
+
+            }
+
+            @include mixin.xs-sm {
+                font-size: 4.5rem;
+                -webkit-text-stroke: .25rem var(--textColor);
+            }
 
             span {
                 border: solid 1px #9F6625;
@@ -49,15 +127,75 @@
     section {
         width: 70%;
 
+        @include mixin.lg-lt {
+            width: 80%;
+        }
+
+        @include mixin.l-lt {
+            width: 85%;
+        }
+
+        @include mixin.md-lt {
+            width: 85%;
+        }
+
+        @include mixin.sm-md {
+            width: 85%;
+        }
+
+        @include mixin.tablette {
+            width: 85%;
+        }
+
+        @include mixin.xs-sm {
+            width: 85%;
+        }
+
         article {
             display: flex;
             justify-content: space-between;
             width: 100%;
 
+            @include mixin.sm-md {
+                flex-direction: column;
+                flex-flow: column-reverse;
+            }
+
+            @include mixin.tablette {
+                flex-direction: column;
+                flex-flow: column-reverse;
+            }
+
+            @include mixin.xs-sm {
+                flex-direction: column;
+                flex-flow: column-reverse;
+            }
+
             .texte {
                 width: 45%;
                 margin-bottom: 5%;
                 padding: 3%;
+
+                @include mixin.sm-md {
+                    width: 80%;
+                    margin-left: 10%;
+                    margin-top: 8%;
+
+                }
+
+                @include mixin.tablette {
+                    width: 80%;
+                    margin-left: 10%;
+                    margin-top: 8%;
+
+                }
+
+                @include mixin.xs-sm {
+                    width: 80%;
+                    margin-left: 10%;
+                    margin-top: 8%;
+
+                }
 
                 p {
                     padding: 2% 0;
@@ -95,6 +233,18 @@
                 flex-direction: column;
                 align-items: center;
 
+                @include mixin.sm-md {
+                    width: 100%;
+                }
+
+                @include mixin.tablette {
+                    width: 100%;
+                }
+
+                @include mixin.xs-sm {
+                    width: 100%;
+                }
+
                 .image {
                     border-radius: 2em;
                     width: 80%;
@@ -105,10 +255,50 @@
                     }
                 }
             }
+
+            .map {
+                height: 40vh;
+
+                @include mixin.l-lt {
+                    height: 35vh;
+                }
+
+                @include mixin.md-lt {
+                    height: 30vh;
+                }
+
+                @include mixin.sm-md {
+                    height: 40vh;
+                }
+
+                @include mixin.tablette {
+                    height: 40vh;
+                }
+
+                @include mixin.xs-sm {
+                    height: 40vh;
+                }
+            }
         }
 
         .reverse {
             margin-bottom: 5%;
+            flex-flow: row-reverse;
+
+            @include mixin.sm-md {
+                flex-flow: column-reverse;
+                margin-bottom: 0;
+            }
+
+            @include mixin.tablette {
+                flex-flow: column-reverse;
+                margin-bottom: 0;
+            }
+
+            @include mixin.xs-sm {
+                flex-flow: column-reverse;
+                margin-bottom: 0;
+            }
 
             .texte {
                 margin-bottom: 0;

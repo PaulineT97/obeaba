@@ -136,9 +136,12 @@ export default function Registration() {
         // Met à jour l'état en conséquence
         if (isEligible) {
             setIsNotEligible(false);
+            console.log(isNotEligible);
         } else {
             setIsNotEligible(true);
             setIsNotEligibleForCurrentActivity([...isNotEligibleForCurrentActivity, { index }]);
+            console.log(isNotEligible);
+            console.log(isNotEligibleForCurrentActivity);
         }
     };
 

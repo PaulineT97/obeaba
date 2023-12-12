@@ -19,6 +19,7 @@ const ResetPassword = lazy(() => import("./Pages/Security/ResetPassword"));
 const ContactUs = lazy(() => import("./Pages/Forms/ContactForm"));
 const MentionsLegales = lazy(() => import("./Components/legalContent/MentionsLegales"));
 const CGU = lazy(() => import("./Components/legalContent/CGU"));
+const Confidentialite = lazy(() => import("./Components/legalContent/politiqueConfidentialite"));
 const Registration = lazy(() => import("./Pages/Activities/Registration"));
 
 
@@ -102,6 +103,10 @@ export const Router = createBrowserRouter([
             {
                 path:"/cgu",
                 element: <CGU />,
+            },
+            {
+                path:"/confidentialite",
+                element: <Confidentialite />,
             },
         ]
     },

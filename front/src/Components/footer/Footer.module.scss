@@ -1,50 +1,91 @@
-.footer{
+@use '../../Assets/Styles/mixin.scss' as mixin;
+
+.footer {
     background-color: var(--clair);
     display: flex;
     flex-direction: column;
     align-items: center;
-    width:100%;
+    width: 100%;
     position: relative;
-    .width{
-        width:80%;
-        .flex{
+
+    .width {
+        width: 80%;
+
+        .flex {
             display: flex;
             justify-content: space-around;
             align-items: center;
             width: 100%;
             padding: 3% 0;
-            h5{
+
+            h5 {
                 font-family: var(--satisfy);
                 font-size: 1.8rem;
                 font-weight: 100;
                 color: var(--textColor);
-                padding-bottom:8%;
+                padding-bottom: 8%;
             }
-            p{
+
+            p {
                 font-family: var(--poppins);
                 font-size: 1.1rem;
                 color: var(--textColor);
                 line-height: 2.1rem;
             }
-            .center{
+
+            .center {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                i{
+
+                i {
                     color: var(--textColor);
                     font-size: 1.2rem;
                     margin-right: 5%;
                 }
             }
-            .follow{
-                padding-top:5%;
-                i{
-                    font-size:1.6rem;
+
+            .follow {
+                padding-top: 5%;
+
+                i {
+                    font-size: 1.6rem;
                 }
+            }
+
+            .optionMenu {
+                @include mixin.sm-md {
+                    display: none;
+                }
+
+                @include mixin.tablette {
+                    display: none;
+                }
+
+                @include mixin.xs-sm {
+                    display: none;
+                }
+            }
+
+            .footerMobile {
+                @include mixin.sm-md {
+                    display: flex;
+                }
+
+                @include mixin.tablette {
+                    display: flex;
+
+                }
+
+                @include mixin.xs-sm {
+                    display: flex;
+                }
+
             }
         }
     }
-    .mentionsLegales{
+
+    .mentionsLegales {
         display: flex;
         justify-content: space-around;
         font-family: var(--poppins);
@@ -53,4 +94,3 @@
         line-height: 4rem;
     }
 }
-

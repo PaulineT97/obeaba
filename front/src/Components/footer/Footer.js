@@ -18,15 +18,12 @@ export default function Footer () {
 
             <div className={`${styles.width}`}>
                 <div className={`${styles.flex}`}>
-                    <div className="center">
+                    <div className={`${styles.optionMenu} center`}>
                     <Title Titre="Infos et Actus"/>
-                    <List Link1="Qui sommes nous" lien1="/" 
-                    Link2="Accueillir un chien" lien2="/WelcomeDog" 
-                    Link3="Se connecter" lien3="/Forms" 
-                    Link4="Newsletter" lien4="/"/>
+                    <List Link1="Qui sommes nous" lien1="/" Link2="Accueillir un chien" lien2="/WelcomeDog" Link3="Se connecter" lien3="/Forms" Link4="Newsletter" lien4="/"/>
                     </div>
                     <Paws/>
-                    <div className="center">
+                    <div className={`${styles.optionMenu} center`}>
                     <Title Titre="Nos activités"/>
                     <List Link1="Éducation" lien1="/Education" 
                     Link2="Agility" lien2="/Agility" 
@@ -34,8 +31,8 @@ export default function Footer () {
                     Link4="Balades organisées" lien4="/Walk" />
                     </div>
                     <Paws/>
-                    <div className="center">
-                        <div>
+                    <div className={`${styles.footerMobile} center`}>
+                        <div className={styles.footerPart}>
                             <Title Titre="Nous contacter"/>
                             <div className={`${styles.center}`}>
                                 <i className="fa-solid fa-phone"></i>
@@ -46,7 +43,7 @@ export default function Footer () {
                                 <p>obeaba@gmail.com</p>
                             </div>
                         </div>
-                        <div className={`${styles.follow}`}>
+                        <div className={`${styles.follow} ${styles.footerPart}`}>
                             <Title Titre="Nous suivre"/>
                             <div className={`${styles.center}`}>
                             <i className="fa-brands fa-facebook-f"></i>
@@ -61,7 +58,7 @@ export default function Footer () {
 {/* PARTIE MENTIONS LEGALES */}
 
             <div className={`${styles.mentionsLegales}`}>
-                <p>© 2023 | <NavLink to="/MentionsLegales" style={{display: 'inline' }}>mentions légales</NavLink>  | <NavLink to="/CGU" style={{display: 'inline' }}>CGU</NavLink> | <NavLink to="/Cookies" style={{display: 'inline' }}>politique de confidentialité</NavLink></p>
+                <p>© 2023 | <NavLink to="/MentionsLegales" style={{display: 'inline' }}>mentions légales</NavLink>  | <NavLink to="/CGU" style={{display: 'inline' }}>CGU</NavLink> | <NavLink to="confidentialite" style={{display: 'inline' }}>politique de confidentialité</NavLink></p>
             </div>
 
         </footer>

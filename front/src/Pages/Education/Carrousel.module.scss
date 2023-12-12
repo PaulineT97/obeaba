@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+
   .carrouselContainer {
     width: 90%;
     margin: auto;
@@ -23,11 +24,14 @@
 
       }
     }
+  }
 
-    .buttonContainer {
-      width: 100%;
-      display: flex;
-      justify-content: center;
+  i {
+    cursor: pointer;
+    transition: 1s all;
+
+    &:hover {
+      transform: scale(1.5);
     }
   }
 }

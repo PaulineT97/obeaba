@@ -1,3 +1,4 @@
+@use '../../Assets/Styles/mixin.scss' as mixin;
 main {
     .box {
         width: 35%;
@@ -8,6 +9,25 @@ main {
         display: flex;
         flex-direction: column;
         align-items: center;
+        @include mixin.lg-lt {
+            width: 45%;
+        }
+        @include mixin.l-lt {
+            width: 45%;
+        }
+        @include mixin.md-lt {
+            width: 50%;
+        }
+        @include mixin.sm-md {
+            width: 70%;
+        }
+        @include mixin.tablette {
+            width: 70%;
+        }
+        @include mixin.xs-sm {
+            width: 80%;
+        }
+
 
         h2{
             width: 100%;
@@ -18,9 +38,19 @@ main {
             display: flex;
             justify-content: space-between;
 
+
             a.inactive {
                 h2 {
                     font-size: 1.8rem;
+                    @include mixin.sm-md {
+                        font-size: 1.8rem;
+                    }
+                    @include mixin.tablette {
+                        font-size: 1.8rem;
+                    }
+                    @include mixin.xs-sm {
+                        font-size: 1.4rem;
+                    }
 
                     i {
                         display: none;
@@ -34,8 +64,15 @@ main {
                     display: flex;
                     align-items: center;
                     text-shadow: 2px 4px 4px rgba(0,0,0,0.3);
-
-
+                    @include mixin.sm-md {
+                        font-size: 1.8rem;
+                    }
+                    @include mixin.tablette {
+                        font-size: 1.8rem;
+                    }
+                    @include mixin.xs-sm {
+                        font-size: 1.4rem;
+                    }
                     i {
                         font-size: 1.8rem;
                         margin-right: 5%;

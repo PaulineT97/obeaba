@@ -1,7 +1,7 @@
 @use "variables.scss";
 @use "utils.scss";
 @use "forms.scss";
-// @use "flex.scss";
+@use "./mixin.scss" as mixin;
 
 
 *{
@@ -12,6 +12,25 @@
     font-size: 16px;
     font-family: var(--poppins);
     color: var(--textColor);
+    @include mixin.lg-lt {
+        font-size: 14px;
+    }
+    @include mixin.l-lt {
+        font-size: 12px;
+    }
+    @include mixin.md-lt {
+        font-size: 12px;
+    }
+    @include mixin.sm-md{
+        font-size: 12px;
+    }
+    @include mixin.tablette{
+        font-size: 12px;
+    }
+    @include mixin.xs-sm{
+        font-size: 10px;
+    }
+
 }
 img{
     display: block;

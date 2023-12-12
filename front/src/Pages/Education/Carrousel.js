@@ -22,7 +22,6 @@ export default function Slider() {
                 const dataBack = await response.json();
                 console.log("fetch data", dataBack);
 
-                // Assuming dataBack is an array of educateurs
                 const formattedData = await Promise.all(dataBack.map(async educateur => {
                     if (educateur.photo && educateur.photo.data) {
                         const blob = new Blob([new Uint8Array(educateur.photo.data)]);
@@ -31,12 +30,6 @@ export default function Slider() {
                             nom: educateur.nom,
                             introduction: educateur.introduction,
                             photo: imageUrl,
-                        };
-                    } else {
-                        return {
-                            nom: educateur.nom,
-                            introduction: educateur.introduction,
-                            photo: null, // Mettez ce que vous voulez en cas d'absence de photo
                         };
                     }
                 }));
@@ -49,7 +42,7 @@ export default function Slider() {
         }
 
         fetchData();
-    }, []); // Le tableau vide [] signifie que cet effet ne s'exécutera qu'une fois après le montage initial.
+    }, []); 
 
     const goToNextSlide = () => {
         const nextIndex = (currentIndex + 1) % carouselData.length;
@@ -64,7 +57,7 @@ export default function Slider() {
     };
 
     const slideWidth = 100 / (carouselData.length);
-    const slidesToShow = 3; // Vous pouvez ajuster ce nombre selon vos besoins
+    const slidesToShow = 3;
     const translateValue = -slideWidth * slidesToShow * currentIndex + '%';
     const sliderStyle = {
         transform: `translateX(${translateValue})`,
@@ -72,7 +65,9 @@ export default function Slider() {
 
     return (
         <div className={styles.allContainer}>
-            <i className="fa-solid fa-angles-left Orange" onClick={goToPrevSlide} style={{marginLeft:"2%"}}></i>
+            <i className="fa-solid fa-angles-left Orange"
+                onClick={goToPrevSlide}
+                style={{ marginLeft: "2%" }}></i>
             <div className={styles.carrouselContainer}>
 
                 <div className={styles.carrouselSlider} style={sliderStyle}>
@@ -81,7 +76,9 @@ export default function Slider() {
                             key={index}
                             className={` slideContainer ${styles.carrouselSlide}`}
                         >
-                            <div className="imgCarrousel"><img src={element.photo} alt={`Portrait de ${element.nom}`} /></div>
+                            <div className="imgCarrousel">
+                                <img src={element.photo} alt={`Portrait de ${element.nom}`} />
+                            </div>
 
                             <div className="txt">
                                 <h2>{element.nom}, </h2>
@@ -94,7 +91,9 @@ export default function Slider() {
                 </div>
 
             </div>
-            <i className="fa-solid fa-angles-right Orange" onClick={goToNextSlide} style={{marginLeft:"4%"}}></i>
+            <i className="fa-solid fa-angles-right Orange"
+                onClick={goToNextSlide}
+                style={{ marginLeft: "4%" }}></i>
         </div>
 
     );

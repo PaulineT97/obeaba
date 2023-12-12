@@ -1,9 +1,11 @@
+import HeaderMobile from "./Components/header/HeaderMobile";
 import Header from "./Components/header/Header";
 import Footer from './Components/footer/Footer';
 import { Suspense } from "react";
-import { Outlet, 
-  // useLoaderData
- } from "react-router-dom";
+import {
+  Outlet,
+  useLoaderData
+} from "react-router-dom";
 import AuthProvider from "./Components/authProvider/AuthProvider"
 
 
@@ -17,6 +19,7 @@ function App() {
     <div className="App">
       <AuthProvider>
         <Header />
+        <HeaderMobile />
         <Suspense>
           <Outlet />
         </Suspense>

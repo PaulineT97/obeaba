@@ -1,6 +1,19 @@
+@use "../../Assets//Styles/mixin.scss" as mixin;
 .banniere {
     width: 100%;
     height: 80vh;
+    @include mixin.md-lt {
+        height: 70vh;
+    }
+    @include mixin.sm-md {
+        height: 70vh;
+    }
+    @include mixin.tablette {
+        height: 70vh;
+    }
+    @include mixin.xs-sm {
+        height: 30vh;
+    }
 
     video {
         width: 100%;
@@ -16,6 +29,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        @include mixin.md-lt {
+            top:-15%;
+        }
+        @include mixin.sm-md {
+            top:-15%;
+        }
+        @include mixin.tablette {
+            top:-15%;
+        }
+        @include mixin.xs-sm {
+            top:-35%;
+        }
+
 
         h1 {
             position: relative;

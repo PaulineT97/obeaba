@@ -1,14 +1,31 @@
-header {
+@use "../../Assets/Styles/mixin.scss" as mixin;
+
+.headerResponsive {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     height: 20vh;
     position: relative;
+    @include mixin.md-lt {
+        display: none;
+    }
+    @include mixin.sm-md {
+        display: none;
+    }
+    @include mixin.tablette {
+        display: none;
+    }
+    @include mixin.xs-sm {
+        display: none;
+    }
+
+
 
     .navbar {
         background-color: var(--clair);
         width: 100%;
+        height: 100%;
         display: flex;
         justify-content: center;
         position: inherit;
@@ -16,6 +33,12 @@ header {
 
         nav {
             width: 85%;
+            @include mixin.lg-lt {
+                width: 90%;
+            }
+            @include mixin.l-lt {
+                width: 90%;
+            }
 
             ul {
                 display: flex;
@@ -23,12 +46,27 @@ header {
                 align-items: center;
                 width: 100%;
                 list-style-type: none;
+                @include mixin.lg-lt {
+                    justify-content: space-evenly;
+                }
+                @include mixin.l-lt {
+                    justify-content: space-evenly;
+                }
+                @include mixin.md-lt {
+                    justify-content: space-evenly;
+                }
 
                 li {
                     .lien {
                         font-family: var(--satisfy);
                         font-size: 2rem;
                         color: var(--textColor);
+                        @include mixin.lg-lt {
+                            font-size: 1.9rem;
+                        }
+                        @include mixin.l-lt {
+                            font-size: 1.9rem;
+                        }
                     }
 
                 }
@@ -41,16 +79,14 @@ header {
                     img {
                         width: 110%;
                     }
+                    @include mixin.lg-lt {
+                        width: 25%;
+                    }
+                    
+                    @include mixin.l-lt {
+                        width: 25%;
+                    }
                 }
-                // .logged{
-                //     // width: 8%;
-                //     display: flex;
-                //     justify-content: space-evenly;
-                //     // align-items: center;
-                //     i{
-                //         font-size: 1.8rem;
-                //     }
-                // }
             }
         }
     }
@@ -67,11 +103,22 @@ header {
         transform: translateY(45%);
         background-color: var(--clair);
         border-radius: 50%;
-
         i {
             color: var(--textColor);
             font-size: 2rem;
             padding: 5%;
+        }
+        @include mixin.lg-lt {
+            width: 18%;
+            i{
+                font-size: 1.6rem;
+            }
+        }
+        @include mixin.l-lt {
+            width: 20%;
+            i{
+                font-size: 1.8rem;
+            }
         }
 
         &.fixedMenu {

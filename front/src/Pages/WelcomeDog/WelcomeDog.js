@@ -118,7 +118,7 @@ export default function WelcomeDog() {
                             <div className={`${styles.needs}`}>
                                 <div className={`${styles.tableau}`}>
                                     <ul className={`${styles.ulActivity}`}>
-                                        <li className={`${styles.entete}`}>Sélectionnez l'âge de votre chien :</li>
+                                        <li className={`${styles.entete}`}>Sélectionner l'âge du chien :</li>
                                         <li className={`${styles.left}`}>repos et sommeil</li>
                                         <li className={`${styles.left}`}>socialisation</li>
                                         <li className={`${styles.left}`}>jeux</li>

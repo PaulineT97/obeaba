@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import HeadEduc from "../../Assets/Images/headerEducation.jpg";
 import styles from "./Education.module.scss";
 import Button from '../../Components/button/Button';
@@ -8,8 +8,7 @@ import Slider from './Carrousel';
 export default function Education() {
     return (
         <>
-            < div style={{ backgroundImage: `url(${HeadEduc})` }
-            } className={`${styles.banniere}`}>
+            < div style={{ backgroundImage: `url(${HeadEduc})` }} className={`${styles.banniere}`}>
                 <div className='overlay'></div>
                 <h1 className='titreBanniere'>Education canine</h1>
             </div >
@@ -19,14 +18,18 @@ export default function Education() {
                 <aside> Notre objectif est d'enseigner à l’humain comme au chien, les comportements et les compétences nécessaires pour établir au sein de votre binôme une communication claire et un lien de confiance. Nous utilisons la méthode positive qui repose sur la récompense. </aside>
 
                 <div className={`${styles.educateurs}`}>
-                    <h2 className='titreOrange center'><i className="fa-solid fa-dog Orange"></i> Nos éducateurs</h2>
+                    <h2 className='titreOrange'>
+                        <i className="fa-solid fa-dog Orange"></i> Nos éducateurs
+                    </h2>
 
                     <Slider />
 
                 </div>
 
                 <section>
-                    <h2 className='titreOrange center'> <i className="fa-solid fa-dog Orange"></i> Les cours </h2>
+                    <h2 className='titreOrange'>
+                        <i className="fa-solid fa-dog Orange"></i> Les cours
+                    </h2>
                     <p className={`${styles.intro}`}>Selon le niveau et la modalité de cours, nous proposons des créneaux d’éducation les lundi, mardi, jeudi et vendredi soirs ainsi que le samedi après-midi.</p>
 
                     <div className={`${styles.flex} ${styles.rowReverse}`}>
@@ -37,7 +40,8 @@ export default function Education() {
                                 <div className='relative'>
                                     <p>Vous pouvez déjà retrouver nos conseils pour préparer  l’arrivée de votre compagnon, sur notre page “Un chien à la maison”.</p>
                                     <NavLink to="/WelcomeDog">
-                                        <Button content="découvrir nos conseils" /></NavLink>
+                                        <Button content="découvrir nos conseils" />
+                                    </NavLink>
                                 </div>
 
                             </div>
@@ -111,7 +115,7 @@ export default function Education() {
                                     <NavLink end to="/RegistrationActivities">
                                         <Button content="Inscrire mon chien" />
                                     </NavLink>
-                                    
+
                                 </div>
                             </div>
                         </article>
