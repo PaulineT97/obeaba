@@ -55,27 +55,6 @@ export default function Login() {
             setError("generic", { type: "generic", message: error });
         }
     }
-    // let user = {};
-    // user.nom = userBack[0].nom;
-    // user.prenom = userBack[0].prenom;
-    // user.email = userBack[0].email;
-    // user.chien = [];
-    // for (let i = 0; i < userBack.length; i++) {
-    //     let nomChien = userBack[i].nomChien;
-    //     let naissance = userBack[i].naissance;
-    //     let race = userBack[i].race;
-    //     user.chien.push({ nomChien, naissance, race });
-    // }
-    // user.chien.activites = [];
-    // for (let i = 0; i < userBack.length; i++) {
-    //     let nomActivites = userBack[i].nomActivites;
-    //     let niveau = userBack[i].level;
-
-    //     user.chien.activites.push({ nomActivites, niveau });
-    // }
-    // getUser(user);
-    // userBack.map((user, index) => (user.dog[index] = user.dogName));
-
 
     // --- --- --- --- --->   R E T U R N   <--- --- --- --- --- //
     return (

@@ -22,7 +22,7 @@ router.post("/login", (req, res) => {
                 if (bcrypt.compareSync(motdepasse, result[0].motdepasse)) {
                     const token = jsonwebtoken.sign({}, key, {
                         subject: result[0].idAdher.toString(),
-                        expiresIn: 3600 * 24 * 30,
+                        expiresIn: 12 * 60 * 60 * 1000,
                         algorithm: "RS256",
                     });
                     res.cookie("token", token, { maxAge: 12 * 60 * 60 * 1000 });
@@ -31,12 +31,7 @@ router.post("/login", (req, res) => {
                     // les éléments sont ajoutés de la droite vers la gauche
 
                     let idAd = result[0].idAdher;
-                    const sqlData = `
-                    SELECT adherents.*, chiens.*
-                    FROM adherents
-                    LEFT JOIN chiens ON adherents.idAdher = chiens.idAdher
-                    WHERE adherents.idAdher = ?` ;
-                    // `SELECT adherents.*, chiens.*, pratiquer.*, activites.nomActivites FROM adherents, chiens, pratiquer, activites WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher AND chiens.idChien = pratiquer.idChien AND pratiquer.idActivites = activites.idActivites`;
+                    const sqlData = `SELECT adherents.*, chiens.*, pratiquer.* , activites.* FROM adherents LEFT JOIN chiens ON adherents.idAdher = chiens.idAdher LEFT JOIN pratiquer ON chiens.idChien = pratiquer.idChien LEFT JOIN activites ON pratiquer.idActivites = activites.idActivites WHERE adherents.idAdher = ?;`;
                     connection.query(sqlData, [idAd], (err, result) => {
                         if (err) throw err;
                         const connectedUser = {
@@ -52,6 +47,12 @@ router.post("/login", (req, res) => {
                                 nomChien: row.nomChien,
                                 naissance: row.naissance,
                                 race: row.race,
+                                activites: result
+                                    .filter(act => act.idChien === row.idChien)
+                                    .map(act => ({
+                                        nomActivites: act.nomActivites,
+                                        level: act.level,
+                                    })),
                             })),
                         };
                         res.json(connectedUser);
@@ -173,17 +174,11 @@ router.get("/userConnected", (req, res) => {
             const decodedToken = jsonwebtoken.verify(token, keyPub, {
                 algorithms: "RS256",
             });
-            const sqlSelect = `
-            SELECT adherents.*, chiens.*
-            FROM adherents
-            LEFT JOIN chiens ON adherents.idAdher = chiens.idAdher
-            WHERE adherents.idAdher = ?;
-        `;
+            const sqlSelect = `SELECT adherents.*, chiens.*, pratiquer.* , activites.* FROM adherents LEFT JOIN chiens ON adherents.idAdher = chiens.idAdher LEFT JOIN pratiquer ON chiens.idChien = pratiquer.idChien LEFT JOIN activites ON pratiquer.idActivites = activites.idActivites WHERE adherents.idAdher = ?;`;
 
-            // `SELECT adherents.*, chiens.* FROM adherents, chiens WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher`;
-            // `SELECT adherents.*, chiens.*, pratiquer.*, activites.nomActivites FROM adherents, chiens, pratiquer, activites WHERE adherents.idAdher= ? AND adherents.idAdher = chiens.idAdher AND chiens.idChien = pratiquer.idChien AND pratiquer.idActivites = activites.idActivites`;
             connection.query(sqlSelect, [decodedToken.sub], (err, result) => {
                 if (err) throw err;
+                console.log({ result });
                 if (result.length > 0) {
                     const connectedUser = {
                         adherent: {
@@ -191,14 +186,21 @@ router.get("/userConnected", (req, res) => {
                             nom: result[0].nom,
                             prenom: result[0].prenom,
                             email: result[0].email,
-                            // d'autres champs adherents si nécessaire
                         },
                         chiens: result.map(row => ({
                             idChien: row.idChien,
                             nomChien: row.nomChien,
                             naissance: row.naissance,
                             race: row.race,
+                            activites: result
+                                .filter(act => act.idChien === row.idChien &&
+                                    row.idChien !== null)
+                                .map(act => ({
+                                    nomActivites: act.nomActivites,
+                                    level: act.level,
+                                })),
                         })),
+
                     };
                     console.log(connectedUser);
                     res.json(connectedUser);

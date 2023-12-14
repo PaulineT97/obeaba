@@ -16,12 +16,33 @@ export default function Register() {
     const navigate = useNavigate();
 
     const yupSchema = yup.object({
-        nom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
-        prenom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
-        email: yup.string().required(" champ obligatoire").matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Votre email n'est pas valide"),
-        motdepasse: yup.string().required("Mot de passe obligatoire").min(5, "mot de passe trop court").max(10, "mot de passe trop long"),
-        confirmMdp: yup.string().required("vous devez confirmer votre mdp").oneOf([yup.ref("motdepasse", ""), "les mots de passe doivent être identiques"]),
-        cgu: yup.boolean().required("vous devez accepter les CGU"),
+        nom: yup
+        .string()
+        .required(" champ obligatoire")
+        .min(2, "le champ doit contenir 2 caractères minimum")
+        .max(12, "le champ doit contenir 12 caractères maximum"),
+        prenom: yup
+        .string()
+        .required(" champ obligatoire")
+        .min(2, "le champ doit contenir 2 caractères minimum")
+        .max(12, "le champ doit contenir 12 caractères maximum"),
+        email: yup
+        .string()
+        .required(" champ obligatoire")
+        .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Votre email n'est pas valide"),
+        motdepasse: yup
+        .string()
+        .required("Mot de passe obligatoire")
+        .min(12, "mot de passe trop court")
+        .max(64, "mot de passe trop long")
+        .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, "Doit contenir au moins une majuscule, un chiffre et un caractère spécial"),
+        confirmMdp: yup
+        .string()
+        .required("vous devez confirmer votre mdp")
+        .oneOf([yup.ref("motdepasse", ""), "les mots de passe doivent être identiques"]),
+        cgu: yup
+        .boolean()
+        .required("vous devez accepter les CGU"),
         // nomChien: yup.string().required(" champ obligatoire"),
     });
 

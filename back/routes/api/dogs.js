@@ -61,18 +61,25 @@ router.get("/getActivities", (req, res) => {
 });
 
 router.post("/addActivity", (req, res) => {
-  const idAd = req.body.idAdher;
+  const activites = req.body.activites;
   console.log(req.body);
+  console.log(activites);
 
-  // const deleteDogSql = "DELETE FROM chiens WHERE idChien = ?";
-  // connection.query(deleteDogSql, idChien, (err, result) => {
-  //   if (err) throw err;
+  for (const a of activites) {
+    const sqlActivite = "INSERT INTO pratiquer (idChien, idActivites, level) VALUES (?,?,?)";
+    const valuesAct = [a.chien, a.activite, a.level];
 
+    try {
+      // Insérer l'activité dans la table pratiquer
+      connection.query(sqlActivite, valuesAct);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Erreur lors de l\'ajout des activités.' });
+    }
+  }
 
-
-    let message = { messageGood: "Vos modifications ont bien été prises en compte" }
-    res.send(message);
-  // });
+  let message = { messageGood: "Vos modifications ont bien été prises en compte" }
+  res.send(message);
 });
 
 module.exports = router;

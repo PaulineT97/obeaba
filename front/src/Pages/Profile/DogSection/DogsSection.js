@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import Button from '../../../Components/button/Button';
 import { deleteDogBack, addDogs } from '../../../apis/dogs';
 import styles from '../Profile.module.scss';
+import { NavLink } from 'react-router-dom';
 
 export default function DogsSection({
     fields,
@@ -106,10 +107,27 @@ export default function DogsSection({
                             <h3 className='titreArticle'>{chien?.nomChien}</h3>
                             <p>Date de naissance : {format(new Date(chien?.naissance), 'dd/MM/yyyy')}</p>
                             <p>Race : {chien?.race}</p>
-                            {/* Ajoutez ici la logique pour afficher les activités du chien si nécessaire */}
+
+                            {/* Liste des activités du chien */}
+                            <ul>
+                                {chien?.activites.length > 0 ? (
+                                    chien.activites.map((activite, activiteIndex) => (
+                                        <li key={activiteIndex}>
+                                            <p>{activite?.nomActivites} {activite?.level ? `au niveau ${activite.level}` : ''}</p>
+                                        </li>
+                                    ))
+                                ) : (
+                                    ""
+                                )}
+                            </ul>
+
+                            <NavLink to="/RegistrationActivities">
+                                <Button content="Ajouter une activité" />
+                            </NavLink>
+
                             <div className={`${styles.sup}`} onClick={() => deleteDogFront(chien.idChien)} >
                                 <i className="fa-solid fa-circle-xmark orangeStroke"></i>
-                                <p>supprimer {chien.nomChien} de ce compte</p>
+                                <p>supprimer {chien?.nomChien} de ce compte</p>
                             </div>
                         </div>
                     ))}

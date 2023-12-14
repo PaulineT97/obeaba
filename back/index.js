@@ -7,13 +7,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookie());
 
-// --- --- ---> C O N S T A N T E S <--- --- --- //
-const port = 8000;
-
-require("./database");
-const routes = require("./routes");
-
-// --- --- ---> app.use <--- --- --- //
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
@@ -21,6 +14,10 @@ app.use((req, res, next) => {
   next();
 });
 
+const port = 8000;
+
+require("./database");
+const routes = require("./routes");
 app.use(routes);
 
 // gestion des routes non reconnues

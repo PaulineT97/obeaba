@@ -53,7 +53,7 @@ export async function addActivity(values) {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({values}),
+        body: JSON.stringify(values),
     });
     const backResponse = await response.json();
     if (response.ok) {
