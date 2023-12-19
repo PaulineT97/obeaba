@@ -12,6 +12,7 @@ export default function AuthProvider({children}) {
     async function login(values) {
         const newUser = await signin(values);
         setUser(newUser);
+        return newUser;
     }
 
     async function logout() {
@@ -22,6 +23,7 @@ export default function AuthProvider({children}) {
     return (
         <AuthContext.Provider value={{
             user,
+            setUser,
             login,
             logout,
         }}>

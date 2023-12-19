@@ -286,7 +286,7 @@ router.post("/deleteUserBDD", (req, res) => {
                 if (err) throw err;
 
                 let message = { messageGood: "Votre compte adhérent et vos informations sauvegardées vont être supprimés." }
-                // res.send(message);
+                res.send(message);
                 
 
             });
@@ -294,8 +294,6 @@ router.post("/deleteUserBDD", (req, res) => {
         });
         
     });
-    res.clearCookie("token");
-        res.end();
 });
 
 

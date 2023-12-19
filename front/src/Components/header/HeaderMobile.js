@@ -17,19 +17,6 @@ export default function Header() {
             {showMenu && (
                 <MobileMenu showMenu={showMenu} setShowMenu={setShowMenu} />
             )}
-
-
-            {/* <ul className={`${styles.boutons}`}>
-                <button className={`mr10 btn btn-primary`}>
-                    <i className="fas fa-star mr5"></i>
-                    <span>Favoris</span>
-                </button>
-
-                <button className={`mr10 btn btn-primary-reverse`}>
-                    <i className="fas fa-right-to-bracket mr5"></i>
-                    <span>Connexion</span>
-                </button>
-            </ul> */}
         </header>
     )
 }

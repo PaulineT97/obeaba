@@ -57,7 +57,6 @@ export async function signin(values) {
     });
     const backResponse = await response.json();
     if (response.ok) {
-        console.log('this is the back response for the login', backResponse);
         return backResponse;
     } else {
         if (backResponse) {

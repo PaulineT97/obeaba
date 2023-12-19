@@ -17,7 +17,7 @@ export default function Profile() {
 
     //ANCHOR - Constantes
 
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
     const [modify, setModify] = useState(false);
     const [updatedUser, setUpdatedUser] = useState(user);
 
@@ -25,6 +25,7 @@ export default function Profile() {
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
     const navigate = useNavigate();
+    const { logout } = useContext(AuthContext);
 
     const yupSchema = yup.object({
         nom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
@@ -119,10 +120,13 @@ export default function Profile() {
             if (response.messageGood) {
 
                 setFeedbackGood(response.messageGood);
+                await logout;
 
                 setTimeout(() => {
                     setFeedbackGood("");
-                    navigate("/")
+                    setUser(null);
+                    navigate("/");
+                    
                 }, 3000);
             } else {
                 setFeedback('Erreur lors de la suppression du compte adhérent.');

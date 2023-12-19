@@ -3,6 +3,7 @@ import App from './App';
 import { lazy } from "react";
 import { userLoader } from "./Loaders/UserLoader";
 import ProtectedRoute from "./Components/protectedRoute/ProtectedRoute";
+import ProtectedRouteAdmin from "./Components/protectedRoute/ProtectedRouteAdmin";
 const Home = lazy(() => import("./Pages/Home/Home"));
 const ErrorPage = lazy(() => import("./Pages/ErrorPage"));
 const Forms = lazy(() => import("./Pages/Forms/Forms"));
@@ -21,6 +22,10 @@ const MentionsLegales = lazy(() => import("./Components/legalContent/MentionsLeg
 const CGU = lazy(() => import("./Components/legalContent/CGU"));
 const Confidentialite = lazy(() => import("./Components/legalContent/politiqueConfidentialite"));
 const Registration = lazy(() => import("./Pages/Activities/Registration"));
+const EspaceAdmin = lazy(() => import("./Pages/Admin/EspaceAdmin"));
+const Adherents = lazy(() => import("./Pages/Admin/Adherents"));
+const Chiens = lazy(() => import("./Pages/Admin/Chiens"));
+const Educateurs = lazy(() => import("./Pages/Admin/Educateurs"));
 
 
 export const Router = createBrowserRouter([
@@ -63,6 +68,28 @@ export const Router = createBrowserRouter([
                         <Registration />
                     </ProtectedRoute>
                 ),
+            },
+            {
+                path: "/Admin",
+                element: (
+                    <ProtectedRouteAdmin>
+                        <EspaceAdmin />
+                    </ProtectedRouteAdmin>
+                ),
+                children:[
+                    {
+                        path: "",
+                        element: <Adherents />,
+                    },
+                    {
+                        path: "chiens",
+                        element: <Chiens />,
+                    },
+                    {
+                        path: "educateurs",
+                        element: <Educateurs />,
+                    },
+                ]
             },
             {
                 path: "/WelcomeDog",

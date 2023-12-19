@@ -49,11 +49,17 @@ export default function Header() {
                     <ul>
                         {user === null ? (
                             <li><NavLink className={`${styles.lien}`} title='se connecter' to="/Forms">Mon compte</NavLink></li>
-                        ) : (
+                        ) : user.adherent.admin === 0 ? (
                             <>
                                 <li><NavLink className={`${styles.lien}`} title='mon profil' to="/Profile"><i className="fa-solid fa-user logged"></i></NavLink></li>
                                 <li><NavLink className={`${styles.lien}`} title='se déconnecter' onClick={logout}
- to="/"><i className="fa-solid fa-right-from-bracket logged"></i></NavLink></li>
+                                    to="/"><i className="fa-solid fa-right-from-bracket logged"></i></NavLink></li>
+                            </>
+                        ) : (
+                            <>
+                                <li><NavLink className={`${styles.lien}`} title='espace administrateur' to="/Admin"><i className="fa-solid fa-user logged"></i></NavLink></li>
+                                <li><NavLink className={`${styles.lien}`} title='se déconnecter' onClick={logout}
+                                    to="/"><i className="fa-solid fa-right-from-bracket logged"></i></NavLink></li>
                             </>
                         )}
                         <li><NavLink className={`${styles.lien}`} to="/WelcomeDog" title='conseils pour accueillir un chien chez soi'>Accueillir un chien</NavLink></li>

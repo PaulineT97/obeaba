@@ -47,7 +47,7 @@ export default function Login() {
             setFeedbackGood("Connexion réussie, vous allez être redirigés");
             reset(defaultValues);
             setTimeout(() => {
-                navigate("/Profile");
+                userBack.adherent.admin ? navigate("/Admin") : navigate("/Profile");
             },
                 2000);
 

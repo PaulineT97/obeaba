@@ -21,9 +21,9 @@ const routes = require("./routes");
 app.use(routes);
 
 // gestion des routes non reconnues
-app.use("*", (req, res) => {
-  res.status(404).end();
-});
+// app.use("*", (req, res) => {
+//   res.status(404).end();
+// });
 
 
 app.listen(port, () => {

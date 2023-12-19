@@ -45,10 +45,16 @@ export default function MenuBurger({showMenu, setShowMenu}) {
                 <ul >
                     {user === null ? (
                         <li><NavLink className={`${styles.lien}`} to="/Forms" onClick={() => setShowMenu(!showMenu)}>Mon compte</NavLink></li>
+                    ) : user.adherent.admin === 0 ? (
+                        <>
+                            <li><NavLink className={`${styles.lien}`} title='mon profil' to="/Profile"  onClick={() => setShowMenu(!showMenu)}><i className="fa-solid fa-user logged"></i></NavLink></li>
+                            <li><NavLink className={`${styles.lien}`} title='se déconnecter' onClick={logout}
+                                to="/"><i className="fa-solid fa-right-from-bracket logged"></i></NavLink></li>
+                        </>
                     ) : (
                         <>
-                            <li><NavLink className={`${styles.lien}`} to="/Profile" onClick={() => setShowMenu(!showMenu)}><i className="fa-solid fa-user logged"></i></NavLink></li>
-                            <li><NavLink className={`${styles.lien}`} onClick={logout}
+                            <li><NavLink className={`${styles.lien}`} title='espace administrateur' to="/Admin"  onClick={() => setShowMenu(!showMenu)}><i className="fa-solid fa-user logged"></i></NavLink></li>
+                            <li><NavLink className={`${styles.lien}`} title='se déconnecter' onClick={logout}
                                 to="/"><i className="fa-solid fa-right-from-bracket logged"></i></NavLink></li>
                         </>
                     )}
