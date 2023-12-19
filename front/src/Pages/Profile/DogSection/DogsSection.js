@@ -96,13 +96,15 @@ export default function DogsSection({
     function deleteChien(id) {
         remove(id);
     }
+    
 
     return (
         <>
-            {updatedUser.chiens && updatedUser.chiens.length > 0 && (
+            {
+            updatedUser.chiens && updatedUser.chiens.length > 0 && (
                 <>
                     <h2 className='titreOrange'> <i class="fa-solid fa-dog Orange"></i> Mes chiens</h2>
-                    {updatedUser.chiens?.map((chien, index) => (
+                    {updatedUser.chiens?.filter((chien, index, array) => array.findIndex(c => c.idChien === chien.idChien) === index).map((chien, index) => (
                         <div key={chien?.idChien} className={` ${styles.texte} box`} >
                             <h3 className='titreArticle'>{chien?.nomChien}</h3>
                             <p>Date de naissance : {format(new Date(chien?.naissance), 'dd/MM/yyyy')}</p>
@@ -111,7 +113,8 @@ export default function DogsSection({
                             {/* Liste des activités du chien */}
                             <ul>
                                 {chien?.activites.length > 0 ? (
-                                    chien.activites.map((activite, activiteIndex) => (
+                                    chien.activites
+                                    .map((activite, activiteIndex) => (
                                         <li key={activiteIndex}>
                                             <p>{activite?.nomActivites} {activite?.level ? `au niveau ${activite.level}` : ''}</p>
                                         </li>
@@ -121,7 +124,7 @@ export default function DogsSection({
                                 )}
                             </ul>
 
-                            <NavLink to="/RegistrationActivities">
+                            <NavLink to="/RegistrationActivities" title='inscrire mon chien à une nouvelle activité'>
                                 <Button content="Ajouter une activité" />
                             </NavLink>
 

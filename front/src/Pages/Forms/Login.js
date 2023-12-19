@@ -42,7 +42,7 @@ export default function Login() {
         try {
             clearErrors();
             const userBack = await login(values);
-            console.log(userBack);
+            console.log("this is the user back", userBack);
 
             setFeedbackGood("Connexion réussie, vous allez être redirigés");
             reset(defaultValues);
@@ -78,12 +78,12 @@ export default function Login() {
                 )}
             </div>
 
-            <NavLink to="/NewPassword" style={{ fontSize: '0.9rem', fontStyle: 'italic' }}> Mot de passe oublié ? </NavLink>
+            <NavLink to="/NewPassword" title='mot de passe oublié ?' style={{ fontSize: '0.9rem', fontStyle: 'italic' }}> Mot de passe oublié ? </NavLink>
 
             {feedback && <p className={`mb10 mt20 ${styles.feedback}`}>{feedback}</p>}
 
             {feedbackGood && <p className={`mb10 mt20 ${styles.feedbackGood}`}>{feedbackGood}</p>}
-            <Button content="Voir mon profil" className="send" />
+            <Button content="Voir mon profil" title="accéder à ma page de profil" className="send" />
         </form>
     )
 }

@@ -30,7 +30,7 @@ export async function deleteDogBack(idChien) {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({idChien:idChien}),
+        body: JSON.stringify({ idChien: idChien }),
     });
     const backResponse = await response.json();
     if (response.ok) {
@@ -55,6 +55,11 @@ export async function addActivity(values) {
         },
         body: JSON.stringify(values),
     });
+
+    if (response.status === 409) {
+        throw { message: 'Duplicata détecté pour l\'activité du chien.' };
+    }
+    
     const backResponse = await response.json();
     if (response.ok) {
         console.log(backResponse);

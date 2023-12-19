@@ -23,11 +23,41 @@ form {
 
     .cgu {
         display: flex;
+        align-items: center;
         margin: 7% 3% 3% 0;
 
         label {
-            margin-right: 3%;
+            margin-left: 3%;
             font-size: 1rem;
+        }
+    }
+
+    .enteteActivity {
+        display: flex;
+        align-items: center;
+
+        span {
+            font-family: var(--satisfy);
+            font-size: 2rem;
+            margin-right: 3%;
+        }
+        button {
+            padding: 10% 5% 0 15%;
+        }
+    }
+
+    .oneActivity {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        margin: 1% 0;
+
+        select {
+            width: 25%;
+        }
+
+        button {
+            padding: 3% 15%;
         }
     }
 

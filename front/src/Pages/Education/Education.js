@@ -39,7 +39,7 @@ export default function Education() {
                                 <div className='overlayText'></div>
                                 <div className='relative'>
                                     <p>Vous pouvez déjà retrouver nos conseils pour préparer  l’arrivée de votre compagnon, sur notre page “Un chien à la maison”.</p>
-                                    <NavLink to="/WelcomeDog">
+                                    <NavLink title='quelques conseils pour accueillir un chien à la maison' to="/WelcomeDog">
                                         <Button content="découvrir nos conseils" />
                                     </NavLink>
                                 </div>
@@ -79,7 +79,7 @@ export default function Education() {
                                         <li>votre compagnon est  <span className='bold'>réactif</span> avec les humains  et / ou ses congénaires</li>
                                     </ul>
                                     <p>Nous étudions ensemble votre besoin et vous proposons un planning adapté.</p>
-                                    <NavLink to="/ContactUs">
+                                    <NavLink title='contactez nous' to="/ContactUs">
                                         <Button content="Prendre rendez-vous" />
                                     </NavLink>
 
@@ -112,7 +112,7 @@ export default function Education() {
                                         <li>marcher en laisse</li>
                                     </ul>
                                     <p>Certains objectifs sont travaillés dès le premier niveau mais il n’est pas attendu du chien qu’ils soient “acquis”.</p>
-                                    <NavLink end to="/RegistrationActivities">
+                                    <NavLink title='inscrire mon chien à une activité' end to="/RegistrationActivities">
                                         <Button content="Inscrire mon chien" />
                                     </NavLink>
 

@@ -3,8 +3,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import styles from "./Activities.module.scss";
 import { useForm, useFieldArray } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../../Components/button/Button";
 import { useNavigate } from "react-router-dom";
 import { addActivity } from "../../apis/dogs";
@@ -40,44 +38,8 @@ export default function Registration() {
     const [listActivities, setListActivities] = useState([]);
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
+    const [isChienSelected, setIsChienSelected] = useState(false);
     const navigate = useNavigate();
-
-    const yupSchema = yup.object({
-        nom: yup
-            .string()
-            .required("Champ obligatoire")
-            .min(2, "Le champ doit contenir 2 caractères minimum")
-            .max(12, "Le champ doit contenir 12 caractères maximum"),
-        prenom: yup
-            .string()
-            .required("Champ obligatoire")
-            .min(2, "Le champ doit contenir 2 caractères minimum")
-            .max(12, "Le champ doit contenir 12 caractères maximum"),
-        email: yup
-            .string()
-            .required("Champ obligatoire")
-            .matches(
-                /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                "Votre email n'est pas valide"
-            ),
-        motdepasse: yup
-            .string()
-            .required("Mot de passe obligatoire")
-            .min(12, "Mot de passe trop court")
-            .max(64, "Mot de passe trop long")
-            .matches(
-                /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-                "Doit contenir au moins une majuscule, un chiffre et un caractère spécial"
-            ),
-        confirmMdp: yup
-            .string()
-            .required("Vous devez confirmer votre mot de passe")
-            .oneOf([
-                yup.ref("motdepasse", ""),
-                "Les mots de passe doivent être identiques",
-            ]),
-        cgu: yup.boolean().required("Vous devez accepter les CGU"),
-    });
 
     const defaultValues = {
         activites: [],
@@ -94,7 +56,6 @@ export default function Registration() {
     } = useForm({
         defaultValues,
         mode: "onChange",
-        resolver: yupResolver(yupSchema),
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -131,13 +92,16 @@ export default function Registration() {
             chien: "",
             level: "",
         });
+        setIsChienSelected(true);
     };
 
     const deleteAct = (id) => {
         remove(id);
+        const remainingChiens = getValues().activites.some(
+            (activite) => !!activite.chien
+        );
+        setIsChienSelected(remainingChiens);
     };
-
-    // Ajoutez cette fonction quelque part dans votre composant
 
     const checkEligibility = (selectedChien, selectedActivity, selectedLevel) => {
         console.log(selectedChien);
@@ -147,7 +111,7 @@ export default function Registration() {
         const activityLimits = getActivityLimits(selectedActivity.idActivites);
         console.log(activityLimits);
 
-        // Vérifier les conditions d'éligibilité en fonction de l'âge, du niveau et de l'activité
+        // Vérifie les conditions d'éligibilité en fonction de l'âge, du niveau et de l'activité
         return (
             (differenceMois >= activityLimits.debutant &&
                 selectedLevel === "débutant") ||
@@ -163,28 +127,55 @@ export default function Registration() {
         clearErrors();
         const values = getValues();
 
+        let selectedChien, selectedActivity, selectedLevel;  
+
+
         try {
             console.log("user", user);
+
+            // Vérifier si chaque activité a tous les champs remplis
+            const isAllActivitiesFilled = values.activites.every(
+                (activite) =>
+                    activite.chien !== "" &&
+                    activite.activite !== "" &&
+                    activite.level !== ""
+            );
+
+            // Vérifier s'il y a au moins une activité avec un chien sélectionné
+            const hasAtLeastOneChien = values.activites.some(
+                (activite) => !!activite.chien
+            );
+
+            // Vérifier les deux conditions en une seule
+            if (!isAllActivitiesFilled || !hasAtLeastOneChien) {
+                setFeedback(
+                    "Veuillez remplir tous les champs pour chaque activité et sélectionner au moins un chien."
+                );
+                return;
+            }
 
             for (let index = 0; index < values.activites.length; index++) {
                 const activite = values.activites[index];
                 const chienId = activite.chien;
                 console.log("chienId", chienId);
-                const selectedChien = user?.chiens.find(
+                
+                selectedChien = user?.chiens.find(
                     (chien) => chien.idChien === parseInt(chienId, 10)
                 );
                 console.log("selectedChien", selectedChien);
+
                 if (selectedChien) {
-                    const selectedActivity = listActivities.find(
+                    selectedActivity = listActivities.find(
                         (a) => a.idActivites === parseInt(activite.activite, 10)
                     );
                     console.log("selectedActivity", selectedActivity);
-                    const selectedLevel = activite.level;
+
+                    selectedLevel = activite.level;
                     if (
                         !checkEligibility(selectedChien, selectedActivity, selectedLevel)
                     ) {
-                        console.log("test4");
-                        const errorMessage = `Votre chien est trop jeune pour l'activité "${selectedActivity.nomActivites}" de niveau "${selectedLevel}"`;
+                        console.log("test");
+                        const errorMessage = `${selectedChien.nomChien} est trop jeune pour l'activité "${selectedActivity.nomActivites}" de niveau "${selectedLevel}"`;
 
                         setFeedback(errorMessage);
                         return;
@@ -203,7 +194,15 @@ export default function Registration() {
                 }, 2000);
             }
         } catch (error) {
-            console.error(error);
+            console.error(error.message);
+            const message = error.message;
+            if (message === "Duplicata détecté pour l'activité du chien.") {
+                const errorMessage = `${selectedChien.nomChien} est déjà inscrit à l'activité "${selectedActivity.nomActivites}" niveau "${selectedLevel}"`;
+
+                setFeedback(errorMessage);
+            } else {
+                setFeedback(message);
+            }
         }
     };
 
@@ -216,25 +215,24 @@ export default function Registration() {
                         <div className="d-flex flex-column mb20 mr20">
                             <label
                                 htmlFor="name"
-                                className="d-flex justify-content-center align-items-center mb10"
+                                className="enteteActivity"
                             >
-                                <span className="mr10">Nouvelle activité</span>
-                                <button
+                                <span>Nouvelle activité</span>
+                                <Button
                                     onClick={addAct}
                                     type="button"
-                                    className="btn btn-primary-reverse"
-                                >
-                                    +
-                                </button>
+                                    content="&nbsp; + &nbsp;"
+                                />
                             </label>
                             <ul>
                                 {fields.map((activites, index) => (
-                                    <li key={index} className="">
+
+                                    <li key={index} className="oneActivity">
                                         <select
                                             id="chien"
                                             {...register(`activites[${index}].chien`)}
                                         >
-                                            {user?.chiens.map((c) => (
+                                            {user?.chiens.filter(c => activites[index]?.chien !== c.idChien).map((c) => (
                                                 <option key={c.idChien} value={c.idChien}>
                                                     {c.nomChien}
                                                 </option>
@@ -258,23 +256,21 @@ export default function Registration() {
                                             <option value="intermédiaire">intermédiaire</option>
                                             <option value="confirmé">confirmé</option>
                                         </select>
-                                        <button
+                                        <Button
                                             onClick={() => deleteAct(index)}
-                                            className="btn btn-primary"
-                                        >
-                                            -
-                                        </button>
+                                            content="annuler"
+                                        />
                                     </li>
+
                                 ))}
                             </ul>
                             {feedback && <p className={`feedback`}>{feedback}</p>}
                             {feedbackGood && <p className={`feedbackGood`}>{feedbackGood}</p>}
                         </div>
                         <Button
-                            onClick={() => submit()}
-                            type="submit"
                             content="Enregistrer"
                             className="send"
+                            disabled={!isChienSelected}
                         />
                     </form>
                 </div>

@@ -9,7 +9,7 @@ export default function Footer () {
     // const Nav = ({Title, Link1, Link2, Link3, Link4}) => ()
     return(
         <footer className={`${styles.footer}`}>
-            <NavLink to="/ContactUs">
+            <NavLink title="nous contacter" to="/ContactUs">
                 <Contact/>
             </NavLink>
          
@@ -58,7 +58,7 @@ export default function Footer () {
 {/* PARTIE MENTIONS LEGALES */}
 
             <div className={`${styles.mentionsLegales}`}>
-                <p>© 2023 | <NavLink to="/MentionsLegales" style={{display: 'inline' }}>mentions légales</NavLink>  | <NavLink to="/CGU" style={{display: 'inline' }}>CGU</NavLink> | <NavLink to="confidentialite" style={{display: 'inline' }}>politique de confidentialité</NavLink></p>
+                <p>© 2023 | <NavLink to="/MentionsLegales" title="mentions légales" style={{display: 'inline' }}>mentions légales</NavLink>  | <NavLink to="/CGU" title="conditions générales d'utilisation" style={{display: 'inline' }}>CGU</NavLink> | <NavLink to="confidentialite" title="politique de confidentialité" style={{display: 'inline' }}>politique de confidentialité</NavLink></p>
             </div>
 
         </footer>

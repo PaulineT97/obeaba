@@ -48,7 +48,7 @@ export default function ContactForm() {
             <label htmlFor="motif">Expliquez votre demande</label>
             <textarea className='motif' type="text" id="motif" maxLength={500} placeholder='   . . .' required />
           </div>
-          <Button content="Envoyer votre demande" className='send' />
+          <Button content="Envoyer votre demande" title='envoyer votre demande' className='send' />
         </form >
 
       </div>

@@ -48,22 +48,22 @@ export default function Header() {
                 <nav>
                     <ul>
                         {user === null ? (
-                            <li><NavLink className={`${styles.lien}`} to="/Forms">Mon compte</NavLink></li>
+                            <li><NavLink className={`${styles.lien}`} title='se connecter' to="/Forms">Mon compte</NavLink></li>
                         ) : (
                             <>
-                                <li><NavLink className={`${styles.lien}`} to="/Profile"><i className="fa-solid fa-user logged"></i></NavLink></li>
-                                <li><NavLink className={`${styles.lien}`} onClick={logout}
+                                <li><NavLink className={`${styles.lien}`} title='mon profil' to="/Profile"><i className="fa-solid fa-user logged"></i></NavLink></li>
+                                <li><NavLink className={`${styles.lien}`} title='se déconnecter' onClick={logout}
  to="/"><i className="fa-solid fa-right-from-bracket logged"></i></NavLink></li>
                             </>
                         )}
-                        <li><NavLink className={`${styles.lien}`} to="/WelcomeDog">Accueillir un chien</NavLink></li>
-                        <li><NavLink className={`${styles.lien}`} to="/Education">Education</NavLink></li>
+                        <li><NavLink className={`${styles.lien}`} to="/WelcomeDog" title='conseils pour accueillir un chien chez soi'>Accueillir un chien</NavLink></li>
+                        <li><NavLink className={`${styles.lien}`} to="/Education" title='éducation canine'>Education</NavLink></li>
                         <li><NavLink end to="/"><div className={`${styles.logoWidth}`}>
                             <img src={Logo} alt="linea - chien de profil" />
                         </div></NavLink></li>
-                        <li><NavLink className={`${styles.lien}`} to="/Agility">Agility</NavLink></li>
-                        <li><NavLink className={`${styles.lien}`} to="/DogDance">Obérythmée</NavLink></li>
-                        <li><NavLink className={`${styles.lien}`} to="/Walk">Balades organisées</NavLink></li>
+                        <li><NavLink className={`${styles.lien}`} to="/Agility" title='agility'>Agility</NavLink></li>
+                        <li><NavLink className={`${styles.lien}`} to="/DogDance" title='obérythmée'>Obérythmée</NavLink></li>
+                        <li><NavLink className={`${styles.lien}`} to="/Walk" title='balades organisées'>Balades organisées</NavLink></li>
                     </ul>
                 </nav>
             </div>

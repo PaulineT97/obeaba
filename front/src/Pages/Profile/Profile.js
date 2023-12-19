@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button from '../../Components/button/Button';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { updateUser } from "../../apis/users";
+import { updateUser, deleteUserBack } from "../../apis/users";
 import DogsSection from './DogSection/DogsSection';
 
 export default function Profile() {
@@ -109,6 +109,30 @@ export default function Profile() {
         }
     }
 
+    async function deleteUser() {
+        const idAd = user.adherent.idAdher
+        console.log('you clicked', idAd);
+        try {
+
+            const response = await deleteUserBack(idAd);
+
+            if (response.messageGood) {
+
+                setFeedbackGood(response.messageGood);
+
+                setTimeout(() => {
+                    setFeedbackGood("");
+                    navigate("/")
+                }, 3000);
+            } else {
+                setFeedback('Erreur lors de la suppression du compte adhérent.');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
     console.log(updateUser);
 
 
@@ -130,7 +154,7 @@ export default function Profile() {
 
                             </div>
 
-                            <div className={`${styles.sup}`} style={{ width: "45%" }} >
+                            <div onClick={() => deleteUser()} className={`${styles.sup}`} style={{ width: "45%" }} >
                                 <i className="fa-solid fa-circle-xmark orangeStroke"></i>
                                 <p>supprimer mon compte</p>
                             </div>
@@ -181,30 +205,31 @@ export default function Profile() {
                                     <p>Nom : {updatedUser?.adherent?.nom}</p>
                                     <p>Prénom : {updatedUser?.adherent?.prenom}</p>
                                     <p>Adresse mail : {updatedUser?.adherent?.email}</p>
-                                    <NavLink to="/NewPassword" style={{ fontStyle: 'italic' }}>Modifier mon mot de passe</NavLink>
+                                    <NavLink title='modifier mon mot de passe' to="/NewPassword" style={{ fontStyle: 'italic' }}>Modifier mon mot de passe</NavLink>
                                 </>
                         }
                     </div>
 
                     {/* Affichage des chiens */}
+
+                        <DogsSection
+                            fields={fields}
+                            append={append}
+                            remove={remove}
+                            getValues={getValues}
+                            errors={errors}
+                            feedback={feedback}
+                            feedbackGood={feedbackGood}
+                            setFeedback={setFeedback}
+                            setFeedbackGood={setFeedbackGood}
+                            updatedUser={updatedUser}
+                            setUpdatedUser={setUpdatedUser}
+                            navigate={navigate}
+                            register={register}
+                            clearErrors={clearErrors}
+                            handleSubmit={handleSubmit}
+                        />
                     
-                    <DogsSection
-                        fields={fields}
-                        append={append}
-                        remove={remove}
-                        getValues={getValues}
-                        errors={errors}
-                        feedback={feedback}
-                        feedbackGood={feedbackGood}
-                        setFeedback={setFeedback}
-                        setFeedbackGood={setFeedbackGood}
-                        updatedUser={updatedUser}
-                        setUpdatedUser={setUpdatedUser}
-                        navigate={navigate}
-                        register={register}
-                        clearErrors={clearErrors}
-                        handleSubmit={handleSubmit}
-                    />
                 </div>
             </main >
         </>

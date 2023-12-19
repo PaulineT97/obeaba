@@ -14,12 +14,12 @@ export default function Forms() {
                 <div className={`shadow ${styles.box}`}>
                     <div className={`${styles.options}`}>
                         <div className={`${styles.left}`}>
-                            <NavLink className={({ isActive }) => (isActive ? styles.active : styles.inactive)} end to="">
+                            <NavLink className={({ isActive }) => (isActive ? styles.active : styles.inactive)} title='je me connecte' end to="">
                                 <h2 className='titreArticle'><i className="fa-solid fa-paw Paw"></i> Je me connecte </h2>
                             </NavLink>
                         </div>
                         <div className={`${styles.right}`} >
-                            <NavLink className={({ isActive }) => (isActive ? styles.active : styles.inactive)} to="register">
+                            <NavLink className={({ isActive }) => (isActive ? styles.active : styles.inactive)} title="je m'inscris" to="register">
                                 <h2 className='titreArticle'><i className="fa-solid fa-paw Paw"></i> Je m'inscris </h2>
                             </NavLink>
                         </div>

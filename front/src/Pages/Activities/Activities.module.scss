@@ -1,6 +1,28 @@
+@use "../../Assets//Styles/mixin.scss" as mixin;
+
 main{
     .container{
         width: 60%;
+        
+        @include mixin.l-lt {
+            width: 60%;
+        }
+
+        @include mixin.md-lt {
+            width: 70%;
+        }
+
+        @include mixin.sm-md {
+            width: 80%;
+        }
+
+        @include mixin.tablette {
+            width: 90%;
+        }
+
+        @include mixin.xs-sm {
+            width: 90%;
+        }
 
     }
     li{

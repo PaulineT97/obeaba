@@ -40,13 +40,17 @@ router.post("/deleteDog", (req, res) => {
   console.log(req.body.idChien);
 
   const deleteDogSql = "DELETE FROM chiens WHERE idChien = ?";
-  connection.query(deleteDogSql, idChien, (err, result) => {
+  const deletePratiquerSql = "DELETE FROM pratiquer WHERE idChien = ?";
+
+  connection.query(deletePratiquerSql, idChien, (err, result) => {
     if (err) throw err;
 
+    connection.query(deleteDogSql, idChien, (err, result) => {
+      if (err) throw err;
 
-
-    let message = { messageGood: "Vos modifications ont bien été prises en compte" }
-    res.send(message);
+      let message = { messageGood: "Vos modifications ont bien été prises en compte" }
+      res.send(message);
+    });
   });
 });
 
@@ -60,26 +64,64 @@ router.get("/getActivities", (req, res) => {
   });
 });
 
-router.post("/addActivity", (req, res) => {
+
+router.post("/addActivity", async (req, res) => {
   const activites = req.body.activites;
   console.log(req.body);
-  console.log(activites);
 
-  for (const a of activites) {
-    const sqlActivite = "INSERT INTO pratiquer (idChien, idActivites, level) VALUES (?,?,?)";
-    const valuesAct = [a.chien, a.activite, a.level];
+  try {
+    for (const a of activites) {
+      // Requête pour vérifier la présence d'une ligne avec les mêmes valeurs
+      const sqlCheckDuplicate =
+        "SELECT * FROM pratiquer WHERE idChien = ? AND idActivites = ? AND level = ?";
+      const valuesCheck = [a.chien, a.activite, a.level];
 
-    try {
-      // Insérer l'activité dans la table pratiquer
-      connection.query(sqlActivite, valuesAct);
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Erreur lors de l\'ajout des activités.' });
+      // Exécute la requête de vérification
+      const rows = await new Promise((resolve, reject) => {
+        connection.query(sqlCheckDuplicate, valuesCheck, (err, rows) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          }
+          resolve(rows);
+        });
+      });
+
+      // Si une ligne avec les mêmes valeurs existe déjà, renvoie un message d'erreur
+      if (rows.length > 0) {
+        console.log(`Duplicata détecté pour l'activité du chien ${a.chien}`);
+        return res.status(409).json({
+          message: `Duplicata détecté pour l'activité du chien ${a.chien}`,
+        });
+      }
+
+      // Aucun duplicata détecté, procède à l'insertion
+      const sqlInsert =
+        "INSERT INTO pratiquer (idChien, idActivites, level) VALUES (?,?,?)";
+      const valuesInsert = [a.chien, a.activite, a.level];
+
+      // Exécute la requête pour insérer l'activité
+      await new Promise((resolve, reject) => {
+        connection.query(sqlInsert, valuesInsert, (err) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          }
+          console.log(`Activité ajoutée pour le chien ${a.chien}`);
+          resolve();
+        });
+      });
     }
-  }
 
-  let message = { messageGood: "Vos modifications ont bien été prises en compte" }
-  res.send(message);
+    let message = {
+      messageGood: "Vos modifications ont bien été prises en compte",
+    };
+    res.send(message);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Erreur lors de l'ajout des activités." });
+  }
 });
 
 module.exports = router;

@@ -57,6 +57,7 @@ export async function signin(values) {
     });
     const backResponse = await response.json();
     if (response.ok) {
+        console.log('this is the back response for the login', backResponse);
         return backResponse;
     } else {
         if (backResponse) {
@@ -77,4 +78,27 @@ export async function signout() {
     await fetch(`${API_USERS}/logout`, {
         method: "DELETE",
     })
+}
+
+export async function deleteUserBack(idAd) {
+    console.log("Sending request to delete a user:", idAd);
+    const response = await fetch(`${API_USERS}/deleteUserBDD`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idAd }),
+    });
+    const backResponse = await response.json();
+    if (response.ok) {
+        console.log(backResponse);
+        return backResponse;
+    } else {
+        if (backResponse) {
+            throw backResponse;
+        } else {
+            console.error('Error API deleting a dog:');
+            throw new Error('Unexpected error');
+        }
+    }
 }

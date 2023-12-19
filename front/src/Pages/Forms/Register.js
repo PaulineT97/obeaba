@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button from '../../Components/button/Button';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from "../../apis/users";
+import { Link } from 'react-router-dom';
 
 export default function Register() {
 
@@ -17,32 +18,32 @@ export default function Register() {
 
     const yupSchema = yup.object({
         nom: yup
-        .string()
-        .required(" champ obligatoire")
-        .min(2, "le champ doit contenir 2 caractères minimum")
-        .max(12, "le champ doit contenir 12 caractères maximum"),
+            .string()
+            .required(" champ obligatoire")
+            .min(2, "le champ doit contenir 2 caractères minimum")
+            .max(12, "le champ doit contenir 12 caractères maximum"),
         prenom: yup
-        .string()
-        .required(" champ obligatoire")
-        .min(2, "le champ doit contenir 2 caractères minimum")
-        .max(12, "le champ doit contenir 12 caractères maximum"),
+            .string()
+            .required(" champ obligatoire")
+            .min(2, "le champ doit contenir 2 caractères minimum")
+            .max(12, "le champ doit contenir 12 caractères maximum"),
         email: yup
-        .string()
-        .required(" champ obligatoire")
-        .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Votre email n'est pas valide"),
+            .string()
+            .required(" champ obligatoire")
+            .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Votre email n'est pas valide"),
         motdepasse: yup
-        .string()
-        .required("Mot de passe obligatoire")
-        .min(12, "mot de passe trop court")
-        .max(64, "mot de passe trop long")
-        .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, "Doit contenir au moins une majuscule, un chiffre et un caractère spécial"),
+            .string()
+            .required("Mot de passe obligatoire")
+            .min(12, "mot de passe trop court")
+            .max(64, "mot de passe trop long")
+            .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, "Doit contenir au moins une majuscule, un chiffre et un caractère spécial"),
         confirmMdp: yup
-        .string()
-        .required("vous devez confirmer votre mdp")
-        .oneOf([yup.ref("motdepasse", ""), "les mots de passe doivent être identiques"]),
+            .string()
+            .required("vous devez confirmer votre mdp")
+            .oneOf([yup.ref("motdepasse", ""), "les mots de passe doivent être identiques"]),
         cgu: yup
-        .boolean()
-        .required("vous devez accepter les CGU"),
+            .boolean()
+            .required("vous devez accepter les CGU"),
         // nomChien: yup.string().required(" champ obligatoire"),
     });
 
@@ -190,7 +191,7 @@ export default function Register() {
             <div>
                 <label className="add" htmlFor="chien" >
                     <span className='titreArticle'>Ajouter un chien</span>
-                    <Button className="btn" content=" + " onClick={addChien} type="button" />
+                    <Button className="btn" title="ajouter un chien" content=" + " onClick={addChien} type="button" />
                 </label>
 
                 <ul>
@@ -226,7 +227,7 @@ export default function Register() {
                                 )}
                             </div>
 
-                            <Button className="btn" onClick={() => deleteChien(index)} content="-" type="button" />
+                            <Button className="btn" title="supprimer cette ligne" onClick={() => deleteChien(index)} content="-" type="button" />
 
                         </li>
                     ))}
@@ -247,8 +248,9 @@ export default function Register() {
 
             {/* --- --- --- --- ---> I N P U T . C G U  <--- --- --- --- --- */}
             <div className="cgu">
-                <label htmlFor="cgu">J'ai lu et j'accepte les conditions générales d'utilisation</label>
                 <input {...register("cgu")} type="checkbox" id="cgu" />
+                <label htmlFor="cgu">J'ai lu et j'accepte les <Link to="/CGU" title="accéder aux conditions générales d'utilisation" target="_blank" style={{textDecoration: "underline",  display: 'inline'}}>conditions générales d'utilisation</Link> et la <Link to="/confidentialite" title='accéder à la politique de confidentialité' target="_blank" style={{textDecoration: "underline",  display: 'inline'}}>politique de confidentialité</Link></label>
+
 
                 {errors?.cgu && (
                     <p style={{ color: "red" }}> {errors.cgu.message} </p>
@@ -257,7 +259,7 @@ export default function Register() {
 
             {/* --- --- --- --- ---> B U T T O N <--- --- --- --- --- */}
 
-            <Button content="Finaliser l'inscription" />
+            <Button content="Finaliser l'inscription" title="Finaliser l'inscription" />
 
         </form>
 

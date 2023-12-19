@@ -1,3 +1,5 @@
+@use "../../Assets//Styles/mixin.scss" as mixin;
+
 .banniere {
     width: 100%;
     height: 80vh;
@@ -6,6 +8,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include mixin.md-lt {
+        height: 70vh;
+    }
+
+    @include mixin.sm-md {
+        height: 70vh;
+    }
+
+    @include mixin.tablette {
+        height: 70vh;
+    }
+
+    @include mixin.xs-sm {
+        height: 30vh;
+    }
 
     h1 {
         position: relative;
@@ -26,6 +44,26 @@ main {
             display: flex;
             flex-direction: column;
 
+            @include mixin.l-lt {
+                width: 60%;
+            }
+
+            @include mixin.md-lt {
+                width: 70%;
+            }
+
+            @include mixin.sm-md {
+                width: 80%;
+            }
+
+            @include mixin.tablette {
+                width: 100%;
+            }
+
+            @include mixin.xs-sm {
+                width: 100%;
+            }
+
             p {
                 padding: 2% 0;
                 font-size: 1.25rem;
@@ -38,18 +76,37 @@ main {
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 5%;
+                @include mixin.tablette {
+                    flex-direction: column;
+                }
+                @include mixin.xs-sm {
+                    flex-direction: column;
+                }
 
                 .button {
                     width: 45%;
+
+                    @include mixin.tablette {
+                        width: 70%;
+                    }
+                    @include mixin.xs-sm {
+                        width: 70%;
+                    }
                 }
 
+                
             }
         }
 
         .sup {
+            width: 100%;
             display: flex;
             align-items: center;
             cursor: pointer;
+
+            @include mixin.xs-sm {
+                width: 100%;
+            }
 
             i {
                 margin: 5%;
@@ -58,13 +115,16 @@ main {
             p {
                 font-size: 1.1rem;
                 font-style: italic;
+
+                @include mixin.xs-sm {
+                    font-size: 1rem;
+                }
             }
         }
-        .ul{
+        .ul {
             width: 100%;
             display: flex;
             justify-content: center;
         }
     }
 }
-
