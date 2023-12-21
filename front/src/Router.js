@@ -4,6 +4,7 @@ import { lazy } from "react";
 import { userLoader } from "./Loaders/UserLoader";
 import ProtectedRoute from "./Components/protectedRoute/ProtectedRoute";
 import ProtectedRouteAdmin from "./Components/protectedRoute/ProtectedRouteAdmin";
+import ProtectedRouteLogged from './Components/protectedRoute/ProtectedRouteLogged';
 const Home = lazy(() => import("./Pages/Home/Home"));
 const ErrorPage = lazy(() => import("./Pages/ErrorPage"));
 const Forms = lazy(() => import("./Pages/Forms/Forms"));
@@ -13,7 +14,13 @@ const Profile = lazy(() => import("./Pages/Profile/Profile"));
 const WelcomeDog = lazy(() => import("./Pages/WelcomeDog/WelcomeDog"));
 const Education = lazy(() => import("./Pages/Education/Education"));
 const Agility = lazy(() => import("./Pages/Agility/Agility"));
+const AgiDebut = lazy(() => import("./Pages/Agility/AgiDebut"));
+const AgiInt = lazy(() => import("./Pages/Agility/AgiInt"));
+const AgiConf = lazy(() => import("./Pages/Agility/AgiConf"));
 const DogDance = lazy(() => import("./Pages/DogDance/DogDance"));
+const ObeDebut = lazy(() => import("./Pages/DogDance/ObeDebut"));
+const ObeInt = lazy(() => import("./Pages/DogDance/ObeInt"));
+const ObeConf = lazy(() => import("./Pages/DogDance/ObeConf"));
 const Walk = lazy(() => import("./Pages/Walk/Walk"));
 const NewPassword = lazy(() => import("./Pages/Security/NewPassword"));
 const ResetPassword = lazy(() => import("./Pages/Security/ResetPassword"));
@@ -49,8 +56,12 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/Forms",
-                element: <Forms />,
-                children:[
+                element: (
+                    <ProtectedRouteLogged>
+                        <Forms />
+                    </ProtectedRouteLogged>
+                ),
+                children: [
                     {
                         path: "",
                         element: <Login />,
@@ -76,7 +87,7 @@ export const Router = createBrowserRouter([
                         <EspaceAdmin />
                     </ProtectedRouteAdmin>
                 ),
-                children:[
+                children: [
                     {
                         path: "",
                         element: <Adherents />,
@@ -102,10 +113,38 @@ export const Router = createBrowserRouter([
             {
                 path: "/Agility",
                 element: <Agility />,
+                children: [
+                    {
+                        path: "",
+                        element: <AgiDebut />,
+                    },
+                    {
+                        path: "agiInt",
+                        element: <AgiInt />,
+                    },
+                    {
+                        path: "agiConf",
+                        element: <AgiConf />,
+                    },
+                ]
             },
             {
                 path: "/DogDance",
                 element: <DogDance />,
+                children: [
+                    {
+                        path: "",
+                        element: <ObeDebut />,
+                    },
+                    {
+                        path: "obeInt",
+                        element: <ObeInt />,
+                    },
+                    {
+                        path: "obeConf",
+                        element: <ObeConf />,
+                    },
+                ]
             },
             {
                 path: "/Walk",
@@ -117,22 +156,22 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/resetPassword",
-                element: <ResetPassword/>,
+                element: <ResetPassword />,
             },
             {
-                path:"/ContactUs",
+                path: "/ContactUs",
                 element: <ContactUs />,
             },
             {
-                path:"/MentionsLegales",
+                path: "/MentionsLegales",
                 element: <MentionsLegales />,
             },
             {
-                path:"/cgu",
+                path: "/cgu",
                 element: <CGU />,
             },
             {
-                path:"/confidentialite",
+                path: "/confidentialite",
                 element: <Confidentialite />,
             },
         ]

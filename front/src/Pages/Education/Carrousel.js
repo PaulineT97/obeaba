@@ -27,7 +27,9 @@ export default function Slider() {
                         const blob = new Blob([new Uint8Array(educateur.photo.data)]);
                         const imageUrl = URL.createObjectURL(blob);
                         return {
+                            id: educateur.idEduc,
                             nom: educateur.nom,
+                            certification: educateur.nameCertification,
                             introduction: educateur.introduction,
                             photo: imageUrl,
                         };
@@ -81,7 +83,7 @@ export default function Slider() {
                             </div>
 
                             <div className="txt">
-                                <h2>{element.nom}, </h2>
+                                <h2>{element.nom}, {element.certification} </h2>
                                 <p>{element.introduction}</p>
                             </div>
 

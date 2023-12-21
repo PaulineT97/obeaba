@@ -3,7 +3,7 @@ const connection = require("../../database");
 
 router.get("/allEducateurs", (req, res) => {
     try {
-        const sqlSelect = "SELECT * FROM educateurs";
+        const sqlSelect = "SELECT educateurs.*, possede.*, certification.* FROM educateurs JOIN possede ON educateurs.idEduc = possede.idEduc JOIN certification ON possede.idCertification = certification.idCertification";
         connection.query(sqlSelect, (err, result) => {
             if (err) {
                 console.log(err);
@@ -11,7 +11,7 @@ router.get("/allEducateurs", (req, res) => {
                 return;
             } else {
             const data = result;
-            console.log(data);
+            // console.log(data);
             res.json(data);
             }
         });

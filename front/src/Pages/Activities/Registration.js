@@ -232,7 +232,12 @@ export default function Registration() {
                                             id="chien"
                                             {...register(`activites[${index}].chien`)}
                                         >
-                                            {user?.chiens.filter(c => activites[index]?.chien !== c.idChien).map((c) => (
+                                            {user?.chiens.filter((chien, currentIndex, chiens) => {
+                                                return (
+                                                    chiens.findIndex((c) => c.idChien === chien.idChien
+                                                    ) === currentIndex
+                                                );
+                                            }).map((c) => (
                                                 <option key={c.idChien} value={c.idChien}>
                                                     {c.nomChien}
                                                 </option>

@@ -235,6 +235,31 @@ main {
         margin-right: 3%;
     }
 
+    .btn{
+        background-color: var(--clair);
+        font-family: var(--satisfy);
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: block;
+        width:max-content;
+        white-space: nowrap;
+        padding: 1% 4%;
+        border-radius: .8rem;
+        border: none;
+        box-shadow: 4px 4px 4px 0px rgba(29, 49, 36, 0.25) inset;
+        transition: 0.5s all;
+        &:hover{
+            transform: scale(0.95);
+            box-shadow: 6px 6px 6px 0px rgba(29, 49, 36, 0.25) inset;
+        }
+    }
+
+    .active{
+        .btn{
+            background-color: var(--orange);
+        }
+    }
+
     // .active {
     //     i{
     //         font-size: 1.8rem;

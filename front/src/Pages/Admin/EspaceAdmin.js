@@ -10,7 +10,7 @@ export default function EspaceAdmin() {
 
             <div className={styles.container}>
                 <aside>
-                    <NavLink to="" title="gérer les adhérents" >
+                    <NavLink end to="" title="gérer les adhérents" >
                         <Button content="Les adhérents" />
                     </NavLink>
 

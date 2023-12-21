@@ -25,3 +25,15 @@
         z-index: 0;
     }
 }
+
+.mainAgi{
+    section{
+        width: 80%;
+        .levelChoice{
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            margin: 3% 0;
+        }
+    }
+}

@@ -34,28 +34,36 @@ router.post("/login", (req, res) => {
                     const sqlData = `SELECT adherents.idAdher, adherents.nom, adherents.prenom, adherents.email, adherents.admin, chiens.idChien, chiens.nomChien, chiens.naissance, chiens.race, pratiquer.level, activites.nomActivites FROM adherents LEFT JOIN chiens ON adherents.idAdher = chiens.idAdher LEFT JOIN pratiquer ON chiens.idChien = pratiquer.idChien LEFT JOIN activites ON pratiquer.idActivites = activites.idActivites WHERE adherents.idAdher = ?`;
                     connection.query(sqlData, [idAd], (err, result) => {
                         if (err) throw err;
-                        const connectedUser = {
+                        let connectedUser = {
                             adherent: {
                                 idAdher: result[0].idAdher,
                                 nom: result[0].nom,
                                 prenom: result[0].prenom,
                                 email: result[0].email,
-                                admin : result[0].admin,
+                                admin: result[0].admin,
                             },
-                            chiens: result.map(row => ({
+                        };
+
+                        // Vérifie s'il y a des chiens associés
+                        const hasDogs = result.some((row) => row.idChien !== null);
+                        console.log(hasDogs);
+                        if (hasDogs) {
+                            connectedUser.chiens = result.map((row) => ({
                                 idChien: row.idChien,
                                 nomChien: row.nomChien,
                                 naissance: row.naissance,
                                 race: row.race,
                                 activites: result
-                                    .filter(act => act.idChien === row.idChien &&
-                                        row.idChien !== null)
-                                    .map(act => ({
+                                    .filter(
+                                        (act) => act.idChien === row.idChien && row.idChien !== null
+                                    )
+                                    .map((act) => ({
                                         nomActivites: act.nomActivites,
                                         level: act.level,
                                     })),
-                            })),
-                        };
+                            }));
+                        }
+
                         res.json(connectedUser);
                     })
                 } else {
@@ -181,7 +189,7 @@ router.get("/userConnected", (req, res) => {
                 if (err) throw err;
                 console.log({ result });
                 if (result.length > 0) {
-                    const connectedUser = {
+                    let connectedUser = {
                         adherent: {
                             idAdher: result[0].idAdher,
                             nom: result[0].nom,
@@ -189,20 +197,28 @@ router.get("/userConnected", (req, res) => {
                             email: result[0].email,
                             admin: result[0].admin,
                         },
-                        chiens: result.map(row => ({
+                    };
+
+                    // Vérifie s'il y a des chiens associés
+                    const hasDogs = result.some((row) => row.idChien !== null);
+                    console.log(hasDogs);
+                    if (hasDogs) {
+                        connectedUser.chiens = result.map((row) => ({
                             idChien: row.idChien,
                             nomChien: row.nomChien,
                             naissance: row.naissance,
                             race: row.race,
                             activites: result
-                                .filter(act => act.idChien === row.idChien &&
-                                    row.idChien !== null)
-                                .map(act => ({
+                                .filter(
+                                    (act) => act.idChien === row.idChien && row.idChien !== null
+                                )
+                                .map((act) => ({
                                     nomActivites: act.nomActivites,
                                     level: act.level,
                                 })),
-                        })),
-                    };
+                        }));
+                    }
+
                     console.log(connectedUser);
                     res.json(connectedUser);
                 } else {
@@ -287,12 +303,12 @@ router.post("/deleteUserBDD", (req, res) => {
 
                 let message = { messageGood: "Votre compte adhérent et vos informations sauvegardées vont être supprimés." }
                 res.send(message);
-                
+
 
             });
-            
+
         });
-        
+
     });
 });
 

@@ -21,7 +21,6 @@ export default function Profile() {
     const [modify, setModify] = useState(false);
     const [updatedUser, setUpdatedUser] = useState(user);
 
-    console.log(updatedUser);
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
     const navigate = useNavigate();
