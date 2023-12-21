@@ -74,6 +74,35 @@ export default function CGU() {
 
                     <p>Les contenus graphiques (images et vidéos - hors logo) sont utilisés et disponibles depuis des applications libres de droit (unsplash, pixabay et freepik).</p>
 
+                    <p>CREDITS PHOTOS</p>
+
+                    <ul>
+                        <li>"Equipe" de Anemone123 sur Pixabay</li>
+                        <li>"Dogs Tunnel" 825545 Pixabay</li>
+                        <li>"Ed1" 3194556 Pixabay</li>
+                        <li>"Ed2" 947051 Pixabay</li>
+                        <li>"Ed3" RebeccasPictures Pixabay</li>
+                        <li>"Ed4" suzanne906 Pixabay</li>
+                        <li>"Ed5" ToNic-Pics Pixabay</li>
+                        <li>"Ed6" Humphrey Muleba Unsplash</li>
+                        <li>"Ed7" Manuel Meza Unsplash</li>
+                        <li>"Ed8" Tamas Pap Unsplash</li>
+                        <li>"Ed9" Tadeusz Lakota Unsplash</li>
+                        <li>"Ed10" Samuel Girven Unsplash</li>
+
+                        <li>"Header Obeaba" rawpixel.com Freepik</li>
+                        <li>"Header Mon Compte" Cookie the Pom Unsplash</li>
+                        <li>"Header Education" RebeccasPictures Pixabay</li>
+                        <li>"Chiot" Currens Pixabay</li>
+                        <li>"A Walk" ElfinFox Pixabay</li>
+                        <li>"Randonnée" StoskSnap sur Pixabay</li>
+
+                        <li>"Education" suzanne906 Pixabay</li>
+                        <li>"Agility" Andrea Lightfoot Unsplash</li>
+                        <li>"Dog Dancing" AdinaVoicu Pixabay</li>
+                        <li>"Promenade" Willea26 Pixabay</li>
+                    </ul>
+
                     <p>L’Éditeur du site se réserve le droit de modérer ou de supprimer librement et à tout moment les contenus mis en ligne par les utilisateurs, et ce sans justification.</p>
 
                 </section>

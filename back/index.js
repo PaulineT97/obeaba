@@ -3,11 +3,11 @@ const bodyParser = require("body-parser");
 const app = express();
 const cookie = require("cookie-parser");
 
+app.use(express.json({ limit: "5000mb" }));
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookie());
-app.use(bodyParser.json({ limit: "250mb" }));
-app.use(bodyParser.urlencoded({ limit: "250mb", extended: true }));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

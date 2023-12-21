@@ -5,7 +5,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fetchAllEducateurs } from '../../apis/educators';
-import { fetchCertifications, addCertification, addEducator } from '../../apis/admin';
+import { fetchCertifications, addCertification, addEducator, deleteEducBack } from '../../apis/admin';
 
 export default function Educateurs() {
 
@@ -27,7 +27,7 @@ export default function Educateurs() {
         prenom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
         certification: yup.string().required(" champ obligatoire"),
         présentation: yup.string().required(" champ obligatoire"),
-        photo : yup.mixed().test('fileType', 'Seuls les fichiers de type image sont autorisés', (value) => {
+        photo: yup.mixed().test('fileType', 'Seuls les fichiers de type image sont autorisés', (value) => {
             if (!value) return true;  // La validation n'est pas requise si le champ est vide
             return value && value[0] && value[0].type.startsWith('image/');
         }).required('Champ obligatoire'),
@@ -127,7 +127,6 @@ export default function Educateurs() {
         values.idEduc = educateurId;
 
         try {
-            console.log(values);
             console.log(`educateur is now : ${values} `);
 
             const newCertification = await addCertification(values);
@@ -187,6 +186,8 @@ export default function Educateurs() {
                     setFeedback(newEducator.message);
                 } else {
                     setFeedbackGood(newEducator.messageGood);
+                    console.log("Nouvel éducateur ajouté :", newEducator.nouveauEducateur);
+
                     setTimeout(() => {
                         setAddAnEduc(false);
                         setFeedbackGood("");
@@ -199,27 +200,25 @@ export default function Educateurs() {
     }
 
     async function deleteEducateur(educateurId) {
+
         try {
             console.log('you cliked to suppress the educator', educateurId);
+
+            const educateurDeleted = await deleteEducBack(educateurId);
             // Envoyer une requête de suppression à votre API
-            // const response = await fetch(`${API_ADMIN}/deleteEducateur/${educateurId}`, {
-            //     method: 'DELETE',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // });
-    
-            // const result = await response.json();
-    
-            // if (response.ok) {
-            //     // Mettez à jour l'état ou effectuez d'autres actions si la suppression réussit
-            //     console.log(result.message);
-            //     // Par exemple, mettez à jour la liste des éducateurs après la suppression
-            //     const updatedEducateurs = educateurs.filter(e => e.id !== educateurId);
-            //     setEducateurs(updatedEducateurs);
-            // } else {
-            //     console.error('Erreur lors de la suppression de l\'éducateur:', result.message);
-            // }
+
+
+            if (educateurDeleted.messageGood) {
+                setFeedbackGood(educateurDeleted.messageGood);
+
+                setTimeout(() => {
+                    const updatedEducateurs = educateurs.filter(e => e.id !== educateurId);
+                    setEducateurs(updatedEducateurs);
+                    setFeedbackGood("");
+                }, 3000);
+            } else {
+                setFeedback("Erreur lors de la suppression de l'éducateur.");
+            }
         } catch (error) {
             console.error('Erreur lors de la suppression de l\'éducateur:', error);
         }
@@ -231,7 +230,7 @@ export default function Educateurs() {
 
             <article>
                 {educateurs.map((e, index) => (
-                    <div className={`box ${styles.educContainer}`} id={e.id} key={e.id}>
+                    <div className={`box ${styles.container}`} id={e.id} key={e.id}>
                         <div className={styles.left}>
                             <img src={e.photo} alt="" />
                         </div>
@@ -274,7 +273,7 @@ export default function Educateurs() {
                                     <p>{e.introduction}</p>
                                     <div className={styles.options}>
                                         <Button content='Modifier la certification' onClick={() => modifyOnClick(e.id)} />
-                                        <button className="btn" onClick={() =>deleteEducateur(e.id)}>Supprimer l'éducateur</button>
+                                        <button className="btn" onClick={() => deleteEducateur(e.id)}>Supprimer l'éducateur</button>
                                     </div>
                                 </>
                             )}
@@ -289,7 +288,7 @@ export default function Educateurs() {
                 {addAnEduc ? (
 
                     <form onSubmit={handleSubmit(submit)} style={{ width: '100%' }}>
-                        <div className={`box ${styles.educContainer}`}>
+                        <div className={`box ${styles.container}`}>
 
                             <div className={styles.left}>
                                 {/* --- --- --- --- ---> I N P U T . P H O T O . A V E C . L A B E L <--- --- --- --- --- */}

@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const connection = require("../../database");
 
+//NOTE - gestion des EDUCATEURS 
+
 router.get("/getCertifications", (req, res) => {
     try {
         const sqlSelect = "SELECT * FROM certification";
@@ -37,61 +39,90 @@ router.post("/updateCertification", (req, res) => {
 })
 
 router.post("/addEducator", async (req, res) => {
-    console.log("test");
-    // const { nom, certification, introduction, photo } = req.body;
+    const { nom, certification, introduction, photo } = req.body;
 
-    // console.log(req.body);
+    console.log(req.body);
+
+    const newEduc = [];
     // Démarrer une transaction pour garantir la cohérence des données
-    // try {
-    //     // Insérer l'éducateur
-    //     const sqlEducateur = "INSERT INTO educateurs (nom, introduction, photo) VALUES (?,?,?)";
-    //     const valuesEducateur = [nom, introduction, photo];
+    try {
+        // Insérer l'éducateur
+        const sqlEducateur = "INSERT INTO educateurs (nom, introduction, photo) VALUES (?,?,?)";
+        const valuesEducateur = [nom, introduction, photo];
 
-    //     connection.query(sqlEducateur, valuesEducateur, (err, result) => {
-    //         if (err) throw err;
-    //         let resultBack = req.body;
-    //         resultBack.id = result.insertId;
+        connection.query(sqlEducateur, valuesEducateur, (err, result) => {
+            if (err) throw err;
+            let resultBack = req.body;
+            resultBack.id = result.insertId;
 
-    //         const nouvellementAjouteIdEducateur = result.insertId;
-    //         console.log("Resultat de l'éducateur:", result);
-    //         console.log("Nouvel ID de l'éducateur:", nouvellementAjouteIdEducateur);
+            const nouvellementAjouteIdEducateur = result.insertId;
+            console.log("Resultat de l'éducateur:", result);
+            console.log("Nouvel ID de l'éducateur:", nouvellementAjouteIdEducateur);
 
-    //     // Insérer la certification en utilisant l'identifiant de l'éducateur
-    //     const sqlCertification = "INSERT INTO possede (idCertification, idEduc) VALUES (?,?)";
-    //     const valuesCertification = [certification, nouvellementAjouteIdEducateur];
+            // Insérer la certification en utilisant l'identifiant de l'éducateur
+            const sqlCertification = "INSERT INTO possede (idCertification, idEduc) VALUES (?,?)";
+            const valuesCertification = [certification, nouvellementAjouteIdEducateur];
 
-    //     connection.query(sqlCertification, valuesCertification);
+            connection.query(sqlCertification, valuesCertification);
 
-    //     // Utiliser l'identifiant pour récupérer l'éducateur nouvellement ajouté
-    //     const nouveauEducateur = (connection.query("SELECT * FROM educateurs WHERE idEduc = ?", [nouvellementAjouteIdEducateur]))[0];
+            // Utiliser l'identifiant pour récupérer l'éducateur nouvellement ajouté
+            const nouvelEducateur = (connection.query("SELECT * FROM educateurs WHERE idEduc = ?", [nouvellementAjouteIdEducateur]))[0];
 
-    //     let message = { messageGood: "L'éducateur a bien été ajouté", nouveauEducateur };
-    //     res.json(message);
-    //     });
+            newEduc.push(nouvelEducateur)
 
-    // } catch (err) {
-    //     console.error(err);
-    //     return res.status(500).json({ message: "Erreur lors de l'ajout de l'éducateur et de sa certification." });
-    // }
+        });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Erreur lors de l'ajout de l'éducateur et de sa certification." });
+    }
+    let message = { messageGood: "L'éducateur a bien été ajouté", newEduc };
+    res.send(message);
 });
 
 router.delete('/deleteEducateur/:educateurId', async (req, res) => {
     const educateurId = req.params.educateurId;
 
-    try {
-        // Effectuez la logique de suppression dans votre base de données
-        // Assurez-vous de traiter les erreurs correctement
+    // try {
+        const deleteEducCertification = `DELETE FROM possede WHERE idEduc = ?`;
+        connection.query(deleteEducCertification, educateurId, (err, result) => {
+            if (err) throw err;
 
-        // Exemple :
-        // const result = await EducateurModel.deleteOne({ _id: educateurId });
+            const deleteEducateur = `DELETE FROM educateurs WHERE idEduc = ?`;
+            connection.query(deleteEducateur, educateurId, (err, result) => {
+                if (err) throw err;
 
-        // Ensuite, envoyez une réponse appropriée
-        res.status(200).json({ message: 'L\'éducateur a été supprimé avec succès.' });
-    } catch (error) {
-        console.error('Erreur lors de la suppression de l\'éducateur:', error);
-        res.status(500).json({ message: 'Erreur lors de la suppression de l\'éducateur.' });
-    }
+                let message = { messageGood: "L'éducateur a été supprimé avec succès." };
+                // res.status(200).json(message);
+                res.send(message);
+            });
+        });
+    // } catch (error) {
+    //     console.error('Erreur lors de la suppression de l\'éducateur:', error);
+    //     res.status(500).json({ message: 'Erreur lors de la suppression de l\'éducateur.' });
+    // }
 });
 
+//NOTE - gestion des ADHERENTS
+
+router.get("/getAdherents", (req, res) => {
+    try {
+        const sqlSelect = "SELECT adherents.nom, adherents.prenom, adherents.email FROM adherents";
+        connection.query(sqlSelect, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "Internal Server Error" });
+                return;
+            } else {
+                const data = result;
+                console.log(data);
+                res.json(data);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 module.exports = router;
