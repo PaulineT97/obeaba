@@ -51,6 +51,18 @@
                 i {
                     font-size: 1.6rem;
                 }
+
+                @include mixin.sm-md {
+                    margin-bottom: 15%;
+                }
+
+                @include mixin.tablette {
+                    margin-bottom: 15%;
+                }
+
+                @include mixin.xs-sm {
+                    margin-bottom: 15%;
+                }
             }
 
             .optionMenu {
@@ -70,15 +82,17 @@
             .footerMobile {
                 @include mixin.sm-md {
                     display: flex;
+                    flex-direction: column-reverse;
                 }
 
                 @include mixin.tablette {
                     display: flex;
-
+                    flex-direction: column-reverse;
                 }
 
                 @include mixin.xs-sm {
                     display: flex;
+                    flex-direction: column-reverse;
                 }
 
             }

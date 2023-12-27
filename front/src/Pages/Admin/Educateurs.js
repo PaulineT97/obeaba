@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './EspaceAdmin.module.scss';
 import Button from '../../Components/button/Button';
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fetchAllEducateurs } from '../../apis/educators';
@@ -13,10 +13,11 @@ export default function Educateurs() {
 
     const [educateurs, setEducateurs] = useState([]);
     const [certification, setCertification] = useState([]);
-    const [editingEducateurId, setEditingEducateurId] = useState(null);
+
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
     const [modify, setModify] = useState(false);
+    const [editingEducateurId, setEditingEducateurId] = useState(null);
     const [addAnEduc, setAddAnEduc] = useState(false);
     // useState pour l'input de type file
     const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -25,7 +26,7 @@ export default function Educateurs() {
 
     const yupSchema = yup.object({
         prenom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
-        certification: yup.string().required(" champ obligatoire"),
+        certification: yup.number().required(" champ obligatoire"),
         présentation: yup.string().required(" champ obligatoire"),
         photo: yup.mixed().test('fileType', 'Seuls les fichiers de type image sont autorisés', (value) => {
             if (!value) return true;  // La validation n'est pas requise si le champ est vide
@@ -129,12 +130,48 @@ export default function Educateurs() {
         try {
             console.log(`educateur is now : ${values} `);
 
+            console.log("Before addCertification:", values.certification);
             const newCertification = await addCertification(values);
+            console.log("After addCertification:", values.certification);
 
 
             if (newCertification.message) {
                 setFeedback(newCertification.message);
+
             } else {
+
+                setEducateurs(prevEducateurs => {
+                    console.log("prevEducateurs:", prevEducateurs);
+
+                    console.log("Certification array:", certification);
+
+                    const updatedEducateurs = prevEducateurs.map(educateur => {
+                        if (educateur.id === educateurId) {
+                            const newCertif = values.certification;
+
+                            console.log("New certification:", newCertif);
+
+                            const selectedCertification = certification.find(c => c.idCertification === parseInt(values.certification, 10));
+
+                            console.log("Selected certification:", selectedCertification);
+
+                            const certificationName = selectedCertification ? selectedCertification.nameCertification : '';
+
+                            console.log("Certification name:", certificationName);
+
+                            return {
+                                ...educateur,
+                                certification: certificationName
+                            };
+                        }
+                        return educateur;
+                    });
+
+                    console.log("updatedEducateurs:", updatedEducateurs);
+
+                    return updatedEducateurs;
+                });
+
                 setFeedbackGood(newCertification.messageGood);
                 setTimeout(() => {
                     setModify(false);
@@ -185,17 +222,40 @@ export default function Educateurs() {
                 if (newEducator.message) {
                     setFeedback(newEducator.message);
                 } else {
-                    setFeedbackGood(newEducator.messageGood);
-                    console.log("Nouvel éducateur ajouté :", newEducator.nouveauEducateur);
-
-                    setTimeout(() => {
-                        setAddAnEduc(false);
-                        setFeedbackGood("");
-                    }, 2000);
+                    if (newEducator.newEduc && newEducator.newEduc.length > 0) {
+                        // Si de nouveaux éducateurs ont été ajoutés, accédez au premier éducateur du tableau
+                        const nouvelEducateur = newEducator.newEduc[0];
+                        console.log("Nouvel éducateur ajouté :", nouvelEducateur.nameCertification);
+        
+                        // Accédez au champ nameCertification de l'objet nouvelEducateur
+                        const certificationName = nouvelEducateur.nameCertification;
+        
+                        setFeedbackGood(newEducator.messageGood);
+        
+                        // Mettez à jour l'état des éducateurs en ajoutant le nouvel éducateur à la liste existante
+                        setEducateurs(prevEducateurs => [
+                            {
+                                ...nouvelEducateur,
+                                certification: certificationName
+                            },
+                            ...prevEducateurs
+                        ]);
+        
+                        // Affichez le nameCertification dans la console ou faites ce que vous souhaitez avec cette information
+                        console.log("Certification du nouvel éducateur :", certificationName);
+        
+                        setTimeout(() => {
+                            setAddAnEduc(false);
+                            setFeedbackGood("");
+                        }, 2000);
+                    } else {
+                        console.error("Erreur lors de l'ajout de l'éducateur. Nouvel éducateur non défini.");
+                    }
                 }
             } catch (error) {
                 console.error(error);
             }
+
         }
     }
 
@@ -206,7 +266,6 @@ export default function Educateurs() {
 
             const educateurDeleted = await deleteEducBack(educateurId);
             // Envoyer une requête de suppression à votre API
-
 
             if (educateurDeleted.messageGood) {
                 setFeedbackGood(educateurDeleted.messageGood);
@@ -230,7 +289,7 @@ export default function Educateurs() {
 
             <article>
                 {educateurs.map((e, index) => (
-                    <div className={`box ${styles.container}`} id={e.id} key={e.id}>
+                    <div className={`box ${styles.containerBox}`} id={e.id} key={index}>
                         <div className={styles.left}>
                             <img src={e.photo} alt="" />
                         </div>
@@ -271,6 +330,14 @@ export default function Educateurs() {
                                 <>
                                     <p className={styles.certif}>{e.certification}</p>
                                     <p>{e.introduction}</p>
+
+
+                                    {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}
+
+                                    {feedback && <p className={`mb10 mt20 feedback`}>{feedback}</p>}
+
+                                    {feedbackGood && <p className={`mb10 mt20 feedbackGood`}>{feedbackGood}</p>}
+
                                     <div className={styles.options}>
                                         <Button content='Modifier la certification' onClick={() => modifyOnClick(e.id)} />
                                         <button className="btn" onClick={() => deleteEducateur(e.id)}>Supprimer l'éducateur</button>
@@ -288,7 +355,7 @@ export default function Educateurs() {
                 {addAnEduc ? (
 
                     <form onSubmit={handleSubmit(submit)} style={{ width: '100%' }}>
-                        <div className={`box ${styles.container}`}>
+                        <div className={`box ${styles.containerBox}`}>
 
                             <div className={styles.left}>
                                 {/* --- --- --- --- ---> I N P U T . P H O T O . A V E C . L A B E L <--- --- --- --- --- */}

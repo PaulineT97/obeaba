@@ -241,9 +241,9 @@ export default function Register() {
 
             {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}
 
-            {feedback && <p className={`mb10 mt20 ${styles.feedback}`}>{feedback}</p>}
+            {feedback && <p className={`feedback`}>{feedback}</p>}
 
-            {feedbackGood && <p className={`mb10 mt20 ${styles.feedbackGood}`}>{feedbackGood}</p>}
+            {feedbackGood && <p className={`feedbackGood`}>{feedbackGood}</p>}
 
 
             {/* --- --- --- --- ---> I N P U T . C G U  <--- --- --- --- --- */}

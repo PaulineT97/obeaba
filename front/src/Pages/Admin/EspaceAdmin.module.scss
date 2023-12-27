@@ -28,7 +28,50 @@
 
             article {
                 width: 100%;
-                .container {
+
+                .dogList {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 2% 3%;
+
+                    .listItem {
+                        width: 20%;
+                    }
+
+                    .listItemAge {
+                        width: 10%;
+                    }
+
+                    form {
+                        width: 8%;
+
+                        .modifications {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            .select {
+                                width: 30%;
+                            }
+                        }
+
+                        .options {
+                            width: 50%;
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                    }
+
+                }
+
+                .choiceActivity {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 5%;
+                }
+
+                .containerBox {
                     width: 90%;
                     display: flex;
                     justify-content: space-around;
@@ -61,8 +104,15 @@
                     }
                 }
 
+                .feedbackContainer {
+                    width: 100%;
+                }
             }
         }
     }
 
+    .active {
+        background-color: var(--orange);
+
+    }
 }

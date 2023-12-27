@@ -304,7 +304,6 @@ router.post("/deleteUserBDD", (req, res) => {
                 let message = { messageGood: "Votre compte adhérent et vos informations sauvegardées vont être supprimés." }
                 res.send(message);
 
-
             });
 
         });

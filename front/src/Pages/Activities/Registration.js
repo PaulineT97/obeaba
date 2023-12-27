@@ -10,7 +10,12 @@ import { addActivity } from "../../apis/dogs";
 const calculateAgeDifference = (selectedChien) => {
     const { naissance } = selectedChien;
     const dateNaissance = new Date(naissance);
+    console.log(dateNaissance);
     const dateActuelle = new Date();
+    console.log(dateActuelle);
+
+    console.log(dateNaissance.getMonth());
+
     return (
         (dateActuelle.getFullYear() - dateNaissance.getFullYear()) * 12 +
         dateActuelle.getMonth() -
