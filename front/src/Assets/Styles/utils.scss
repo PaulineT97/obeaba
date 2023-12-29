@@ -115,7 +115,7 @@ main {
     justify-content: center;
     width: 100%;
     padding: 8% 0;
-    min-height: 80vh;
+    min-height: 100vh;
     aside {
         width: 60%;
         font-size: 1.5rem;
@@ -258,6 +258,21 @@ main {
     .active{
         .btn{
             background-color: var(--orange);
+        }
+    }
+
+    .notice{
+        width: 100%;
+        font-style: italic;
+        font-weight: 500;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5%;
+        p{
+            width: 80%;
+            font-size: 1rem;
+            text-align: center;
         }
     }
 

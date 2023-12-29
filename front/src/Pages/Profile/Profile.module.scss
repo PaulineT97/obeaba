@@ -76,9 +76,11 @@ main {
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 5%;
+
                 @include mixin.tablette {
                     flex-direction: column;
                 }
+
                 @include mixin.xs-sm {
                     flex-direction: column;
                 }
@@ -89,12 +91,13 @@ main {
                     @include mixin.tablette {
                         width: 70%;
                     }
+
                     @include mixin.xs-sm {
                         width: 70%;
                     }
                 }
 
-                
+
             }
         }
 
@@ -121,10 +124,18 @@ main {
                 }
             }
         }
+
         .ul {
             width: 100%;
             display: flex;
             justify-content: center;
         }
+    }
+
+    .ajoutChien {
+        width: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }

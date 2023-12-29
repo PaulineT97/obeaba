@@ -9,6 +9,7 @@ export default function Adherents() {
     const [listUsers, setListUsers] = useState([]);
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
+    const [selectedAdherentId, setSelectedAdherentId] = useState(null);
 
     //ANCHOR - Fonctions 
 
@@ -43,6 +44,7 @@ export default function Adherents() {
                 }, 3000);
             } else {
                 console.error('Erreur lors de la suppression de l\'adhérent:', deletedAdherent.message);
+                setFeedback('Erreur lors de la suppression, réessayez.')
             }
         } catch (error) {
             console.error('Erreur lors de la suppression de l\'adhérent:', error);
@@ -61,16 +63,19 @@ export default function Adherents() {
                                 <p>{u.nom}</p>
                                 <p>{u.prenom}</p>
                                 <p>{u.email}</p>
-                                <Button content="supprimer l'adhérent" onClick={() => deleteAdherent(u.idAdher)} />
-
+                                <Button content="supprimer l'adhérent" onClick={() => {
+                                    deleteAdherent(u.idAdher);
+                                    setSelectedAdherentId(u.idAdher);
+                                }} />
                             </div>
                             <div className={styles.feedbackContainer}>
                                 {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}
-
-                                {feedback && <p className={`mb10 mt20 feedback`}>{feedback}</p>}
-
-                                {feedbackGood && <p className={`mb10 mt20 feedbackGood`}>{feedbackGood}</p>}
-
+                                {u.idAdher === selectedAdherentId && feedback && (
+                                    <p className={`mb10 mt20 feedback`}>{feedback}</p>
+                                )}
+                                {u.idAdher === selectedAdherentId && feedbackGood && (
+                                    <p className={`mb10 mt20 feedbackGood`}>{feedbackGood}</p>
+                                )}
                             </div>
                         </div>
                     ))}

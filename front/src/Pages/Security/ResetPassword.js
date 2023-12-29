@@ -18,9 +18,18 @@ const ResetPassword = () => {
     const email = searchParams.get('email');
 
     const yupSchema = yup.object({
-        motdepasse: yup.string().required("Mot de passe obligatoire").min(5, "mot de passe trop court").max(10, "mot de passe trop long"),
-        confirmMdp: yup.string().required("vous devez confirmer votre mdp").oneOf([yup.ref("motdepasse", ""), "les mots de passe doivent être identiques"]),
+        motdepasse: yup
+            .string()
+            .required("Mot de passe obligatoire")
+            .min(12, "mot de passe trop court")
+            .max(64, "mot de passe trop long")
+            .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, "Doit contenir au moins une majuscule, un chiffre et un caractère spécial"),
+        confirmMdp: yup
+            .string()
+            .required("vous devez confirmer votre mot de passe")
+            .oneOf([yup.ref("motdepasse"), null], "Les mots de passe doivent être identiques"),
     });
+
     const defaultValues = {
         motdepasse: "",
         confirmMdp: "",
@@ -84,6 +93,12 @@ const ResetPassword = () => {
             <div className='flex-fill d-flex flex-column justify-content-center align-items-center'>
                 <h1 className='titreArticle'> Renouveler mon mot de passe </h1>
 
+                <div className="notice">
+                    <p>
+                        Votre mot de passe doit contenir 12 caractères dont au minimum une majuscule, un chiffre et un caractère spécial.
+                    </p>
+                </div> 
+
                 <form onSubmit={handleSubmit(submit)} >
                     {/* --- --- --- --- ---> I N P U T . P A S S W O R D . A V E C . L A B E L  <--- --- --- --- --- */}
                     <div className="oneInput">
@@ -91,7 +106,7 @@ const ResetPassword = () => {
                         <input {...register("motdepasse")} type="password" id="motdepasse" />
 
                         {errors?.motdepasse && (
-                            <p style={{ color: "red" }}> {errors.motdepasse.message} </p>
+                            <p className={`feedback`}> {errors.motdepasse.message} </p>
                         )}
                     </div>
 
@@ -101,7 +116,7 @@ const ResetPassword = () => {
                         <input {...register("confirmMdp")} type="password" id="confirmMdp" />
 
                         {errors?.confirmMdp && (
-                            <p style={{ color: "red" }}> {errors.confirmMdp.message} </p>
+                            <p className={`feedback`}> {errors.confirmMdp.message} </p>
                         )}
                     </div>
                     {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}

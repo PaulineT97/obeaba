@@ -174,6 +174,36 @@ router.post("/changePassword/:email", async (req, res) => {
     }
 });
 
+router.get("/resetPassword/:email", (req, res) => {
+    console.log(req.params);
+    const email = req.params.email;
+    const sqlSearchMail = "SELECT * FROM adherents WHERE email = ?";
+    connection.query(sqlSearchMail, [email], (err, result) => {
+        if (err) throw err;
+
+        if (result.length !== 0) {
+            const confirmLink = `http://localhost:3000/ResetPassword?email=${email}`;
+            const mailOptions = {
+                from: "obeaba@fauxmail.com",
+                to: email,
+                subject: "Mot de passe oublié Obeaba",
+                text: `Cliquez sur ce lien pour modifier votre mot de passe : ${confirmLink}`,
+            };
+
+            transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    throw err;
+                } else {
+                    res.end();
+                }
+            });
+        } else {
+            res.status(404).send("Email non trouvé dans la base de données");
+        }
+    });
+});
+
+
 //NOTE - récupérer les infos du user lors de sa connexion 
 
 router.get("/userConnected", (req, res) => {
@@ -236,31 +266,6 @@ router.get("/userConnected", (req, res) => {
 router.delete('/logout', (req, res) => {
     res.clearCookie("token");
     res.end();
-});
-
-router.get("/resetPassword/:email", (req, res) => {
-    console.log(req.params);
-    const email = req.params.email;
-    const sqlSearchMail = "SELECT * FROM adherents WHERE email = ?";
-    connection.query(sqlSearchMail, [email], (err, result) => {
-        if (err) throw err;
-        if (result.length !== 0) {
-            const confirmLink = `http://localhost:3000/ResetPassword?email=${email}`;
-            const mailOptions = {
-                from: "obeaba@fauxmail.com",
-                to: email,
-                subject: "Mot de passe oublié Obeaba",
-                text: `Cliquez sur ce lien pour modifier votre mot de passe : ${confirmLink}`,
-            };
-            transporter.sendMail(mailOptions, (err, info) => {
-                if (err) {
-                    throw err;
-                } else {
-                    res.end();
-                }
-            });
-        }
-    });
 });
 
 router.post("/deleteUserBDD", (req, res) => {

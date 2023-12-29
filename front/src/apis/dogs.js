@@ -1,4 +1,4 @@
-const API_DOGS = "/api/dogs";
+const API_DOGS = "http://127.0.0.1:8000/api/dogs";
 
 export async function addDogs(newDog) {
     console.log("Sending request to add a dog:", newDog);

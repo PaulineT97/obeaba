@@ -38,15 +38,30 @@ const NewPassword = () => {
 
     async function submit(values) {
         try {
-            await fetch(
+            const response = await fetch(
                 `http://localhost:8000/api/users/resetPassword/${values.email}`
             );
-            setFeedbackGood("Un email vous a été envoyé, vérifiez votre messagerie.");
+    
+            if (response.ok) {
+                setFeedbackGood("Un email vous a été envoyé, vérifiez votre messagerie.");
+            } else if (response.status === 404) {
+                setFeedback("L'email est incorrect.");
+                setTimeout(() => {
+                    setFeedback("");
+                }, 3000);
+            } else {
+                setFeedback("Une erreur s'est produite. Veuillez réessayer plus tard.");
+                setTimeout(() => {
+                    setFeedback("");
+                }, 3000);
+            }
         } catch (error) {
             console.error(error);
-            // setFeedback("Adresse email inexistante");
+            setFeedback("Une erreur s'est produite. Veuillez réessayer plus tard.");
         }
     }
+    
+
     return (
         <main>
             <div className="">

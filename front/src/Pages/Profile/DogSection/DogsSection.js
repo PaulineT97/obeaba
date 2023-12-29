@@ -96,46 +96,46 @@ export default function DogsSection({
     function deleteChien(id) {
         remove(id);
     }
-    
+
 
     return (
         <>
             {
-            updatedUser.chiens && updatedUser.chiens.length > 0 && (
-                <>
-                    <h2 className='titreOrange'> <i class="fa-solid fa-dog Orange"></i> Mes chiens</h2>
-                    {updatedUser.chiens?.filter((chien, index, array) => array.findIndex(c => c.idChien === chien.idChien) === index).map((chien, index) => (
-                        <div key={chien?.idChien} className={` ${styles.texte} box`} >
-                            <h3 className='titreArticle'>{chien?.nomChien}</h3>
-                            <p>Date de naissance : {format(new Date(chien?.naissance), 'dd/MM/yyyy')}</p>
-                            <p>Race : {chien?.race}</p>
+                updatedUser.chiens && updatedUser.chiens.length > 0 && (
+                    <>
+                        <h2 className='titreOrange'> <i class="fa-solid fa-dog Orange"></i> Mes chiens</h2>
+                        {updatedUser.chiens?.filter((chien, index, array) => array.findIndex(c => c.idChien === chien.idChien) === index).map((chien, index) => (
+                            <div key={chien?.idChien} className={` ${styles.texte} box`} >
+                                <h3 className='titreArticle'>{chien?.nomChien}</h3>
+                                <p>Date de naissance : {format(new Date(chien?.naissance), 'dd/MM/yyyy')}</p>
+                                <p>Race : {chien?.race}</p>
 
-                            {/* Liste des activités du chien */}
-                            <ul>
-                                {chien?.activites.length > 0 ? (
-                                    chien.activites
-                                    .map((activite, activiteIndex) => (
-                                        <li key={activiteIndex}>
-                                            <p>{activite?.nomActivites} {activite?.level ? `au niveau ${activite.level}` : ''}</p>
-                                        </li>
-                                    ))
-                                ) : (
-                                    ""
-                                )}
-                            </ul>
+                                {/* Liste des activités du chien */}
+                                <ul>
+                                    {chien?.activites.length > 0 ? (
+                                        chien.activites
+                                            .map((activite, activiteIndex) => (
+                                                <li key={activiteIndex}>
+                                                    <p>{activite?.nomActivites} {activite?.level ? `au niveau ${activite.level}` : ''}</p>
+                                                </li>
+                                            ))
+                                    ) : (
+                                        ""
+                                    )}
+                                </ul>
 
-                            <NavLink to="/RegistrationActivities" title='inscrire mon chien à une nouvelle activité'>
-                                <Button content="Ajouter une activité" />
-                            </NavLink>
+                                <NavLink to="/RegistrationActivities" title='inscrire mon chien à une nouvelle activité'>
+                                    <Button content="Ajouter une activité" />
+                                </NavLink>
 
-                            <div className={`${styles.sup}`} onClick={() => deleteDogFront(chien.idChien)} >
-                                <i className="fa-solid fa-circle-xmark orangeStroke"></i>
-                                <p>supprimer {chien?.nomChien} de ce compte</p>
+                                <div className={`${styles.sup}`} onClick={() => deleteDogFront(chien.idChien)} >
+                                    <i className="fa-solid fa-circle-xmark orangeStroke"></i>
+                                    <p>supprimer {chien?.nomChien} de ce compte</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </>
-            )}
+                        ))}
+                    </>
+                )}
 
             <form onSubmit={handleSubmit()}>
                 {/* --- --- --- --- ---> I N P U T . D O G S . A V E C . L A B E L  <--- --- --- --- --- */}
@@ -144,47 +144,49 @@ export default function DogsSection({
                     <Button className="btn" content=" + " onClick={addChien} type="button" />
                 </label>
 
-
-                <ul>
+                <div className={styles.ajoutChien}>
                     {fields.map((dog, index) => (
                         <div className={` ${styles.texte} box`} style={{ marginBottom: "5%" }}>
-                            <li key={dog.idDog}>
-                                {/* ---> NOM - DU - CHIEN <--- */}
-                                <div className="oneInput">
-                                    <label htmlFor="nomChien">Nom du chien</label>
-                                    <input {...register(`chiens.[${index}].nomChien`)} type="text" id="nomChien" />
+                            <ul>
+                                <li key={dog.idDog}>
+                                    {/* ---> NOM - DU - CHIEN <--- */}
+                                    <div className="oneInput">
+                                        <label htmlFor="nomChien">Nom du chien</label>
+                                        <input {...register(`chiens.[${index}].nomChien`)} type="text" id="nomChien" />
 
-                                    {errors?.nomChien && (
-                                        <p style={{ color: "red" }}> {errors.nomChien.message} </p>
-                                    )}
-                                </div>
+                                        {errors?.nomChien && (
+                                            <p style={{ color: "red" }}> {errors.nomChien.message} </p>
+                                        )}
+                                    </div>
 
-                                {/* ---> DATE - DE - NAISSANCE <--- */}
-                                <div className="oneInput">
-                                    <label htmlFor="naissance">Date de naissance</label>
-                                    <input {...register(`chiens.[${index}].naissance`)} type="date" id="naissance" />
+                                    {/* ---> DATE - DE - NAISSANCE <--- */}
+                                    <div className="oneInput">
+                                        <label htmlFor="naissance">Date de naissance</label>
+                                        <input {...register(`chiens.[${index}].naissance`)} type="date" id="naissance" />
 
-                                    {errors?.naissance && (
-                                        <p style={{ color: "red" }}> {errors.naissance.message} </p>
-                                    )}
-                                </div>
+                                        {errors?.naissance && (
+                                            <p style={{ color: "red" }}> {errors.naissance.message} </p>
+                                        )}
+                                    </div>
 
-                                {/* ---> RACE - DU - CHIEN <--- */}
-                                <div className="oneInput">
-                                    <label htmlFor="race">Race</label>
-                                    <input {...register(`chiens.[${index}].race`)} type="text" id="race" />
+                                    {/* ---> RACE - DU - CHIEN <--- */}
+                                    <div className="oneInput">
+                                        <label htmlFor="race">Race</label>
+                                        <input {...register(`chiens.[${index}].race`)} type="text" id="race" />
 
-                                    {errors?.race && (
-                                        <p style={{ color: "red" }}> {errors.race.message} </p>
-                                    )}
-                                </div>
+                                        {errors?.race && (
+                                            <p style={{ color: "red" }}> {errors.race.message} </p>
+                                        )}
+                                    </div>
 
-                                <Button className="btn" onClick={() => deleteChien(index)} content="-" type="button" />
+                                    <Button className="btn" onClick={() => deleteChien(index)} content="-" type="button" />
 
-                            </li>
+                                </li>
+                            </ul>
                         </div>
                     ))}
-                </ul>
+                </div>
+
                 {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}
 
                 {feedback && <p className={`mb10 mt20 feedback`}>{feedback}</p>}

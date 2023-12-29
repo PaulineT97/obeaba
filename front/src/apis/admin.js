@@ -1,4 +1,4 @@
-const API_ADMIN = "/api/admin";
+const API_ADMIN = "http://127.0.0.1:8000/api/admin";
 
 //NOTE - gestion des EDUCATEURS 
 

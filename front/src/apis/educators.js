@@ -1,4 +1,4 @@
-const API_EDUC = "/api/educators";
+const API_EDUC = "http://127.0.0.1:8000/api/educators";
 
 export async function fetchAllEducateurs() {
     try {

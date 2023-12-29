@@ -26,7 +26,7 @@ const calculateAgeDifference = (selectedChien) => {
 const getActivityLimits = (idActivites) => {
     switch (idActivites) {
         case 1:
-            return { debutant: 2, intermediaire: 10, confirme: 18 };
+            return { debutant: 2, intermediaire: 8, confirme: 12 };
         case 2:
             return { debutant: 4, intermediaire: 8, confirme: 12 };
         case 3:
@@ -132,7 +132,7 @@ export default function Registration() {
         clearErrors();
         const values = getValues();
 
-        let selectedChien, selectedActivity, selectedLevel;  
+        let selectedChien, selectedActivity, selectedLevel;
 
 
         try {
@@ -163,7 +163,7 @@ export default function Registration() {
                 const activite = values.activites[index];
                 const chienId = activite.chien;
                 console.log("chienId", chienId);
-                
+
                 selectedChien = user?.chiens.find(
                     (chien) => chien.idChien === parseInt(chienId, 10)
                 );
@@ -213,9 +213,72 @@ export default function Registration() {
 
     return (
         <main>
-            <div className={styles.container}>
+            <section className={styles.container}>
                 <h2 className="titreOrange">Vous souhaitez vous inscrire</h2>
-                <div className="box">
+
+                <div className="notice">
+                    <p>Pour rappel, voici l'âge à partir duquel votre chien peut participer aux différentes activités, selon le niveau. Si votre chien et, ou vous même, n'avez jamais pratiqué l'activité, nous vous conseillons de commencer par le niveau débutant, peu importe son âge.</p>
+                </div>
+                <article className={styles.rappelContainer}>
+                    <div className={styles.colonne}>
+                        <h3>Education canine</h3>
+                        <ul>
+                            <li>
+                                débutant : 2 mois
+                            </li>
+                            <li>
+                                intermédiaire : 8 mois
+                            </li>
+                            <li>
+                                confirmé : 12 mois
+                            </li>
+                        </ul>
+                    </div>
+                    <div className={styles.colonne}>
+                        <h3>Agility</h3>
+                        <ul>
+                            <li>
+                                débutant : 4 mois
+                            </li>
+                            <li>
+                                intermédiaire : 8 mois
+                            </li>
+                            <li>
+                                confirmé : 12 mois
+                            </li>
+                        </ul>
+                    </div>
+                    <div className={styles.colonne}>
+                        <h3>Obérythmée</h3>
+                        <ul>
+                            <li>
+                                débutant : 3 mois
+                            </li>
+                            <li>
+                                intermédiaire : 6 mois
+                            </li>
+                            <li>
+                                confirmé : 12 mois
+                            </li>
+                        </ul>
+                    </div>
+                    <div className={styles.colonne}>
+                        <h3>Balades et randonnées</h3>
+                        <ul>
+                            <li>
+                                débutant : 6 mois
+                            </li>
+                            <li>
+                                intermédiaire : 12 mois
+                            </li>
+                            <li>
+                                confirmé : 18 mois
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article className="box">
                     <form onSubmit={handleSubmit(submit)}>
                         <div className="d-flex flex-column mb20 mr20">
                             <label
@@ -283,8 +346,8 @@ export default function Registration() {
                             disabled={!isChienSelected}
                         />
                     </form>
-                </div>
-            </div>
+                </article>
+            </section>
         </main>
     );
 }
