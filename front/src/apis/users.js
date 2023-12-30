@@ -1,4 +1,4 @@
-const API_USERS = "http://127.0.0.1:8000/api/users";
+const API_USERS = "/api/users";
 
 
 export async function createUser(newUser) {

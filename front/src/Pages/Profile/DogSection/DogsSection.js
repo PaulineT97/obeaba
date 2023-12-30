@@ -1,10 +1,11 @@
 // dogsSection.js
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 import Button from '../../../Components/button/Button';
 import { deleteDogBack, addDogs } from '../../../apis/dogs';
 import styles from '../Profile.module.scss';
 import { NavLink } from 'react-router-dom';
+import Modal from "../../../Components/Modal/Modal";
 
 export default function DogsSection({
     fields,
@@ -23,6 +24,14 @@ export default function DogsSection({
     clearErrors,
     handleSubmit,
 }) {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedDogId, setSelectedDogId] = useState(null);
+
+    function showModal(dogId) {
+        setModalVisible(!modalVisible);
+        setSelectedDogId(dogId);
+    }
+
     async function submitDogs() {
 
         setFeedback('');
@@ -100,6 +109,7 @@ export default function DogsSection({
 
     return (
         <>
+
             {
                 updatedUser.chiens && updatedUser.chiens.length > 0 && (
                     <>
@@ -128,10 +138,21 @@ export default function DogsSection({
                                     <Button content="Ajouter une activité" />
                                 </NavLink>
 
-                                <div className={`${styles.sup}`} onClick={() => deleteDogFront(chien.idChien)} >
+                                <div className={`${styles.sup}`} onClick={() => showModal(chien.idChien)} >
                                     <i className="fa-solid fa-circle-xmark orangeStroke"></i>
                                     <p>supprimer {chien?.nomChien} de ce compte</p>
                                 </div>
+
+
+                                {
+                                    modalVisible && selectedDogId == chien.idChien &&
+
+                                    <Modal message={`Vous allez supprimer ${chien?.nomChien} de ce compte. Souhaitez vous continuer ?`}
+                                        onCancel={() => showModal(chien.idChien)}
+                                        onConfirm={() => deleteDogFront(selectedDogId)}>
+                                        {console.log("Rendering Modal")};
+                                    </Modal>
+                                }
                             </div>
                         ))}
                     </>

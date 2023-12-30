@@ -1,0 +1,29 @@
+.modalContainer {
+    // position: absolute;
+    // z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .contentContainer {
+        // width: 55vw;
+        // transform: translateX(-50vw);
+        // transform: translateY(-10vh);
+        background-color: var(--backColor);
+        padding: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .message {
+            font-weight: 600;
+        }
+
+        .buttonsContainer {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 5%;
+        }
+    }
+}

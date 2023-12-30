@@ -12,6 +12,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { updateUser, deleteUserBack } from "../../apis/users";
 import DogsSection from './DogSection/DogsSection';
+import Modal from "../../Components/Modal/Modal";
 
 export default function Profile() {
 
@@ -25,6 +26,7 @@ export default function Profile() {
     const [feedbackGood, setFeedbackGood] = useState("");
     const navigate = useNavigate();
     const { logout } = useContext(AuthContext);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const yupSchema = yup.object({
         nom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
@@ -74,6 +76,10 @@ export default function Profile() {
             });
         }
     }, [updatedUser.nouveauxChiens]);
+
+    function showModal() {
+        setModalVisible(!modalVisible);
+    }
 
     function modifyOnClick() {
         setModify(!modify);
@@ -125,7 +131,7 @@ export default function Profile() {
                     setFeedbackGood("");
                     setUser(null);
                     navigate("/");
-                    
+
                 }, 3000);
             } else {
                 setFeedback('Erreur lors de la suppression du compte adhérent.');
@@ -147,6 +153,14 @@ export default function Profile() {
             </div >
 
             <main>
+
+                {
+                    modalVisible && <Modal message="Vous allez supprimer votre compte. Souhaitez vous continuer ?"
+                    onCancel={showModal} 
+                    onConfirm={deleteUser}/>
+                }
+                
+
                 <div className={styles.container}>
                     <h2 className='titreArticle'>Bienvenue {updatedUser?.adherent?.prenom}</h2>
 
@@ -157,7 +171,7 @@ export default function Profile() {
 
                             </div>
 
-                            <div onClick={() => deleteUser()} className={`${styles.sup}`} style={{ width: "45%" }} >
+                            <div onClick={() => showModal()} className={`${styles.sup}`} style={{ width: "45%" }} >
                                 <i className="fa-solid fa-circle-xmark orangeStroke"></i>
                                 <p>supprimer mon compte</p>
                             </div>
@@ -215,24 +229,24 @@ export default function Profile() {
 
                     {/* Affichage des chiens */}
 
-                        <DogsSection
-                            fields={fields}
-                            append={append}
-                            remove={remove}
-                            getValues={getValues}
-                            errors={errors}
-                            feedback={feedback}
-                            feedbackGood={feedbackGood}
-                            setFeedback={setFeedback}
-                            setFeedbackGood={setFeedbackGood}
-                            updatedUser={updatedUser}
-                            setUpdatedUser={setUpdatedUser}
-                            navigate={navigate}
-                            register={register}
-                            clearErrors={clearErrors}
-                            handleSubmit={handleSubmit}
-                        />
-                    
+                    <DogsSection
+                        fields={fields}
+                        append={append}
+                        remove={remove}
+                        getValues={getValues}
+                        errors={errors}
+                        feedback={feedback}
+                        feedbackGood={feedbackGood}
+                        setFeedback={setFeedback}
+                        setFeedbackGood={setFeedbackGood}
+                        updatedUser={updatedUser}
+                        setUpdatedUser={setUpdatedUser}
+                        navigate={navigate}
+                        register={register}
+                        clearErrors={clearErrors}
+                        handleSubmit={handleSubmit}
+                    />
+
                 </div>
             </main >
         </>

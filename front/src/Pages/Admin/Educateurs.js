@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fetchAllEducateurs } from '../../apis/educators';
 import { fetchCertifications, addCertification, addEducator, deleteEducBack } from '../../apis/admin';
+import Modal from "../../Components/Modal/Modal";
 
 export default function Educateurs() {
 
@@ -25,6 +26,7 @@ export default function Educateurs() {
     const [selectedPhoto, setSelectedPhoto] = useState(null);
     // useState pour l'attribut src de notre balise img
     const [previewImage, setPreviewImage] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
 
 
     const yupSchema = yup.object({
@@ -57,6 +59,11 @@ export default function Educateurs() {
 
     //ANCHOR - Fonctions 
 
+    function showModal(educId) {
+        console.log(educId);
+        setModalVisible(!modalVisible);
+        setEditingEducateurId(educId);
+    }
     //NOTE -- cette fonction permet de récupérer toutes les informations nécessaires à l'affichage des éducateurs
     useEffect(() => {
         async function fetchData() {
@@ -129,7 +136,7 @@ export default function Educateurs() {
 
 
             if (newCertification.message) {
-                setFeedback({ [educateurId]: newCertification.message});
+                setFeedback({ [educateurId]: newCertification.message });
 
             } else {
 
@@ -160,10 +167,10 @@ export default function Educateurs() {
                     return updatedEducateurs;
                 });
 
-                setFeedbackGood({ [educateurId]: newCertification.messageGood});
+                setFeedbackGood({ [educateurId]: newCertification.messageGood });
                 setTimeout(() => {
                     setModify(false);
-                    setFeedbackGood({ [educateurId]: ""});
+                    setFeedbackGood({ [educateurId]: "" });
                 }, 2000);
             }
         } catch (error) {
@@ -258,10 +265,10 @@ export default function Educateurs() {
                 setTimeout(() => {
                     const updatedEducateurs = educateurs.filter(e => e.id !== educateurId);
                     setEducateurs(updatedEducateurs);
-                    setFeedbackGood({ [educateurId]: ""});
+                    setFeedbackGood({ [educateurId]: "" });
                 }, 3000);
             } else {
-                setFeedback({ [educateurId]: "Erreur lors de la suppression de l'éducateur."});
+                setFeedback({ [educateurId]: "Erreur lors de la suppression de l'éducateur." });
             }
         } catch (error) {
             console.error('Erreur lors de la suppression de l\'éducateur:', error);
@@ -325,8 +332,15 @@ export default function Educateurs() {
 
                                     <div className={styles.options}>
                                         <Button content='Modifier la certification' onClick={() => modifyOnClick(e.id)} />
-                                        <button className="btn" onClick={() => deleteEducateur(e.id)}>Supprimer l'éducateur</button>
+                                        <button className="btn" onClick={() => showModal(e.id)}>Supprimer l'éducateur</button>
                                     </div>
+                                    {
+                                        modalVisible && editingEducateurId == e.id &&
+                                        <Modal message={`Vous allez supprimer ${e.nom} de la liste des éducateurs. Souhaitez vous continuer ?`}
+                                            onCancel={() => showModal(e.id)}
+                                            onConfirm={() => deleteEducateur(e.id)} 
+                                        />
+                                    }
                                 </>
                             )}
                         </div>

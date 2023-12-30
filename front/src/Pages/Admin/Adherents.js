@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './EspaceAdmin.module.scss';
 import { fetchAllAdherents, deleteAdherentBack } from '../../apis/admin';
 import Button from '../../Components/button/Button';
+import Modal from "../../Components/Modal/Modal";
 
 export default function Adherents() {
 
@@ -10,6 +11,7 @@ export default function Adherents() {
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
     const [selectedAdherentId, setSelectedAdherentId] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
 
     //ANCHOR - Fonctions 
 
@@ -51,6 +53,12 @@ export default function Adherents() {
         }
     }
 
+    function showModal(adherId) {
+        console.log(adherId);
+        setModalVisible(!modalVisible);
+        setSelectedAdherentId(adherId);
+    }
+
     return (
         <>
             <h3>Les adhérents</h3>
@@ -63,11 +71,17 @@ export default function Adherents() {
                                 <p>{u.nom}</p>
                                 <p>{u.prenom}</p>
                                 <p>{u.email}</p>
-                                <Button content="supprimer l'adhérent" onClick={() => {
-                                    deleteAdherent(u.idAdher);
-                                    setSelectedAdherentId(u.idAdher);
-                                }} />
+                                <Button content="supprimer l'adhérent" onClick={() => showModal(u.idAdher)} />
                             </div>
+                            {
+                                modalVisible && selectedAdherentId == u.idAdher &&
+                                <Modal message={`Vous allez supprimer le compte de ${u.prenom} ${u.nom}. Souhaitez vous continuer ?`}
+                                    onCancel={() => showModal(u.idAdher)}
+                                    onConfirm={() => {
+                                        deleteAdherent(u.idAdher);
+                                        setSelectedAdherentId(u.idAdher);
+                                    }} style={{transform: 'translateX(-10.5%)'}} />
+                            }
                             <div className={styles.feedbackContainer}>
                                 {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}
                                 {u.idAdher === selectedAdherentId && feedback && (
