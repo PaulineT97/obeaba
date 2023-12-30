@@ -80,7 +80,7 @@ export default function Adherents() {
                                     onConfirm={() => {
                                         deleteAdherent(u.idAdher);
                                         setSelectedAdherentId(u.idAdher);
-                                    }} style={{transform: 'translateX(-10.5%)'}} />
+                                    }} style={{transform: 'translateX(-12%)'}} />
                             }
                             <div className={styles.feedbackContainer}>
                                 {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}

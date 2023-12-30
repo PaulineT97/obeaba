@@ -31,6 +31,22 @@
         box-shadow: var(--boxShadow);
         border: solid .2em var(--backColor);
 
+
+        @include mixin.sm-md {
+            width: 15vh;
+            height: 15vh;
+        }
+
+        @include mixin.tablette {
+            width: 12vh;
+            height: 12vh;
+        }
+
+        @include mixin.xs-sm {
+            width: 8vh;
+            height:8vh;        }
+
+
         .LogoMenu {
             position: inherit;
             width: 50%;

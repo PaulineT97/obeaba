@@ -1,16 +1,21 @@
 @use "../../Assets//Styles/mixin.scss" as mixin;
+
 .banniere {
     width: 100%;
     height: 80vh;
+
     @include mixin.md-lt {
         height: 70vh;
-    }    
+    }
+
     @include mixin.sm-md {
         height: 70vh;
     }
+
     @include mixin.tablette {
         height: 70vh;
     }
+
     @include mixin.xs-sm {
         height: 30vh;
     }
@@ -29,19 +34,23 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         @include mixin.md-lt {
-            top:-15%;
+            top: -15%;
         }
+
         @include mixin.sm-md {
-            top:-15%;
+            top: -15%;
         }
+
         @include mixin.tablette {
-            top:-15%;
+            top: -15%;
         }
+
         @include mixin.xs-sm {
-            top:-35%;
+            top: -35%;
         }
-        
+
         h1 {
             position: relative;
             z-index: 1;
@@ -49,14 +58,159 @@
     }
 }
 
-.mainObe{
-    section{
+.mainObe {
+    section {
         width: 80%;
-        .levelChoice{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .levelChoice {
             width: 100%;
             display: flex;
             justify-content: space-evenly;
             margin: 3% 0;
+            @include mixin.tablette {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0 0;
+            }
+            @include mixin.xs-sm {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0 0;
+            }
+        }
+
+        article {
+            width: 60%;
+
+            @include mixin.lg-lt {
+                width: 70%;
+            }
+
+            @include mixin.l-lt {
+                width: 70%;
+            }
+
+            @include mixin.md-lt {
+                width: 80%;
+            }
+
+            @include mixin.sm-md {
+                width: 90%;
+            }
+
+            @include mixin.tablette {
+                width: 90%;
+            }
+
+            @include mixin.xs-sm {
+                width: 90%;
+            }
+
+            h2{
+    
+                @include mixin.tablette {
+                    font-size: 1.8rem;
+                }
+    
+                @include mixin.xs-sm {
+                    width: 100%;
+                    font-size: 1.4rem;
+                }
+            }
+
+            .bloc {
+                width: 100%;
+                padding: 2% 0;
+                display: flex;
+                justify-content: space-between;
+
+                @include mixin.xs-sm {
+                    flex-direction: column;
+                }
+
+                .texte {
+                    width: 70%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    @include mixin.xs-sm {
+                        width: 100%;
+                    }
+
+                    ul {
+                        li {
+                            list-style-type: circle;
+                        }
+                    }
+                }
+
+                .imageContainer {
+                    width: 25%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+
+                    .image {
+                        width: 20vh;
+                        height: 20vh;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        overflow: hidden;
+
+                        @include mixin.l-lt {
+                            width: 18vh;
+                            height: 18vh;
+                        }
+
+                        @include mixin.md-lt {
+                            width: 18vh;
+                            height: 18vh;
+                        }
+
+                        @include mixin.sm-md {
+                            width: 15vh;
+                            height: 15vh;
+                        }
+
+                        @include mixin.tablette {
+                            width: 15vh;
+                            height: 15vh;
+                        }
+
+                        @include mixin.xs-sm {
+                            display: none;
+                        }
+
+
+                        img {
+                            object-fit: cover;
+                            height: 100%;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .reverse {
+                flex-direction: row-reverse;
+
+                @include mixin.xs-sm {
+                    flex-direction: column;
+                }
+            }
+        }
+
+        button {
+            margin-top: 25%;
         }
     }
 }

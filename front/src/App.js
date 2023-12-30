@@ -20,9 +20,9 @@ function App() {
       <AuthProvider>
         <Header />
         <HeaderMobile />
-        <Suspense>
-          <Outlet />
-        </Suspense>
+          <Suspense>
+            <Outlet />
+          </Suspense>
         <Footer />
       </AuthProvider>
     </div>

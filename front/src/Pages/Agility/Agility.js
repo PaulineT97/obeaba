@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
 import HeadEduc from "../../Assets/Images/headerAgility.jpg";
 import styles from "./Agility.module.scss";
 import { NavLink, Outlet } from 'react-router-dom';
 import Button from '../../Components/button/Button';
 
 export default function Agility() {
+
+
   return (
     <>
       < div style={{ backgroundImage: `url(${HeadEduc})` }
