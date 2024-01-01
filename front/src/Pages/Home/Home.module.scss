@@ -155,6 +155,7 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
+            margin: 3% 0;
 
             @include mixin.sm-md {
                 flex-direction: column;
@@ -282,7 +283,7 @@
         }
 
         .reverse {
-            margin-bottom: 5%;
+            margin-bottom: 7%;
             flex-flow: row-reverse;
 
             @include mixin.sm-md {

@@ -1,3 +1,5 @@
+@use "../../Assets//Styles/mixin.scss" as mixin;
+
 .allContainer {
   width: 100%;
   display: flex;
@@ -9,19 +11,187 @@
     overflow: hidden;
 
 
+
     .carrouselSlider {
       width: 100%;
       display: flex;
-      transition: transform 0.5s ease-in-out;
 
       .carrouselSlide {
-        width: 33%;
-        flex: 0 0 33%;
+        width: 100%;
+        flex: 0 0 100%;
         box-sizing: border-box;
         margin: 2%;
         text-align: center;
-        transition: opacity 0.5s ease-in-out;
+        transition: opacity 1.5s ease-in-out;
+        position: relative;
 
+        .imageContainer {
+          max-height: 75vh;
+          object-position: bottom;
+
+          @include mixin.lg-lt {
+            max-height: 75vh;
+          }
+
+          @include mixin.l-lt {
+            max-height: 65vh;
+          }
+
+          @include mixin.md-lt {
+            max-height: 55vh;
+          }
+
+          @include mixin.sm-md {
+            max-height: 40vh;
+          }
+
+          @include mixin.tablette {
+            max-height: 33vh;
+          }
+
+          @include mixin.xs-sm {
+            max-height: 15vh;
+          }
+        }
+
+        .texteContainer {
+          background-color: var(--clair);
+          opacity: 0.8;
+          padding: 5%;
+          width: 100%;
+          position: absolute;
+          top: 0%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          animation: fadeInOut 7s forwards;
+          /* 5 secondes d'animation */
+
+          @keyframes fadeInOut {
+            0% {
+              opacity: 0.8;
+            }
+
+            70% {
+              opacity: 0.8;
+            }
+
+            71% {
+              opacity: 0.75;
+            }
+
+            72% {
+              opacity: 0.7;
+            }
+
+            74% {
+              opacity: 0.65;
+            }
+
+            76% {
+              opacity: 0.6;
+            }
+
+            78% {
+              opacity: 0.55;
+            }
+
+            80% {
+              opacity: 0.5;
+            }
+
+            82% {
+              opacity: 0.45;
+            }
+
+            84% {
+              opacity: 0.4;
+            }
+
+            86% {
+              opacity: 0.35;
+            }
+
+            88% {
+              opacity: 0.3;
+            }
+
+            90% {
+              opacity: 0.25;
+            }
+
+            92% {
+              opacity: 0.2;
+            }
+
+            94% {
+              opacity: 0.15;
+            }
+
+            96% {
+              opacity: 0.1;
+            }
+
+            98% {
+              opacity: 0.05;
+            }
+
+            100% {
+              opacity: 0;
+            }
+          }
+
+          @include mixin.xs-sm {
+            padding: 2%;
+          }
+
+
+          h2 {
+            font-family: var(--satisfy);
+            font-size: 2.2rem;
+            line-height: 5rem;
+            opacity: 1;
+            @include mixin.tablette {
+              font-size: 1.8rem;
+            }
+            @include mixin.xs-sm {
+              font-size: 1.4rem;
+              line-height: 3rem;
+            }
+          }
+
+          p {
+            padding-top: 2%;
+            width: 80%;
+            text-align: center;
+            line-height: 2rem;
+            @include mixin.sm-md {
+              width: 90%;
+            }
+  
+            @include mixin.tablette {
+              width: 95%;
+              font-size: 1.2rem;
+            }
+  
+            @include mixin.xs-sm {
+              width: 95%;
+              font-size: 1.1rem;
+              line-height: 1.5rem;
+              padding-top: 0%;
+            }
+          }
+        }
+      }
+
+      .active {
+        display: block;
+      }
+
+      .autre {
+        display: none;
+        float: left;
+        transition: opacity 1.5s ease-in-out;
       }
     }
   }

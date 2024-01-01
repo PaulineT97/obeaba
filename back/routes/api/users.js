@@ -203,6 +203,27 @@ router.get("/resetPassword/:email", (req, res) => {
     });
 });
 
+router.post("/contactUs", (req, res) => {
+    console.log(req.body);
+    const email = req.body.email;
+    const motif = req.body.motif;
+
+    const mailOptions = {
+        from: email,
+        to: 'pauline.todeschini@gmail.com',
+        subject: "Formulaire de contact Obeaba",
+        text: `${motif}. Répondre à : ${email}`,
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            throw err;
+        } else {
+            const successMessage = "Nous avons bien reçu votre demande, nous répondrons dans les plus brefs délais (comptez environ 1 semaine).";
+            res.json({ messageGood: successMessage });
+        }
+    });
+});
 
 //NOTE - récupérer les infos du user lors de sa connexion 
 

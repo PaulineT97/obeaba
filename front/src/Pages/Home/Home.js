@@ -31,7 +31,6 @@ export default function Home() {
                                 <img src={equipe} alt="" />
                             </div>
                         </div>
-
                     </article>
 
                     {/* --- ---> liste des activités <--- --- */}
@@ -48,9 +47,6 @@ export default function Home() {
                                 <img src={activites} alt="" />
                             </div>
                         </div>
-                        
-
-
                     </article>
 
                     {/* --- ---> adresse et contact <--- --- */}

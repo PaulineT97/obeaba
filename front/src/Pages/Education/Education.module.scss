@@ -39,40 +39,22 @@
     @include mixin.xs-sm {
         padding-bottom: 8%;
     }
-    .educateurs {
-        padding-top: 3%;
-        display: flex;
-        flex-direction: column;
-        width: 95%;
-    }
+
 
     section {
-        width: 75%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding-top: 3%;
         position: relative;
 
-        @include mixin.lg-lt {
-            width: 80%;
-        }
-        @include mixin.l-lt {
-            width: 80%;
-        }
-        @include mixin.md-lt {
-            width: 80%;
-        }
-        @include mixin.sm-md{
-            width: 80%;
-        }
-        @include mixin.tablette{
-            width: 80%;
-        }
-        @include mixin.xs-sm{
-            width: 80%;
-        }
 
         .intro {
+            width: 80%;
             font-size: 1.5rem;
             padding: 2% 0;
+            text-align: center;
         }
 
         .flex {
@@ -167,5 +149,16 @@
         }
 
 
+    }
+    .educContainer{
+        @include mixin.sm-md{
+            width: 100%;
+        }
+        @include mixin.tablette{
+            width: 90%;
+        }
+        @include mixin.xs-sm{
+            width: 90%;
+        }  
     }
 }

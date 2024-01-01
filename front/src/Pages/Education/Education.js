@@ -17,14 +17,14 @@ export default function Education() {
 
                 <aside> Notre objectif est d'enseigner à l’humain comme au chien, les comportements et les compétences nécessaires pour établir au sein de votre binôme une communication claire et un lien de confiance. Nous utilisons la méthode positive qui repose sur la récompense. </aside>
 
-                <div className={`${styles.educateurs}`}>
+                <section className={`${styles.educContainer}`}>
                     <h2 className='titreOrange'>
                         <i className="fa-solid fa-dog Orange"></i> Nos éducateurs
                     </h2>
 
                     <Slider />
 
-                </div>
+                </section>
 
                 <section>
                     <h2 className='titreOrange'>

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import HeadProfile from "../../Assets/Images/headerMonCompte.jpg";
 import styles from "./Profile.module.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Button from '../../Components/button/Button';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import Button from "../../Components/button/Button";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { updateUser, deleteUserBack } from "../../apis/users";
-import DogsSection from './DogSection/DogsSection';
+import DogsSection from "./DogSection/DogsSection";
 import Modal from "../../Components/Modal/Modal";
 
 export default function Profile() {
@@ -20,21 +20,32 @@ export default function Profile() {
 
     const { user, setUser } = useContext(AuthContext);
     const [modify, setModify] = useState(false);
-    const [updatedUser, setUpdatedUser] = useState(user);
-
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
+    const [feedbackUser, setFeedbackUser] = useState("");
+    const [feedbackGoodUser, setFeedbackGoodUser] = useState("");
     const navigate = useNavigate();
     const { logout } = useContext(AuthContext);
     const [modalVisible, setModalVisible] = useState(false);
 
     const yupSchema = yup.object({
-        nom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
-        prenom: yup.string().required(" champ obligatoire").min(2, "le champ doit contenir 2 caractères minimum").max(12, "le champ doit contenir 12 caractères maximum"),
-        email: yup.string().required(" champ obligatoire").email("ce mail n'est pas valide"),
-        nomChien: yup.string().required(" champ obligatoire"),
-        naissance: yup.date().required(" champ obligatoire"),
-        race: yup.string().required(" champ obligatoire"),
+        nom: yup
+            .string()
+            .required(" champ obligatoire")
+            .min(2, "le champ doit contenir 2 caractères minimum")
+            .max(12, "le champ doit contenir 12 caractères maximum"),
+        prenom: yup
+            .string()
+            .required(" champ obligatoire")
+            .min(2, "le champ doit contenir 2 caractères minimum")
+            .max(12, "le champ doit contenir 12 caractères maximum"),
+        email: yup
+            .string()
+            .required(" champ obligatoire")
+            .email("ce mail n'est pas valide"),
+        // nomChien: yup.string().required(" champ obligatoire"),
+        // naissance: yup.date().required(" champ obligatoire"),
+        // race: yup.string().required(" champ obligatoire"),
     });
 
     const {
@@ -42,13 +53,14 @@ export default function Profile() {
         handleSubmit,
         control,
         getValues,
+        reset,
         formState: { errors },
         clearErrors,
     } = useForm({
         defaultValues: {
-            nom: updatedUser.adherent.nom,
-            prenom: updatedUser.adherent.prenom,
-            email: updatedUser.adherent.email,
+            nom: user?.adherent?.nom || "",
+            prenom: user?.adherent?.prenom || "",
+            email: user?.adherent?.email || "",
             chiens: "",
         },
         mode: "onChange",
@@ -58,24 +70,26 @@ export default function Profile() {
     const { fields, append, remove } = useFieldArray({
         name: "chiens",
         control,
-    })
+    });
 
-
-    //ANCHOR - Fonctions 
+    //     //ANCHOR - Fonctions 
 
     useEffect(() => {
-        if (Array.isArray(updatedUser?.nouveauxChiens) && updatedUser.nouveauxChiens.length > 0) {
-            setUpdatedUser((updatedUser) => {
+        if (Array.isArray(user?.nouveauxChiens) && user.nouveauxChiens.length > 0) {
+            setUser((prevUser) => {
                 return {
-                    ...updatedUser,
-                    chiens: [...updatedUser.chiens, ...updatedUser.nouveauxChiens.map(chien => ({
-                        ...chien,
-                        naissance: format(new Date(chien.naissance), 'dd/MM/yyyy'), // Formater la date ici
-                    }))],
+                    ...prevUser,
+                    chiens: [
+                        ...prevUser.chiens,
+                        ...prevUser.nouveauxChiens.map((chien) => ({
+                            ...chien,
+                            naissance: format(new Date(chien.naissance), "dd/MM/yyyy"),
+                        })),
+                    ],
                 };
             });
         }
-    }, [updatedUser.nouveauxChiens]);
+    }, [user.nouveauxChiens]);
 
     function showModal() {
         setModalVisible(!modalVisible);
@@ -91,21 +105,34 @@ export default function Profile() {
         const values = getValues();
         const formData = new FormData();
 
-        values.idAdher = updatedUser.idAdher;
+        values.idAdher = user.adherent.idAdher;
         formData.append("nom", values.nom);
         formData.append("prenom", values.prenom);
         formData.append("email", values.email);
 
+        console.log(values);
         try {
-            console.log(values);
             const actualUser = await updateUser(values);
-            console.log(`actual user is : ${actualUser}`);
 
             if (actualUser.message) {
-                setFeedback(actualUser.message);
+                setFeedbackUser(actualUser.message);
             } else {
-                setFeedbackGood(actualUser.messageGood);
+                setFeedbackGoodUser(actualUser.messageGood);
+
+                setUser((prevUser) => {
+                    return {
+                        ...prevUser,
+                        adherent: {
+                            ...prevUser.adherent,
+                            nom: values.nom,
+                            prenom: values.prenom,
+                            email: values.email,
+                        },
+                    };
+                });
+
                 setTimeout(() => {
+                    reset();
                     navigate("/Profile");
                     setModify(false);
                 }, 2000);
@@ -114,6 +141,9 @@ export default function Profile() {
             console.error(error);
         }
     }
+
+    console.log(user);
+
 
     async function deleteUser() {
         const idAd = user.adherent.idAdher
@@ -142,9 +172,6 @@ export default function Profile() {
 
     }
 
-    console.log(updateUser);
-
-
     return (
         <>
             < div style={{ backgroundImage: `url(${HeadProfile})` }} className={`${styles.banniere}`}>
@@ -153,40 +180,49 @@ export default function Profile() {
             </div >
 
             <main>
-
-                {
-                    modalVisible && <Modal message="Vous allez supprimer votre compte. Souhaitez vous continuer ?"
-                    onCancel={showModal} 
-                    onConfirm={deleteUser}/>
-                }
-                
-
                 <div className={styles.container}>
-                    <h2 className='titreArticle'>Bienvenue {updatedUser?.adherent?.prenom}</h2>
+                    <h2 className="titreArticle">Bienvenue {user?.adherent?.prenom}</h2>
 
-                    <div className={`${styles.texte} box`} >
+                    {
+                        modalVisible && <Modal message="Vous allez supprimer votre compte. Souhaitez vous continuer ?"
+                            onCancel={showModal}
+                            onConfirm={deleteUser} />
+                    }
+
+                    <div className={`${styles.texte} box`}>
                         <div className={styles.options}>
                             <div className={styles.button}>
-                                {modify ? <Button content="annuler les modifications" onClick={() => modifyOnClick()} /> : <Button content="modifier mes informations" onClick={() => modifyOnClick()} />}
-
+                                {modify ? (
+                                    <Button
+                                        content="annuler les modifications"
+                                        onClick={() => modifyOnClick()}
+                                        title="annuler les modifications"
+                                    />
+                                ) : (
+                                    <Button
+                                        content="modifier mes informations"
+                                        onClick={() => modifyOnClick()}
+                                        title="modifier mes informations"
+                                    />
+                                )}
                             </div>
 
-                            <div onClick={() => showModal()} className={`${styles.sup}`} style={{ width: "45%" }} >
+                            <div onClick={() => showModal()} className={`${styles.sup}`} style={{ width: "45%" }} title='supprimer mon compte'>
                                 <i className="fa-solid fa-circle-xmark orangeStroke"></i>
                                 <p>supprimer mon compte</p>
                             </div>
-
                         </div>
-                        {
-                            modify ?
-                                <form onSubmit={handleSubmit(submit)} >
+
+                        {modify ? (
+                            <>
+                                <form onSubmit={handleSubmit(submit)}>
                                     {/* --- --- --- --- ---> I N P U T . N A M E . A V E C . L A B E L  <--- --- --- --- --- */}
                                     <div className="oneInput">
                                         <label htmlFor="nom">Nom</label>
                                         <input {...register("nom")} type="text" id="nom" />
 
                                         {errors?.nom && (
-                                            <p style={{ color: "red" }}> {errors.nom.message} </p>
+                                            <p className="feedback"> {errors.nom.message} </p>
                                         )}
                                     </div>
 
@@ -196,7 +232,7 @@ export default function Profile() {
                                         <input {...register("prenom")} type="text" id="prenom" />
 
                                         {errors?.prenom && (
-                                            <p style={{ color: "red" }}> {errors.prenom.message} </p>
+                                            <p className="feedback"> {errors.prenom.message} </p>
                                         )}
                                     </div>
 
@@ -206,25 +242,33 @@ export default function Profile() {
                                         <input {...register("email")} type="text" id="email" />
 
                                         {errors?.email && (
-                                            <p style={{ color: "red" }}> {errors.email.message} </p>
+                                            <p className="feedback"> {errors.email.message} </p>
                                         )}
                                     </div>
+
                                     {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}
+                                    {feedbackUser && <p className={`feedback`}>{feedbackUser}</p>}
 
-                                    {feedback && <p className={`mb10 mt20 feedback`}>{feedback}</p>}
+                                    {feedbackGoodUser && (<p className={`feedbackGood`}>{feedbackGoodUser}</p>)}
 
-                                    {feedbackGood && <p className={`mb10 mt20 feedbackGood`}>{feedbackGood}</p>}
-
-                                    <Button content='enregistrer les modifications' className='send' />
-
-                                </form> :
-                                <>
-                                    <p>Nom : {updatedUser?.adherent?.nom}</p>
-                                    <p>Prénom : {updatedUser?.adherent?.prenom}</p>
-                                    <p>Adresse mail : {updatedUser?.adherent?.email}</p>
-                                    <NavLink title='modifier mon mot de passe' to="/NewPassword" style={{ fontStyle: 'italic' }}>Modifier mon mot de passe</NavLink>
-                                </>
-                        }
+                                    <Button
+                                        content="enregistrer les modifications"
+                                        className="send"
+                                        title="enregistrer les modifications"
+                                        onClick={() => submit()}
+                                    />
+                                </form>
+                                <NavLink title='modifier mon mot de passe' to="/NewPassword" style={{ fontStyle: "italic", marginTop: '5%' }}>
+                                    Modifier mon mot de passe
+                                </NavLink>
+                            </>
+                        ) : (
+                            <>
+                                <p>Nom : {user?.adherent?.nom}</p>
+                                <p>Prénom : {user?.adherent?.prenom}</p>
+                                <p>Adresse mail : {user?.adherent?.email}</p>
+                            </>
+                        )}
                     </div>
 
                     {/* Affichage des chiens */}
@@ -239,16 +283,16 @@ export default function Profile() {
                         feedbackGood={feedbackGood}
                         setFeedback={setFeedback}
                         setFeedbackGood={setFeedbackGood}
-                        updatedUser={updatedUser}
-                        setUpdatedUser={setUpdatedUser}
+                        updatedUser={user}
+                        setUpdatedUser={setUser}
                         navigate={navigate}
                         register={register}
                         clearErrors={clearErrors}
                         handleSubmit={handleSubmit}
+                        reset={reset}
                     />
-
                 </div>
-            </main >
+            </main>
         </>
-    )
+    );
 }

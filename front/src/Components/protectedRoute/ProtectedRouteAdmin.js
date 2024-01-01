@@ -10,7 +10,11 @@ export default function ProtectedRouteAdmin({ children }) {
         return <Navigate to="/Forms" />;
     }
 
-    return user.adherent && user.adherent.admin ? children : <Navigate to="/Forms" />;
+    if ((user.adherent && user.adherent.admin !== 1)) {
+        // L'utilisateur n'est pas administrateur, redirection vers une page d'autorisation insuffisante
+        return <Navigate to="/" />;
+    }
 
+    // L'utilisateur est connecté et est administrateur, rendu des composants enfants
+    return children;
 }
-

@@ -1,4 +1,3 @@
-// dogsSection.js
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import Button from '../../../Components/button/Button';
@@ -23,6 +22,7 @@ export default function DogsSection({
     register,
     clearErrors,
     handleSubmit,
+    reset,
 }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedDogId, setSelectedDogId] = useState(null);
@@ -35,7 +35,7 @@ export default function DogsSection({
     async function submitDogs() {
 
         setFeedback('');
-        clearErrors();
+        await clearErrors();
         const values = getValues();
         const formData = new FormData();
 
@@ -50,14 +50,15 @@ export default function DogsSection({
 
         try {
             const addDogsResponse = await addDogs(values);
+            console.log(addDogsResponse);
 
-            if (addDogsResponse.messageGood) {
-                setFeedbackGood(addDogsResponse.messageGood);
-
-                if (updatedUser.chiens) {
-                    const updatedChiens = [...updatedUser.chiens, ...(addDogsResponse.nouveauxChiens || [])];
-                    setUpdatedUser({ ...updatedUser, chiens: updatedChiens });
-                }
+            if (updatedUser.chiens) {
+                const updatedChiens = [
+                    ...updatedUser.chiens,
+                    ...(addDogsResponse.nouveauxChiens || []),
+                ];
+                setUpdatedUser({ ...updatedUser, chiens: updatedChiens });
+                reset();
 
                 setTimeout(() => {
                     navigate('/Profile');
@@ -70,24 +71,25 @@ export default function DogsSection({
             console.error(error);
         }
     }
+    console.log(updatedUser);
 
     async function deleteDogFront(idChien) {
         console.log(idChien);
         try {
-
             const response = await deleteDogBack(idChien);
 
             if (response.messageGood) {
-
                 setFeedbackGood(response.messageGood);
-                const updatedChiens = updatedUser.chiens.filter(chien => chien.idChien !== idChien);
+                const updatedChiens = updatedUser?.chiens.filter(
+                    (chien) => chien.idChien !== idChien
+                );
                 setUpdatedUser({ ...updatedUser, chiens: updatedChiens });
 
                 setTimeout(() => {
                     setFeedbackGood("");
                 }, 3000);
             } else {
-                setFeedback('Erreur lors de la suppression du chien.');
+                setFeedback("Erreur lors de la suppression du chien.");
             }
         } catch (error) {
             console.error(error);
@@ -96,9 +98,9 @@ export default function DogsSection({
 
     function addChien() {
         append({
-            nomChien: '',
-            naissance: '',
-            race: '',
+            nomChien: "",
+            naissance: "",
+            race: "",
         });
     }
 
@@ -106,43 +108,49 @@ export default function DogsSection({
         remove(id);
     }
 
-
     return (
         <>
+            {updatedUser.chiens && updatedUser.chiens.length > 0 && (
+                <>
+                    <h2 className='titreOrange'> {" "} <i class="fa-solid fa-dog Orange"></i> Mes chiens</h2>
 
-            {
-                updatedUser.chiens && updatedUser.chiens.length > 0 && (
-                    <>
-                        <h2 className='titreOrange'> <i class="fa-solid fa-dog Orange"></i> Mes chiens</h2>
-                        {updatedUser.chiens?.filter((chien, index, array) => array.findIndex(c => c.idChien === chien.idChien) === index).map((chien, index) => (
-                            <div key={chien?.idChien} className={` ${styles.texte} box`} >
-                                <h3 className='titreArticle'>{chien?.nomChien}</h3>
-                                <p>Date de naissance : {format(new Date(chien?.naissance), 'dd/MM/yyyy')}</p>
+                    {(updatedUser?.chiens || [])
+                        ?.filter(
+                            (chien, index, array) =>
+                                array.findIndex(
+                                    (c) => c && chien && c.idChien === chien.idChien
+                                ) === index
+                        )
+                        .map((chien, index) => (
+                            <div key={index} className={` ${styles.texte} box`}>
+                                <h3 className="titreArticle">{chien?.nomChien}</h3>
+                                <p>Date de naissance :{" "} {format(new Date(chien?.naissance), "dd/MM/yyyy")}</p>
                                 <p>Race : {chien?.race}</p>
 
                                 {/* Liste des activités du chien */}
                                 <ul>
-                                    {chien?.activites.length > 0 ? (
-                                        chien.activites
-                                            .map((activite, activiteIndex) => (
-                                                <li key={activiteIndex}>
-                                                    <p>{activite?.nomActivites} {activite?.level ? `au niveau ${activite.level}` : ''}</p>
-                                                </li>
-                                            ))
-                                    ) : (
-                                        ""
-                                    )}
+                                    {chien?.activite && chien?.activites.length > 0
+                                        ? chien.activites.map((activite, activiteIndex) => (
+                                            <li key={activiteIndex}>
+                                                <p>
+                                                    {activite?.nomActivites}{" "}
+                                                    {activite?.level
+                                                        ? `au niveau ${activite.level}`
+                                                        : ""}
+                                                </p>
+                                            </li>
+                                        ))
+                                        : ""}
                                 </ul>
 
                                 <NavLink to="/RegistrationActivities" title='inscrire mon chien à une nouvelle activité'>
                                     <Button content="Ajouter une activité" />
                                 </NavLink>
 
-                                <div className={`${styles.sup}`} onClick={() => showModal(chien.idChien)} >
+                                <div className={`${styles.sup}`} onClick={() => showModal(chien.idChien)} title={`supprimer ${chien?.nomChien} de ce compte`}>
                                     <i className="fa-solid fa-circle-xmark orangeStroke"></i>
                                     <p>supprimer {chien?.nomChien} de ce compte</p>
                                 </div>
-
 
                                 {
                                     modalVisible && selectedDogId == chien.idChien &&
@@ -155,19 +163,24 @@ export default function DogsSection({
                                 }
                             </div>
                         ))}
-                    </>
-                )}
+                </>
+            )}
 
-            <form onSubmit={handleSubmit()}>
+            <form onSubmit={handleSubmit(submitDogs)}>
                 {/* --- --- --- --- ---> I N P U T . D O G S . A V E C . L A B E L  <--- --- --- --- --- */}
-                <label className="add" htmlFor="chien" >
-                    <span className='titreArticle'>Ajouter un chien</span>
-                    <Button className="btn" content=" + " onClick={addChien} type="button" />
+                <label className="add" htmlFor="chien">
+                    <span className="titreArticle">Ajouter un chien</span>
+                    <Button
+                        className="btn"
+                        content=" + "
+                        onClick={addChien}
+                        type="button"
+                    />
                 </label>
 
                 <div className={styles.ajoutChien}>
                     {fields.map((dog, index) => (
-                        <div className={` ${styles.texte} box`} style={{ marginBottom: "5%" }}>
+                        <div className={`${styles.texte} box`} style={{ marginBottom: "5%" }} >
                             <ul>
                                 <li key={dog.idDog}>
                                     {/* ---> NOM - DU - CHIEN <--- */}
@@ -176,7 +189,7 @@ export default function DogsSection({
                                         <input {...register(`chiens.[${index}].nomChien`)} type="text" id="nomChien" />
 
                                         {errors?.nomChien && (
-                                            <p style={{ color: "red" }}> {errors.nomChien.message} </p>
+                                            <p className='feedback'> {" "} {errors?.nomChien.message} {" "}</p>
                                         )}
                                     </div>
 
@@ -186,7 +199,7 @@ export default function DogsSection({
                                         <input {...register(`chiens.[${index}].naissance`)} type="date" id="naissance" />
 
                                         {errors?.naissance && (
-                                            <p style={{ color: "red" }}> {errors.naissance.message} </p>
+                                            <p className='feedback'> {" "} {errors?.naissance.message} {" "} </p>
                                         )}
                                     </div>
 
@@ -196,12 +209,16 @@ export default function DogsSection({
                                         <input {...register(`chiens.[${index}].race`)} type="text" id="race" />
 
                                         {errors?.race && (
-                                            <p style={{ color: "red" }}> {errors.race.message} </p>
+                                            <p className='feedback'> {errors?.race.message} </p>
                                         )}
                                     </div>
 
-                                    <Button className="btn" onClick={() => deleteChien(index)} content="-" type="button" />
-
+                                    <Button
+                                        className="btn"
+                                        onClick={() => deleteChien(index)}
+                                        content="-"
+                                        type="button"
+                                    />
                                 </li>
                             </ul>
                         </div>
@@ -210,11 +227,13 @@ export default function DogsSection({
 
                 {/* --- --- --- --- ---> F E E D B A C K <--- --- --- --- --- */}
 
-                {feedback && <p className={`mb10 mt20 feedback`}>{feedback}</p>}
+                {feedback && <p className={`feedback`}>{feedback}</p>}
 
-                {feedbackGood && <p className={`mb10 mt20 feedbackGood`}>{feedbackGood}</p>}
+                {feedbackGood && (<p className={`feedbackGood`}>{feedbackGood}</p>)}
 
-                {fields.length > 0 && <Button content="Ajouter" onClick={() => submitDogs()} />}
+                {fields.length > 0 && (
+                    <Button content="Ajouter" onClick={() => submitDogs()} />
+                )}
             </form>
         </>
     );

@@ -5,14 +5,18 @@ import { Navigate } from "react-router-dom";
 export default function ProtectedRoute({ children }) {
     const { user } = useContext(AuthContext);
 
-    // return (user) ? children : <Navigate to="/Forms" />;
-    if (user.adherent.admin == 1) {
-        // L'utilisateur est connecté et est un administrateur, rediriger vers /Admin
+    if (user == null) {
+        // L'utilisateur n'est pas connecté, redirection vers la page de connexion
+        return <Navigate to="/Forms" />;
+    }
+
+    if ((user.adherent.admin == 1)) {
+        // L'utilisateur n'est pas administrateur, redirection vers une page d'autorisation insuffisante
         return <Navigate to="/Admin" />;
     }
 
-    // L'utilisateur n'est pas connecté ou n'est pas un administrateur, rediriger vers /Forms
-    return user.adherent ? children : <Navigate to="/Forms" />;
+    // L'utilisateur est connecté et est administrateur, rendu des composants enfants
+    return children;
 }
 
 

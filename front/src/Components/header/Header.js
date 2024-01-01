@@ -64,7 +64,7 @@ export default function Header() {
                         )}
                         <li><NavLink className={`${styles.lien}`} to="/WelcomeDog" title='conseils pour accueillir un chien chez soi'>Accueillir un chien</NavLink></li>
                         <li><NavLink className={`${styles.lien}`} to="/Education" title='éducation canine'>Education</NavLink></li>
-                        <li><NavLink end to="/"><div className={`${styles.logoWidth}`}>
+                        <li><NavLink end to="/" title='qui sommes nous ?'><div className={`${styles.logoWidth}`}>
                             <img src={Logo} alt="linea - chien de profil" />
                         </div></NavLink></li>
                         <li><NavLink className={`${styles.lien}`} to="/Agility" title='agility'>Agility</NavLink></li>

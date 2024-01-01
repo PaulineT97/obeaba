@@ -283,7 +283,7 @@ export default function Educateurs() {
                 {educateurs.map((e, index) => (
                     <div className={`box ${styles.containerBox}`} id={e.id} key={index}>
                         <div className={styles.left}>
-                            <img src={e.photo || e.previewImage} alt="" />
+                            <img src={e.photo || previewImage} alt="" />
                         </div>
                         <div className={styles.right}>
                             <h4>{e.nom}</h4>
