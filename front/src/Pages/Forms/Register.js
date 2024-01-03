@@ -43,9 +43,9 @@ export default function Register() {
             .required("vous devez confirmer votre mot de passe")
             .oneOf([yup.ref("motdepasse"), null], "Les mots de passe doivent être identiques"),
         cgu: yup
-            .boolean("Vous devez accepter les CGU")
-            .oneOf([true], "Vous devez accepter les CGU")
-            .required("Vous devez accepter les CGU"),
+            .boolean("Vous devez accepter les CGU et la politique de confidentialité")
+            .oneOf([true], "Vous devez accepter les CGU et la politique de confidentialité")
+            .required("Vous devez accepter les CGU et la politique de confidentialité"),
         // nomChien: yup.string().required(" champ obligatoire"),
     });
 

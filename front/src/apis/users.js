@@ -27,7 +27,7 @@ export async function createUser(newUser) {
 export async function updateUser(actualUser) {
     console.log("Sending request to update:", actualUser);
     const response = await fetch(`${API_USERS}/update`, {
-        method: "POST",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },

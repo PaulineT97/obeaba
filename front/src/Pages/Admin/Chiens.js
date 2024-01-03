@@ -135,7 +135,7 @@ export default function Chiens() {
 
     return (
         <>
-            <h3>Les chiens</h3>
+            <h2>Les chiens</h2>
 
             <article>
                 <div className={styles.choiceActivity}>

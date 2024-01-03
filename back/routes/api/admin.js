@@ -38,48 +38,6 @@ router.post("/updateCertification", (req, res) => {
     })
 })
 
-// router.post("/addEducator", async (req, res) => {
-//     const { nom, certification, introduction, photo } = req.body;
-
-//     console.log(req.body);
-
-//     const newEduc = [];
-//     // Démarrer une transaction pour garantir la cohérence des données
-//     try {
-//         // Insérer l'éducateur
-//         const sqlEducateur = "INSERT INTO educateurs (nom, introduction, photo) VALUES (?,?,?)";
-//         const valuesEducateur = [nom, introduction, photo];
-
-//         connection.query(sqlEducateur, valuesEducateur, (err, result) => {
-//             if (err) throw err;
-//             let resultBack = req.body;
-//             resultBack.id = result.insertId;
-
-//             const nouvellementAjouteIdEducateur = result.insertId;
-//             console.log("Resultat de l'éducateur:", result);
-//             console.log("Nouvel ID de l'éducateur:", nouvellementAjouteIdEducateur);
-
-//             // Insérer la certification en utilisant l'identifiant de l'éducateur
-//             const sqlCertification = "INSERT INTO possede (idCertification, idEduc) VALUES (?,?)";
-//             const valuesCertification = [certification, nouvellementAjouteIdEducateur];
-
-//             connection.query(sqlCertification, valuesCertification);
-
-//             // Utiliser l'identifiant pour récupérer l'éducateur nouvellement ajouté
-//             const nouvelEducateur = (connection.query("SELECT * FROM educateurs WHERE idEduc = ?", [nouvellementAjouteIdEducateur]))[0];
-
-//             newEduc.push(nouvelEducateur)
-
-//         });
-
-//     } catch (err) {
-//         console.error(err);
-//         return res.status(500).json({ message: "Erreur lors de l'ajout de l'éducateur et de sa certification." });
-//     }
-//     let message = { messageGood: "L'éducateur a bien été ajouté", newEduc };
-//     res.send(message);
-// });
-
 router.post("/addEducator", async (req, res) => {
     const { nom, certification, introduction, photo } = req.body;
 
@@ -143,7 +101,6 @@ router.post("/addEducator", async (req, res) => {
         return res.status(500).json({ message: "Erreur lors de l'ajout de l'éducateur et de sa certification." });
     }
 });
-
 
 router.delete('/deleteEducateur/:educateurId', async (req, res) => {
     const educateurId = req.params.educateurId;

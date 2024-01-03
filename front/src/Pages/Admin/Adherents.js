@@ -61,7 +61,7 @@ export default function Adherents() {
 
     return (
         <>
-            <h3>Les adhérents</h3>
+            <h2>Les adhérents</h2>
 
             <article>
                 {listUsers.filter(user => user.admin !== 1) // Filtrer le compte administrateur

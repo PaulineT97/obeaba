@@ -28,7 +28,7 @@ export default function Home() {
                             <h2 className='titreArticle'>Qui sommes nous ?</h2>
                             <div className={`${styles.image} shadow`}>
 
-                                <img src={equipe} alt="" />
+                                <img src={equipe} alt="ronde de mains pour symboliser l'esprit d'équipe" />
                             </div>
                         </div>
                     </article>
@@ -44,7 +44,7 @@ export default function Home() {
                             <h2 className='titreArticle'>Quelles activités ?</h2>
                             <div className={`${styles.image} shadow`}>
 
-                                <img src={activites} alt="" />
+                                <img src={activites} alt="chiens couchés dans un tunnel d'agility" />
                             </div>
                         </div>
                     </article>

@@ -277,7 +277,7 @@ export default function Educateurs() {
 
     return (
         <>
-            <h3>Les éducateurs</h3>
+            <h2>Les éducateurs</h2>
 
             <article>
                 {educateurs.map((e, index) => (
@@ -286,7 +286,7 @@ export default function Educateurs() {
                             <img src={e.photo || previewImage} alt="" />
                         </div>
                         <div className={styles.right}>
-                            <h4>{e.nom}</h4>
+                            <h3>{e.nom}</h3>
                             {modify && editingEducateurId === e.id ? (
                                 <>
                                     <form onSubmit={handleSubmit(() => SubmitChangement(e.id))}>

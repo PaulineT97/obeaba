@@ -12,8 +12,8 @@ import AuthProvider from "./Components/authProvider/AuthProvider"
 function App() {
 
   //NOTE - Permet de récupérer les informations du user lors de sa connexion
-  // const user = useLoaderData();
-  // console.log(user);
+  const user = useLoaderData();
+  console.log(user);
 
   return (
     <div className="App">

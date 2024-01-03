@@ -51,7 +51,11 @@ export default function Header() {
                             <li><NavLink className={`${styles.lien}`} title='se connecter' to="/Forms">Mon compte</NavLink></li>
                         ) : user.adherent.admin === 0 ? (
                             <>
-                                <li><NavLink className={`${styles.lien}`} title='mon profil' to="/Profile"><i className="fa-solid fa-user logged"></i></NavLink></li>
+                                <li>
+                                    <NavLink className={`${styles.lien}`} title='mon profil' to="/Profile">
+                                        <i className="fa-solid fa-user logged"></i>
+                                    </NavLink>
+                                </li>
                                 <li><NavLink className={`${styles.lien}`} title='se déconnecter' onClick={logout}
                                     to="/"><i className="fa-solid fa-right-from-bracket logged"></i></NavLink></li>
                             </>

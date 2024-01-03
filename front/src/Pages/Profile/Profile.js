@@ -43,9 +43,6 @@ export default function Profile() {
             .string()
             .required(" champ obligatoire")
             .email("ce mail n'est pas valide"),
-        // nomChien: yup.string().required(" champ obligatoire"),
-        // naissance: yup.date().required(" champ obligatoire"),
-        // race: yup.string().required(" champ obligatoire"),
     });
 
     const {
@@ -72,7 +69,7 @@ export default function Profile() {
         control,
     });
 
-    //     //ANCHOR - Fonctions 
+         //ANCHOR - Fonctions 
 
     useEffect(() => {
         if (Array.isArray(user?.nouveauxChiens) && user.nouveauxChiens.length > 0) {
@@ -116,6 +113,9 @@ export default function Profile() {
 
             if (actualUser.message) {
                 setFeedbackUser(actualUser.message);
+                setTimeout(() => {
+                    setFeedbackUser("");
+                }, 2000);
             } else {
                 setFeedbackGoodUser(actualUser.messageGood);
 
@@ -135,6 +135,7 @@ export default function Profile() {
                     reset();
                     navigate("/Profile");
                     setModify(false);
+                    setFeedbackGoodUser('');
                 }, 2000);
             }
         } catch (error) {
