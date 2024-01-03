@@ -1,5 +1,5 @@
 export default function Title ({Titre}){
     return(
-        <h5>{Titre}</h5>
+        <h1>{Titre}</h1>
     )
 } 

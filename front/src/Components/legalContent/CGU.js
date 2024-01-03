@@ -7,10 +7,10 @@ export default function CGU() {
             <div className={styles.content}>
                 <div className={styles.entete}>
 
-                    <h2>Conditions générales d'utilisation du site obeaba</h2>
+                    <h1>Conditions générales d'utilisation du site obeaba</h1>
                 </div>
                 <section>
-                    <h3>Article 1 - Objet</h3>
+                    <h2>Article 1 - Objet</h2>
 
                     <p>Les présentes « conditions générales d'utilisation » ont pour objet l'encadrement juridique de l’utilisation du site <span className={styles.it}>www.obeaba.fr</span> et de ses services.</p>
 
@@ -20,7 +20,7 @@ export default function CGU() {
                 </section>
 
                 <section>
-                    <h3>Article 2 - accès aux services</h3>
+                    <h2>Article 2 - accès aux services</h2>
 
                     <p>L’Utilisateur du site <span>Obeaba</span> a accès aux services suivants: </p>
                     <ul>
@@ -44,7 +44,7 @@ export default function CGU() {
                 </section>
 
                 <section>
-                    <h3>Article 3 - Responsabilité de l’Utilisateur</h3>
+                    <h2>Article 3 - Responsabilité de l’Utilisateur</h2>
 
                     <p>L'Utilisateur est responsable des risques liés à l’utilisation de son identifiant de connexion et de son mot de passe. Le mot de passe de l’Utilisateur doit rester secret. En cas de divulgation de mot de passe, l’Éditeur décline toute responsabilité</p>
 
@@ -56,7 +56,7 @@ export default function CGU() {
                 </section>
 
                 <section>
-                    <h3>Article 4 - Responsabilité de l’Éditeur</h3>
+                    <h2>Article 4 - Responsabilité de l’Éditeur</h2>
 
                     <p>Tout dysfonctionnement du serveur ou du réseau ne peut engager la responsabilité de l’Éditeur. De même, la responsabilité du site ne peut être engagée en cas de force majeure ou du fait imprévisible et insurmontable d'un tiers.</p>
 
@@ -66,7 +66,7 @@ export default function CGU() {
                 </section>
 
                 <section>
-                    <h3>Article 5 - Propriété intellectuelle</h3>
+                    <h2>Article 5 - Propriété intellectuelle</h2>
 
                     <p>Les contenus du site <span>Obeaba</span> (textes, logo) sont protégés par le droit d’auteur, en vertu du Code de la propriété intellectuelle.</p>
 
@@ -108,7 +108,7 @@ export default function CGU() {
                 </section>
 
                 <section>
-                    <h3>Article 6 - Données personnelles</h3>
+                    <h2>Article 6 - Données personnelles</h2>
 
                     <p>L’Utilisateur doit obligatoirement fournir des informations personnelles pour procéder à son inscription sur le site. L’adresse électronique (e-mail) de l’utilisateur pourra notamment être utilisée par le site <span>Obeaba</span> pour la communication d’informations diverses et la gestion du compte.</p>
 
@@ -129,7 +129,7 @@ export default function CGU() {
                 </section>
 
                 <section>
-                    <h3>Article 7 - Liens hypertextes</h3>
+                    <h2>Article 7 - Liens hypertextes</h2>
 
                     <p>Les domaines vers lesquels mènent les liens hypertextes présents sur le site n’engagent pas la responsabilité de l’Éditeur de <span>Obeaba</span>, qui n’a pas de contrôle sur ces liens.</p>
 
@@ -137,19 +137,19 @@ export default function CGU() {
                 </section>
 
                 <section>
-                    <h3>Article 8 - Évolution des conditions générales d’utilisation</h3>
+                    <h2>Article 8 - Évolution des conditions générales d’utilisation</h2>
 
                     <p>Le site <span>Obeaba</span> se réserve le droit de modifier les clauses de ces conditions générales d’utilisation à tout moment et sans justification.</p>
                 </section>
 
                 <section>
-                    <h3>Article 9 - Durée du contrat</h3>
+                    <h2>Article 9 - Durée du contrat</h2>
 
                     <p>La durée du présent contrat est indéterminée. Le contrat produit ses effets à l'égard de l'Utilisateur à compter du début de l’utilisation du service.</p>
                 </section>
 
                 <section>
-                    <h3>Article 10 - Droit applicable et juridiction compétente</h3>
+                    <h2>Article 10 - Droit applicable et juridiction compétente</h2>
 
                     <p>Le présent contrat dépend de la législation française. En cas de litige non résolu à l’amiable entre l’Utilisateur et l’Éditeur, les tribunaux de ... sont compétents pour régler le contentieux.</p>
                 </section>

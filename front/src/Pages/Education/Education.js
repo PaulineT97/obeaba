@@ -76,7 +76,7 @@ export default function Education() {
                                     <ul>
                                         <li>le besoin de renforcer la  <span className='bold'>connexion</span> avec votre chien</li>
                                         <li>vous souhaitez (re)travailler une notion en particulier</li>
-                                        <li>votre compagnon est  <span className='bold'>réactif</span> avec les humains  et / ou ses congénaires</li>
+                                        <li>votre compagnon est  <span className='bold'>réactif</span> avec les humains  et / ou ses congénères</li>
                                     </ul>
                                     <p>Nous étudions ensemble votre besoin et vous proposons un planning adapté.</p>
                                     <NavLink title='contactez nous' to="/ContactUs">

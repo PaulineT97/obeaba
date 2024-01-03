@@ -6,7 +6,7 @@ export default function MentionsLegales() {
         <main>
             <div className={styles.content}>
                 <div className={styles.entete}>
-                    <h2>Mentions légales</h2>
+                    <h1>Mentions légales</h1>
                     <aside>En vigueur au 01/01/2024</aside>
                 </div>
                 <section>
@@ -18,7 +18,7 @@ export default function MentionsLegales() {
                 </section>
 
                 <section>
-                    <h3>Article 1 - l'éditeur</h3>
+                    <h2>Article 1 - l'éditeur</h2>
 
                     <p>L'édition et la direction de la publication du site sont assurées par l'équipe d'Obeaba, adresse postale Rue de l'Université, 62400 Verquigneul, dont le numéro de téléphone est le 06 00 00 00 00, et l'adresse mail obeaba@fauxmail.com. </p>
 
@@ -26,13 +26,13 @@ export default function MentionsLegales() {
                 </section>
 
                 <section>
-                    <h3>Article 2 - l'hébergeur</h3>
+                    <h2>Article 2 - l'hébergeur</h2>
 
                     <p>L'hébergeur du site est la société OVH Group SAS, dont le siège social est situé à Roubaix, avec le numéro de téléphone 03 00 00 00 00 et l'adresse mail ...</p>
                 </section>
 
                 <section>
-                    <h3>Article 3 - Accès au site</h3>
+                    <h2>Article 3 - Accès au site</h2>
                     <p>Le site est accessible en tout endroit, 7j / 7, 24h / 24, sauf cas de force majeure, interruption programmée ou non et pouvant découler d'une nécessité de maintenance.</p>
                 </section>
 

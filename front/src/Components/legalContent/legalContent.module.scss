@@ -1,5 +1,23 @@
+@use "../../Assets/Styles/mixin.scss" as mixin;
+
 .content {
     width: 60%;
+
+    @include mixin.md-lt {
+        width: 80%;
+    }
+
+    @include mixin.sm-md {
+        width: 80%;
+    }
+
+    @include mixin.tablette {
+        width: 80%;
+    }
+
+    @include mixin.xs-sm {
+        width: 80%;
+    }
 
     .entete {
         width: 100%;
@@ -7,11 +25,35 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        h2 {
+
+        h1 {
             text-transform: uppercase;
             font-size: 2.6rem;
             font-weight: 500;
             line-height: 5rem;
+
+            @include mixin.md-lt {
+                font-size: 2.4rem;
+            }
+
+            @include mixin.sm-md {
+                font-size: 2.4rem;
+                text-align: center;
+                width: 80%;
+            }
+
+            @include mixin.tablette {
+                font-size: 2rem;
+                text-align: center;
+                width: 80%;
+            }
+
+            @include mixin.xs-sm {
+                font-size: 1.8rem;
+                text-align: center;
+                width: 80%;
+                line-height: 3rem;
+            }
         }
 
         aside {
@@ -22,11 +64,26 @@
     section {
         width: 100%;
 
-        h3 {
+        h2 {
             text-transform: uppercase;
             font-size: 2rem;
             font-weight: 400;
             line-height: 4.4rem;
+
+            @include mixin.md-lt {
+                font-size: 1.8rem;
+            }
+
+            @include mixin.sm-md {
+                font-size: 1.8rem;
+            }
+            @include mixin.tablette {
+                font-size: 1.6rem;        
+            }
+
+            @include mixin.xs-sm {
+                font-size: 1.6rem;
+            }
         }
 
         p {
@@ -43,8 +100,9 @@
                 font-style: italic;
             }
         }
-        ul{
-            li{
+
+        ul {
+            li {
                 list-style-type: circle;
                 font-size: 1.4rem;
             }

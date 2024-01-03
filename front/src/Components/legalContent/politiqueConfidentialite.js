@@ -6,11 +6,11 @@ export default function politiqueConfidentialite() {
         <main>
             <div className={styles.content}>
                 <div className={styles.entete}>
-                    <h2>Politique de confidentialité</h2>
+                    <h1>Politique de confidentialité</h1>
                     <aside>En vigueur au 01/01/2024</aside>
                 </div>
                 <section>
-                    <h3>Le but de cette politique de confidentialité</h3>
+                    <h2>Le but de cette politique de confidentialité</h2>
 
                     <p>Le but de cette politique de confidentialité est d'informer les utilisateurs du site <span className={styles.it}>www.obeaba.fr</span>, des données personnelles que nous recuillerons ainsi que les informations suivantes, le cas échéant : </p>
 
@@ -27,7 +27,7 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Lois applicables</h3>
+                    <h2>Lois applicables</h2>
 
                     <p> Conformément au <span className={styles.it}>Règlement général sur la protection des données (RGPD)</span>, cette politique de confidentialité est conforme aux règlements suivants. </p>
 
@@ -58,7 +58,7 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Consentement</h3>
+                    <h2>Consentement</h2>
 
                     <p>Les utilisateurs conviennent qu'en utilisant notre site, ils consentent :</p>
                     <ul>
@@ -68,7 +68,7 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Données personnelles que nous collectons</h3>
+                    <h2>Données personnelles que nous collectons</h2>
 
                     <p><span>Données collectées automatiquement</span></p>
                     <p>Nous ne collectons aucune donnée automatiquement sur notre site.</p>
@@ -87,7 +87,7 @@ export default function politiqueConfidentialite() {
 
                 <section>
 
-                    <h3>Comment nous utilisons les données personnelles</h3>
+                    <h2>Comment nous utilisons les données personnelles</h2>
 
                     <p> Les données personnelles recuillies sur notre site seront utilisées uniquement aux fins précisées dans la présente politique ou indiquées sur les pages pertinentes de notre site. Nous n'utiliserons pas vos données au-delà de ce que nous divulguerons. </p>
 
@@ -96,7 +96,7 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Avec qui nous partageons les données personnelles</h3>
+                    <h2>Avec qui nous partageons les données personnelles</h2>
 
                     <p><span>Employés</span></p>
 
@@ -120,13 +120,13 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Combien de temps nous stockons les données personnelles</h3>
+                    <h2>Combien de temps nous stockons les données personnelles</h2>
 
                     <p>Nous ne conservons pas les données des utilisateurs au-delà de ce qui est nécessaire pour atteindre les fins pour lesquelles elles sont recueillies.</p>
                 </section>
 
                 <section>
-                    <h3>Comment nous protégeons vos données personnelles</h3>
+                    <h2>Comment nous protégeons vos données personnelles</h2>
 
                     {/* <p>Afin d'assurer la protection de vos données, nous utilisons le protocole de sécurité de la couche transport pour transmettre des renseignements personnels dans notre système.</p> */}
 
@@ -140,7 +140,7 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Vos droits en tant qu'utilisateur</h3>
+                    <h2>Vos droits en tant qu'utilisateur</h2>
 
                     <p>En vertu du RGPD, les utilisateurs ont les droits suivants en tant que personnes concernées :</p>
 
@@ -157,7 +157,7 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Comment modifier, supprimer ou contester les données recueillies</h3>
+                    <h2>Comment modifier, supprimer ou contester les données recueillies</h2>
 
                     <p>Si vous souhaitez que vos renseignements soient supprimés ou midifiés d'un façon ou d'une autre, vous pouvez le faire depuis votre espace public, ou nous contacter :</p>
 
@@ -170,7 +170,7 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Politique sur les cookies</h3>
+                    <h2>Politique sur les cookies</h2>
 
                     <p>Un cookie est un petit fichier, stocké sur le disque dur d'un utilisateur par le site Web. Son but est de recueillir des données relatives aux habitudes de navigation de l'utilisateur.</p>
 
@@ -184,13 +184,13 @@ export default function politiqueConfidentialite() {
                 </section>
 
                 <section>
-                    <h3>Modifications</h3>
+                    <h2>Modifications</h2>
 
                     <p>Cette politique de confidentialité peut être modifiée à l'occasion de maintenir la conformité avec la loi et de temir compte de tout changement à notre processus de collecte de données. Nous recommandons à nos utilisateurs de vérifier notre politique de temps à autre pour s'assurer qu'ils soient informés de toute mise à jour. Au besoin, nous pouvons informer les utilisateurs par courriel des changements apportés à cette politique.</p>
                 </section>
 
                 <section>
-                    <h3>Contact</h3>
+                    <h2>Contact</h2>
 
                     <p>Si vous avez des questiosn à nous poser, n'hésitez pas à communiquer avec nous en utilisant ce qui suit : </p>
 
